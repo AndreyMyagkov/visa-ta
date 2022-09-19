@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+  <style>
+      body {
+          padding: 0;
+      }
+      .kv-container {
+          width: 1250px;
+          max-width: 100%;
+          position: relative;
+          margin: 0 auto;
+          padding: 0 26px;
+          box-sizing: border-box;
+      }
+  </style>
+    <div id="app"></div>
+    <div class="kv-container">
+
+        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias atque corporis dolore eveniet facere inventore modi nostrum. Alias cupiditate eveniet facilis fuga hic impedit ipsam, nobis quibusdam repellat. Culpa, totam.</div>
+        <br><br>
+        <div id="kt-visa-app-1"></div>
+        <script>
+            (function (k, o, e, n, i, g) {
+                const config =  {
+                    elementId: 'kt-visa-app-1',
+                    //clientId: '{8B8CB112-716B-41E1-9748-9A193D45A36D}', // common
+                    clientId: '{C27DE0D8-2DA2-4545-BB2B-0F178009E018}', // payment test v2
+                    mode:  "default", //"default", // "price", "success", "payment"
+                    nationality: "DE",
+                    residenceRegions: "DEU\\BE",
+                    country: "RUS",
+                    //serviceGroup: "9c1132c8-c6d9-41bb-97ad-6d4a536a408c",
+                    // service: "959d28d0-16a3-4942-96f8-ad524c553b27",
+                    //product: "bb39fd21-0180-0002-005d-660d98f98164",
+                    order: "21",
+                    lng: "ru",
+                    //API_URL: "https://apisrv.ideo-software.com/Ideo/KoenigVN/Web/api/OrderPortal/",
+                    API_URL: "https://apisrv.ideo-software.com/Ideo/Test/Srv/api/OrderPortal/", // payment
+                    redirectUrl: "/",
+                    allowBrowserHistory: true,
+                    //css: '/css/widgete.dev.css'
+                }
+                k[o] = k[o] || [];
+                k[o].push(config);
+            })(window, '__KV_CONFIG');
+        </script>
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
