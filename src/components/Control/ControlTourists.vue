@@ -1,6 +1,6 @@
 <template>
   <!-- Tourists -->
-  <div >
+  <div>
     <slot :updateNationality="updateNationality"></slot>
     <div>Добавить</div>
   </div>
@@ -14,21 +14,15 @@ export default {
   components: {
     //ControlTouristsItem
   },
-  props: {
-
-
-  },
-  emits: ['change'],
+  props: {},
+  emits: ["change"],
   methods: {
     updateNationality(data) {
-      console.log('ct')
-      console.log(data)
-    }
-  }
-
-}
+      console.log("ct");
+      console.log(data);
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

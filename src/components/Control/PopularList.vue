@@ -7,20 +7,21 @@
 </template>
 <script>
 export default {
-  name: 'PopularList',
+  name: "PopularList",
   props: {
     list: {},
   },
   methods: {
-   onSelect(data) {
-      this.$emit('change', data)
-    }
-  }
-}
+    onSelect(data) {
+      this.$emit("change", data);
+    },
+  },
+};
 </script>
 <style scoped>
 .kv-popular {
   margin-top: 8px;
+  margin-bottom: 8px;
   padding-left: 52px;
 }
 

@@ -18,8 +18,12 @@ import vSelect from "vue-select";
 import ControlCountries from "@/components/Control/ControlCountries.vue";
 import ControlServices from "@/components/Control/ControlServices.vue";
 
+// FIXME:
 import ControlTourists from "@/components/Control/ControlTourists.vue";
 import ControlTouristsItem from "@/components/Control/ControlTouristsItem.vue";
+
+import ControlNationality from "@/components/Control/ControlNationality.vue";
+import ControlTouristsGroup from "@/components/Control/ControlTouristsGroup.vue";
 
 export default {
   name: "App",
@@ -33,6 +37,8 @@ export default {
     ControlServices,
     ControlTourists,
     ControlTouristsItem,
+    ControlNationality,
+    ControlTouristsGroup,
   },
   data: () => {
     return {
@@ -138,6 +144,7 @@ export default {
       selectedPrice: new constants.PriceDefault(),
 
       tourists: [], //new constants.Toursit()
+      touristGroups: [], // Группы национальностей/количества
 
       selectedServicePackage: new constants.ServicePackage(),
       selectedSuppServices: [],
@@ -171,6 +178,23 @@ export default {
   },
 
   methods: {
+    addTouristsGroup(data) {
+      this.touristGroups.push({
+        nationality: data.nationality,
+        quantity: data.quantity,
+      });
+    },
+    changeTouristsGroup(data) {
+      this.touristGroups
+          .find(_ => _.nationality.codeA2 === data.nationality.codeA2)
+          .quantity = data.quantity
+    },
+    removeTouristsGroup(codeA2) {
+      const index = this.touristGroups
+          .findIndex(_ => _.nationality.codeA2 === codeA2);
+      console.log('index', index);
+      this.touristGroups.splice(index, 1);
+    },
     /**
      * Инициирует виджет, проверяет входные данные
      */
@@ -1994,6 +2018,34 @@ export default {
         <!-- /step 1 -->
 
         <!-- step 2 -->
+<br style="margin-bottom: 30px">
+
+        <div class="kv-processing__label">
+          {{ $lng("step2.nationalitiesLabel") }}
+        </div>
+        <ControlTouristsGroup
+            :data="item"
+            v-for="item in touristGroups"
+            :key="item"
+            @change="changeTouristsGroup"
+            @remove="removeTouristsGroup"
+        ></ControlTouristsGroup>
+
+
+        <ControlNationality
+          :nationalities="listNationalities"
+          :setup="{
+            nationality: CONFIG.nationality,
+          }"
+          @add="addTouristsGroup"
+          @change="updateNationality"
+        >
+        </ControlNationality>
+
+<div style="margin-bottom: 0px"></div>
+
+
+<!--
         <ControlTourists v-slot="scope">
           <ControlTouristsItem
             :nationalities="listNationalities"
@@ -2003,6 +2055,7 @@ export default {
             @change="scope.updateNationality"
           ></ControlTouristsItem>
         </ControlTourists>
+        -->
         <!-- /step 2 -->
 
         <!--
@@ -2101,7 +2154,7 @@ export default {
       </div>
     </vue-final-modal>
 
-    <button @click="confirm.isShow = true">Open Modal</button>
+    <!--<button @click="confirm.isShow = true">Open Modal</button>-->
   </div>
 </template>
 
