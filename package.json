@@ -13,7 +13,8 @@
     "vue": "^3.2.38",
     "vue-final-modal": "^3.4.4",
     "vue-loading-overlay": "^5.0.3",
-    "vue-select": "^4.0.0-beta.5"
+    "vue-select": "^4.0.0-beta.5",
+    "vue3-carousel": "^0.1.46"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
@@ -21,7 +22,6 @@
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
-    "prettier": "^2.7.1",
     "vite": "^3.0.9"
   }
 }

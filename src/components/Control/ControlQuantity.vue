@@ -78,6 +78,7 @@ export default {
   width: 36px;
   height: 36px;
   color: var(--c-second);
+  background: #fff;
 }
 .kv-quantity__btn:disabled {
   background-color: var(--c-disabled);

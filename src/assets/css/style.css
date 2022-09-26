@@ -3115,7 +3115,7 @@
 }
 
 .kv-app .kv-processing-days__item:first-child:last-child {
-    max-width: 50%;
+    max-width: 100%;
 }
 
 .kv-app .kv-processing-day {
@@ -5614,3 +5614,95 @@
     padding: 1rem 0 0;
 }
 
+
+
+/* SLIDER*/
+.kv-app .carousel {
+  position: relative;
+}
+.kv-app .carousel__pagination {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kv-app .carousel__pagination-item {
+  list-style-type: none;
+}
+.kv-app .carousel__pagination-button[type="button"] {
+  margin: 0 2px;
+  width: 12px;
+  height: 4px;
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  background-color: var(--c-second);
+  cursor: pointer;
+}
+
+.kv-app .carousel__pagination-button--active[type="button"],
+.kv-app .carousel__pagination-button--active[type="button"]:hover {
+  background-color: var(--c-prim);
+}
+
+.kv-staying .kv-slider-pagination {
+  bottom: -12px;
+}
+.is-empty .hooper-navigation,
+.is-empty .kv-slider-pagination {
+  display: none;
+}
+.kv-app .kv-slider-pagination,
+.kv-app[cq-max-w-991] .hooper-navigation {
+  display: none;
+}
+.kv-app[cq-max-w-991] .kv-slider-pagination {
+  display: block;
+}
+
+
+.kv-app .carousel__next, .kv-app .carousel__prev {
+  background-color: transparent;
+  border: none;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.kv-app .carousel__prev {
+  left: -45px;
+}
+.kv-app .carousel__next {
+  right: -45px;
+}
+.kv-processing-days .carousel .carousel__prev,
+.kv-processing-days .carousel .carousel__next {
+  height: 100%;
+  padding: 0;
+  background: whitesmoke;
+  border-radius: 6px;
+  width: 35px;
+  text-align: center;
+}
+
+.carousel .carousel__next svg,
+.carousel .carousel__prev svg {
+  fill: var(--c-second);
+  width: 24px;
+}
+.carousel .carousel__prev--in-active,
+.carousel .carousel__next--in-active {
+  cursor: not-allowed;
+}
+.carousel .carousel__next--in-active svg,
+.carousel .carousel__prev--in-active svg {
+  opacity: .6;
+}
+
+.kv-processing-days .carousel:not(.is-empty) {
+  margin: 0 auto;
+  max-width: calc(100% - 90px);
+}

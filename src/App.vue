@@ -13,6 +13,8 @@ import "vue-loading-overlay/dist/vue-loading.css";
 import { $vfm, VueFinalModal, ModalsContainer } from "vue-final-modal";
 
 //import 'vue-select/dist/vue-select.css';
+import TheBlock from "@/components/TheBlock.vue";
+
 import vSelect from "vue-select";
 
 import ControlCountries from "@/components/Control/ControlCountries.vue";
@@ -25,9 +27,26 @@ import ControlTouristsItem from "@/components/Control/ControlTouristsItem.vue";
 import ControlNationality from "@/components/Control/ControlNationality.vue";
 import ControlTouristsGroup from "@/components/Control/ControlTouristsGroup.vue";
 
+import ControlDuration from "@/components/Control/ControlDuration.vue";
+
+import ControlPrice from "@/components/Control/ControlPrice.vue";
+
+import ControlPostal from "@/components/Control/ControlPostal.vue";
+
+import ControlPackages from "@/components/Control/ControlPackages.vue";
+
+import mockPostalServices from "@/mock/postalServices";
+
+import mockPrices from "@/mock/prices";
+
+import mockServiceDetails from "@/mock/serviceDetails";
+
+import produckDetails from "@/mock/produckDetails";
+
 export default {
   name: "App",
   components: {
+    TheBlock,
     iconSprite,
     Loading,
     VueFinalModal,
@@ -39,9 +58,64 @@ export default {
     ControlTouristsItem,
     ControlNationality,
     ControlTouristsGroup,
+    ControlDuration,
+    ControlPrice,
+    ControlPackages,
+    ControlPostal,
+
   },
   data: () => {
     return {
+      mockData: {
+        postalServices: mockPostalServices,
+        durations: [
+          {
+            "index": 0,
+            "name": "30 Tage",
+            "nameHTML": "<p>bis zu <b>30</b> Tage</p>",
+            "description": "<p>Туристическая виза срок пребывания <b>до 30 дней</b>, возможен только однократный визит</p>",
+            "multiplicities": [
+              "1"
+            ]
+          },
+          {
+            "index": 1,
+            "name": "90 Tage",
+            "nameHTML": "<p>bis zu <b>90</b> Tage</p>",
+            "description": "<p>Туристическая виза срок пребывания <b>до 60 дней</b>, возможен одно-/двукратный визит</p>",
+            "multiplicities": [
+              "1",
+              "2"
+            ]
+          },
+          {
+            "index": 2,
+            "name": "180 Tage",
+            "nameHTML": "<p>bis zu <b>180</b> Tage</p>",
+            "description": "<p>Туристическая виза срок пребывания <b>до 180 дней</b>, возможен одно-/дву-/трехкратный визит</p>",
+            "multiplicities": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          {
+            "index": 3,
+            "name": "1 Jahr",
+            "nameHTML": "<p>bis zu <b>1</b> Jahr</p>",
+            "description": "<p>Туристическая виза срок пребывания <b>до 365 дней</b>, возможен многократный визит</p>",
+            "multiplicities": [
+              "1",
+              "2",
+              "3",
+              "m"
+            ]
+          }
+
+        ],
+
+      },
+
       uniqueKey: Date.now(),
       isMobile: false,
       isModalShow: false,
@@ -118,18 +192,19 @@ export default {
 
       services: [],
       serviceGroups: [],
-      serviceDetails: {},
-      prices: {},
+      serviceDetails: mockServiceDetails, //{},
+      prices: mockPrices, //{},
       addressingCountries: [],
       pickupPoints: [],
-      postalServices: [],
+      //postalServices: [],
       paymentMethods: [],
 
-      productDetails: {
-        id: null,
-        servedResidenceRegions: null,
-        discounts: null,
-      },
+      // productDetails: {
+      //   id: null,
+      //   servedResidenceRegions: null,
+      //   discounts: null,
+      // },
+      productDetails: produckDetails.product,
 
       serviceGroupsPrepared: [],
 
@@ -1990,6 +2065,18 @@ export default {
 
     <div class="kv-content">
       <div class="kv-content__body">
+
+        <the-block
+          icon="step_1"
+          header="Lorem ipsum dolor sit amet, consectetur"
+        >
+          <template #content>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor est facere hic laborum natus necessitatibus nisi omnis porro. Dicta eos fugit mollitia nemo, nesciunt quasi recusandae tempora unde voluptates voluptatibus!
+          </template>
+        </the-block>
+
+
+
         <!-- step 1 -->
         <div class="kv-buch">
           <div class="kv-buch__row">
@@ -2041,6 +2128,75 @@ export default {
           @change="updateNationality"
         >
         </ControlNationality>
+
+
+        <div class="kv-staying">
+          <!-- text -->
+          <div class="kv-staying__text">
+            <div class="kv-user-text"><b>{{$lng('step2.modalDefaultInfo')}}</b> <span v-html="serviceDetails.durationsInfo"></span></div>
+          </div>
+          <!-- /text -->
+
+          <ControlDuration
+            :list="mockData.durations"
+            :selected="selectedDuration"
+            @change="updateDuration"
+            @showModal="showModal"
+          ></ControlDuration>
+
+          <div class="kv-staying__info">
+            <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
+            <div class="kv-staying__text">
+              <p>Туристическая виза срок пребывания <b>до 180 дней</b>, возможен одно-/дву-/трехкратный визит</p>
+            </div>
+          </div>
+        </div>
+        {{selectedDuration}}
+
+
+        <control-price
+          :serviceDetails="serviceDetails"
+          :prices="prices"
+          :setup="{
+            duration: selectedDuration,
+            price: selectedPrice,
+            redirectUrl: CONFIG.redirectUrl,
+            mode: CONFIG.mode
+            }"
+
+          @update:price="updatePrice"
+          @showModal="showModal"
+        >
+        </control-price>
+
+
+        <control-packages
+          :data="productDetails"
+          :selectedServicePackage="selectedServicePackage"
+          :selectedSuppServices="selectedSuppServices"
+
+          @showModal="showModal"
+          @changePackage="changePackage"
+          @changeSuppService="changeSuppService"
+          @calculate="sendCalculateAndValidate"
+        >
+        </control-packages>
+
+
+        <ControlPostal
+          :postalServices="mockData.postalServices"
+          :selectedPostalService="selectedPostalService.id"
+          @change="postalChange"
+          @showModal="showModal"
+          ref="step6"
+        ></ControlPostal>
+        {{ selectedPostalService }}
+<div>
+
+</div>
+
+
+
 
 <div style="margin-bottom: 0px"></div>
 
@@ -2117,12 +2273,12 @@ export default {
       content-class="modal-content"
       :esc-to-close="true"
     >
-      <button class="modal__close" @click="isModalShow = false">
+      <button class="modal__close" id="kv-popup__close" @click="isModalShow = false">
         <svg class="kv-select__icon"><use href="#kv-icons_close"></use></svg>
       </button>
-      <span class="modal__title">{{ modal.title }}</span>
+      <span class="modal__title" id="kv-popup__title">{{ modal.title }}</span>
       <div class="modal__content">
-        <div v-html="modal.content" class="kv-user-text"></div>
+        <div v-html="modal.content" class="kv-user-text" id="kv-popup__content"></div>
       </div>
     </vue-final-modal>
 
@@ -2132,12 +2288,12 @@ export default {
       content-class="modal-content"
       :esc-to-close="true"
     >
-      <button class="modal__close" @click="confirm.isShow = false">
+      <button class="modal__close" id="kv-popup__close" @click="confirm.isShow = false">
         <svg class="kv-select__icon"><use href="#kv-icons_close"></use></svg>
       </button>
-      <span class="modal__title">{{ confirm.title }}</span>
+      <span class="modal__title" id="kv-popup__title">{{ confirm.title }}</span>
       <div class="modal__content">
-        <div v-html="confirm.content" class="kv-user-text"></div>
+        <div v-html="confirm.content" class="kv-user-text" id="kv-popup__content"></div>
       </div>
       <div v-if="confirmReset">
         <div class="kv-step-buttons-centered kv-modal-buttons">
