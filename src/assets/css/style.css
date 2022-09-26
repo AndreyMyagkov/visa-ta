@@ -23,7 +23,8 @@
     --c-prim: hsl(189, 100%, 42%);
     --c-prim_light: hsla(189, 100%, 42%, 0.102);
     --c-second: hsl(190, 28%, 35%);
-    --c-second_dark: hsl(190, 63%, 17%);
+    /*--c-second_dark: hsl(190, 63%, 17%);*/
+    --c-second_dark: #406A72;
     --c-success: hsl(131, 61%, 48%);
     --c-success_light: hsla(131, 61%, 48%, 0.1);
     --c-disabled: hsl(0, 0%, 96%);
@@ -37,6 +38,8 @@
     --c-error_light: hsl(0, 100%, 50%, 0.1);
     --c-success-50: hsla(131, 61%, 48%, 50%);
     --c-prim-50: hsla(189, 100%, 42%, 50%);
+    --dark-grey_bdv: #406A72;
+    --blue_bdv_50: rgba(0, 179, 212, 0.5);
 }
 
 .kv-app,
@@ -2057,8 +2060,6 @@
 }
 
 .kv-app .kv-step-values .kv-step-values__row {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     overflow-x: auto;
     -ms-flex-preferred-size: calc((539px - 100%) * 999);
@@ -2380,7 +2381,8 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    margin-bottom: 30px;
+    border-bottom: 1px solid var(--blue_bdv_50);
+    padding-bottom: 5px;
 }
 
 .kv-app .kv-content__icon {
@@ -2400,12 +2402,10 @@
     font-family: var(--fnt-main);
     font-style: normal;
     font-weight: bold;
-    font-size: 24px;
-    line-height: 33px;
-    color: var(--c-second_dark);
-    border-bottom: 1px solid var(--c-disabled_dark);
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 0%;
+    font-size: 20px;
+    text-transform: uppercase;
+    line-height: 35px;
+    color: var(--dark-grey_bdv);
     flex: 1 1 0%;
     min-width: 0;
 }

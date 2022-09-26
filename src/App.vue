@@ -5,6 +5,10 @@ import * as network from "@/helpers/network";
 import * as constants from "@/helpers/constants";
 import * as formatter from "@/helpers/format";
 
+import StatusBar from "@/components/StatusBar/StatusBar.vue";
+import StatusBarInfo from "@/components/StatusBar/StatusBarInfo.vue";
+import StatusBarCart from "@/components/StatusBar/StatusBarCart.vue";
+
 import iconSprite from "./components/icons/IconSprite.vue";
 
 import Loading from "vue-loading-overlay";
@@ -43,9 +47,14 @@ import mockServiceDetails from "@/mock/serviceDetails";
 
 import produckDetails from "@/mock/produckDetails";
 
+
+
 export default {
   name: "App",
   components: {
+    StatusBarInfo,
+    StatusBar,
+    StatusBarCart,
     TheBlock,
     iconSprite,
     Loading,
@@ -1991,7 +2000,7 @@ export default {
     totalAmount() {
       let amount = this.calculate.amount;
       if (amount !== null) {
-        return this.formatter.priceFormat(amount);
+        return formatter.priceFormat(amount);
       } else {
         return constants.dashSymbol;
       }
@@ -2063,8 +2072,30 @@ export default {
   >
     <iconSprite />
 
+    <StatusBar>
+      <template v-slot:info>
+        <StatusBarInfo
+          :selectedCountry="selectedCountry"
+          :selectedService="selectedService"
+          :selectedDuration="selectedDuration"
+          :selectedPrice="selectedPrice"
+        >
+        </StatusBarInfo>
+      </template>
+      <template v-slot:cart>
+        <StatusBarCart
+          :calculation="calculate.calculation"
+          :tourists="tourists"
+          :totalAmount="totalAmount"
+        >
+        </StatusBarCart>
+      </template>
+    </StatusBar>
+
     <div class="kv-content">
       <div class="kv-content__body">
+
+
 
         <the-block
           icon="step_1"
