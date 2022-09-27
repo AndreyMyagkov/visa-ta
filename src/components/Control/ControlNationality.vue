@@ -1,4 +1,36 @@
 <template>
+
+  <div class="kv-row">
+    <div class="kv-col-12 kv-col-md-6">
+      <div id="kv-participants-add" class="kv-add"><svg><use href="#kv-icons_plus"></use></svg>
+        HINZUFÜGEN
+      </div>
+    </div>
+
+    <div class="kv-col-12 kv-col-md-6">
+
+        <div class="kv-select">
+          <div class="kv-select__input kv-select_hide-arrow">
+            <v-select
+              :options="nationalities"
+              label="name"
+              :placeholder="$lng('step2.nationalitiesPlaceholder')"
+              v-model="nationalitiesModel"
+              :clearable="false"
+              id="kv-select-general-nationality"
+              @option:selected="selected"
+            />
+            <svg class="kv-form__sel-arrow">
+              <use href="#kv-icons_select"></use>
+            </svg>
+          </div>
+
+
+      </div>
+      <PopularList :list="popular" @change="change" />
+    </div>
+  </div>
+
   <!-- selects -->
   <div class="kv-processing__row">
     <div class="kv-processing__item">
@@ -7,32 +39,9 @@
         <!--          {{ $lng("step2.nationalitiesLabel") }}-->
         <!--        </div>-->
 
-        <PopularList :list="popular" @change="change" />
 
-        <div class="kv-nationalities">
-          <div class="kv-processing__select kv-select">
-            <div class="kv-select__badge">
-              <svg class="kv-select__icon">
-                <use href="#kv-icons_home"></use>
-              </svg>
-            </div>
-            <div class="kv-select__input kv-select_hide-arrow">
-              <v-select
-                :options="nationalities"
-                label="name"
-                :placeholder="$lng('step2.nationalitiesPlaceholder')"
-                v-model="nationalitiesModel"
-                :clearable="false"
-                id="kv-select-general-nationality"
-                @option:selected="selected"
-              />
-              <svg class="kv-form__sel-arrow">
-                <use href="#kv-icons_select"></use>
-              </svg>
-            </div>
-          </div>
-          <!--          <button class="kv-button" @click="add">Добавить</button>-->
-        </div>
+
+
       </div>
     </div>
   </div>
@@ -123,4 +132,5 @@ export default {
   border-radius: 6px;
   transition: 0.3s;
 }
+
 </style>

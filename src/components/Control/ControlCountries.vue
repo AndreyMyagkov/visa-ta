@@ -3,8 +3,8 @@
     <div class="kv-buch__col-inner kv-control-country">
 <!--      <div class="kv-buch__title">{{ $lng("step1.countryLabel") }}</div>-->
       <div class="kv-buch__list kv-row">
-        <!-- select -->
-        <div class="kv-select kv-col-12 kv-col-md-4">
+        <div class="kv-col-12 kv-col-md-4">
+          <div class="kv-select">
 
           <div class="kv-select__input kv-select_hide-arrow">
             <v-select
@@ -22,7 +22,7 @@
             </svg>
           </div>
         </div>
-
+        </div>
         <!-- /select -->
       </div>
     </div>
@@ -75,8 +75,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .kv-buch__title {
   margin-bottom: 5px;
+}
+.vs__dropdown-toggle {
+  padding: 12px 0 16px;
 }
 </style>

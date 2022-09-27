@@ -22,7 +22,6 @@ export default {
 .kv-popular {
   margin-top: 8px;
   margin-bottom: 8px;
-  padding-left: 52px;
 }
 
 .kv-popular__item {
