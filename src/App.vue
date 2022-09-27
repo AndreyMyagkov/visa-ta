@@ -2225,6 +2225,8 @@ export default {
           header="TARIFAUSWAHL"
         >
 
+          <div class="kv-packages-text kv-user-text"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s </div>
+
           <control-packages
             :data="productDetails"
             :selectedServicePackage="selectedServicePackage"

@@ -3549,10 +3549,10 @@
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    padding: 10px;
+    padding: 10px 10px 10px 20px;
     height: 100%;
-    border-bottom: 1px solid var(--c-disabled_dark);
-    min-height: 150px;
+    border-bottom: 1px solid rgba(0, 179, 212, 0.5);
+
 }
 
 .kv-app .kv-service_simple {
@@ -3570,10 +3570,9 @@
 }
 
 .kv-app .kv-service__title {
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 33px;
-    color: #172F37;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
     margin-bottom: 5px;
 }
 
@@ -3586,21 +3585,10 @@
 
 .kv-app .kv-service__aside {
     padding: 10px 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: end;
-    -ms-flex-align: end;
-    align-items: flex-end;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
+    align-items: center;
     flex-direction: column;
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 100px;
     flex: 1 1 100px;
 }
 
@@ -3631,13 +3619,12 @@
 }
 
 .kv-app .kv-services__item:first-child .kv-services__item-inner {
-    border-top: 1px solid var(--c-disabled_dark);
+    border-top: 1px solid transparent;
 }
 
 .kv-app .kv-services__item-inner {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 0%;
-    flex: 1 1 0%;
+    flex: 1 1 0;
+  background-color: #fff;
 }
 
 .kv-app .kv-services__class {
@@ -3682,13 +3669,13 @@
 }
 
 .kv-app .kv-class__item {
-    background-color: var(--c-disabled);
+    background-color: #fff;
     padding: 10px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    border-bottom: 1px solid var(--c-disabled_dark);
+    border-bottom: 1px solid var(--blue_bdv_50);
     border-left: 2px solid transparent;
     border-right: 2px solid transparent;
     opacity: .5;
@@ -3717,6 +3704,7 @@
 .kv-app .kv-class__item_active {
     border-left: 2px solid var(--c-success);
     border-right: 2px solid var(--c-success);
+  border-bottom: 1px solid var(--c-success);
 }
 
 .kv-app .kv-class__item_add {
@@ -3837,12 +3825,18 @@
     font-size: 30px;
     line-height: .9;
 }
+.kv-service__price {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 41px;
+}
 .kv-app .kv-price .kv-price__currency {
-    font-weight: normal;
+    font-weight: 700;
     font-size: 20px;
-    line-height: .9;
+    line-height: 27px;
     color: inherit;
     margin-left: 4px;
+  font-weight: 400;
 }
 
 .kv-app .kv-price_second {
@@ -4912,7 +4906,7 @@
 }
 
 .kv-app .kv-services-price {
-    background-color: var(--c-disabled);
+    background-color: #fff;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -5800,7 +5794,8 @@
   margin-bottom: 30px;
 }
 
-.kv-country-text {
+.kv-country-text,
+.kv-packages-text {
   margin-bottom: 30px;
   font-size: 15px;
   line-height: 21px;
