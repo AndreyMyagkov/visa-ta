@@ -62,29 +62,29 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 130px;
+  max-width: 120px;
 }
 .kv-quantity__value {
   text-align: center;
   min-width: 50px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .kv-quantity__btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px var(--c-second);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  color: var(--c-second);
+  border: solid 1px var(--dark-grey_bdv);
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
   background: #fff;
+  font-size: 20px;
 }
 .kv-quantity__btn:disabled {
   background-color: var(--c-disabled);
   border-color: #ddd;
 }
 .kv-quantity__btn:not(:disabled):hover {
-  border-color: var(--c-prim);
+  /*border-color:  rgba(48, 197, 75, 0.5);*/
 }
 </style>

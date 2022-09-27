@@ -2143,9 +2143,6 @@ export default {
           icon="step_1"
           header="STAATSBÜRGERSCHAFT"
         >
-          <div class="kv-processing__label">
-            {{ $lng("step2.nationalitiesLabel") }}
-          </div>
           <ControlTouristsGroup
               :data="item"
               v-for="item in touristGroups"

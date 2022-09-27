@@ -5083,16 +5083,16 @@
     border: none;
 }
 
-.kv-app .kv-alert {
-    border-radius: 6px;
-    padding: 20px;
-    margin: 20px 0;
-    background-color: var(--c-prim_light);
-    font-family: var(--fnt-main);
-    font-size: 24px;
-    line-height: 33px;
-    color: var(--c-second_dark);
-}
+/*.kv-app .kv-alert {*/
+/*    border-radius: 6px;*/
+/*    padding: 20px;*/
+/*    margin: 20px 0;*/
+/*    background-color: var(--c-prim_light);*/
+/*    font-family: var(--fnt-main);*/
+/*    font-size: 24px;*/
+/*    line-height: 33px;*/
+/*    color: var(--c-second_dark);*/
+/*}*/
 
 .kv-app .kv-alert_center {
     text-align: center;
@@ -5785,6 +5785,15 @@
   flex-basis: 25%;
   max-width: 25%;
 }
+
+/* Utility */
+.kv-mb-10 {
+  margin-bottom: 10px;
+}
+.kv-mb-20 {
+  margin-bottom: 20px;
+}
+
 
 
 .kv-control-country {

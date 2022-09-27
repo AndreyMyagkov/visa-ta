@@ -1,21 +1,28 @@
 <template>
   <!-- selects -->
-  <div class="kv-processing__row kv-tg">
-    <div class="kv-tg__row">
-      <div class="kv-tg__action">
-        <button class="kv-btn" @click="remove">✖</button>
-      </div>
+  <div class="kv-row kv-mb-20">
+    <div class="kv-col-12 kv-col-md-6">
+      <div class="kv-tg">
+        <div class="kv-tg__row">
+          <div class="kv-tg__action">
+            <button class="kv-btn" @click="remove">✖</button>
+          </div>
 
-      <div class="kv-tg__title">
-        <!-- Количество -->
-        {{ data.nationality.name }}
-      </div>
+          <div class="kv-tg__title">
+            {{ data.nationality.name }}
+          </div>
 
-      <div class="kv-tg__quality">
-        <!-- Количество -->
-        <ControlQuantity :quantity="data.quantity" @change="changeQuantity" />
-      </div>
+          <div class="kv-tg__quality">
+            <ControlQuantity :quantity="data.quantity" @change="changeQuantity" />
+          </div>
 
+        </div>
+      </div>
+    </div>
+    <div class="kv-col-12 kv-col-md-6">
+      <kv-alert>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+      </kv-alert>
     </div>
   </div>
   <!-- /selects -->
@@ -23,10 +30,12 @@
 
 <script>
 import ControlQuantity from "@/components/Control/ControlQuantity.vue";
+import KvAlert from "@/components/KvAlert.vue";
 
 export default {
   name: "ControlTouristsGroup",
   components: {
+    KvAlert,
     ControlQuantity,
   },
   props: {
@@ -59,10 +68,10 @@ export default {
 
 <style scoped>
 .kv-tg {
-  margin: 20px 0;
-  background-color: var(--c-disabled);
-  padding: 10px;
-  max-width: 500px;
+  background-color: var(--background-green_bdv);
+  border: 1px solid rgba(48, 197, 75, 0.5);
+  border-radius: 6px;
+  padding: 16px 40px 17px 20px;
 }
 .kv-tg__row {
   display: flex;
@@ -70,12 +79,14 @@ export default {
 }
 .kv-tg__title {
   flex: 1 1 200px;
+  font-size: 18px;
+  line-height: 25px;
 }
 .kv-tg__quality {
   flex: 0 1 130px;
   margin-left: auto;
 }
 .kv-tg__action {
-  flex: 0 0 30px;
+  flex: 0 0 34px;
 }
 </style>
