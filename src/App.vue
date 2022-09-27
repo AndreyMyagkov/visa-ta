@@ -2096,145 +2096,170 @@ export default {
       <div class="kv-content__body">
 
 
-
+        <!-- step 1 -->
         <TheBlock
           icon="step_1"
           header="VISA-AUSWAHL"
         >
-          <template #content>
 
-            <ControlCountries
-              :countries="listCountries"
-              :default="{
-                country: selectedCountry,
+          <ControlCountries
+            :countries="listCountries"
+            :default="{
+              country: selectedCountry,
+            }"
+            @change:country="countryChange"
+          ></ControlCountries>
+
+          <div class="kv-country-text kv-user-text">
+            is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          </div>
+
+          <div class="kv-buch">
+            <div class="kv-buch__row kv-row">
+              <ControlServices
+                :serviceGroups="serviceGroups"
+                :serviceGroupsSelected="serviceGroupsSelected"
+                :init="{
+                serviceGroups: selectedServiceGroup.id
+                  ? [selectedServiceGroup.id, selectedService.id]
+                  : [selectedService.id],
+                service: [selectedService.id],
               }"
-              @change:country="countryChange"
-            ></ControlCountries>
-
-            <div class="kv-country-text kv-user-text">
-              is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                @change:service="selectVisaType"
+                @showModal="showModal"
+              ></ControlServices>
             </div>
+          </div>
 
-            <div class="kv-buch">
-              <div class="kv-buch__row kv-row">
-                <ControlServices
-                  :serviceGroups="serviceGroups"
-                  :serviceGroupsSelected="serviceGroupsSelected"
-                  :init="{
-                  serviceGroups: selectedServiceGroup.id
-                    ? [selectedServiceGroup.id, selectedService.id]
-                    : [selectedService.id],
-                  service: [selectedService.id],
-                }"
-                  @change:service="selectVisaType"
-                  @showModal="showModal"
-                ></ControlServices>
-              </div>
-            </div>
-
-
-          </template>
         </TheBlock>
-
+        <!-- /step 1 -->
 
         <!-- step 1 -->
 
-          <div class="kv-buch__row">
-            <!-- cnt -->
-
-
-          </div>
-
-        <!-- /step 1 -->
 
         <!-- step 2 -->
-<br style="margin-bottom: 30px">
 
-        <div class="kv-processing__label">
-          {{ $lng("step2.nationalitiesLabel") }}
-        </div>
-        <ControlTouristsGroup
-            :data="item"
-            v-for="item in touristGroups"
-            :key="item"
-            @change="changeTouristsGroup"
-            @remove="removeTouristsGroup"
-        ></ControlTouristsGroup>
-
-
-        <ControlNationality
-          :nationalities="listNationalities"
-          :setup="{
-            nationality: CONFIG.nationality,
-          }"
-          @add="addTouristsGroup"
-          @change="updateNationality"
+        <TheBlock
+          icon="step_1"
+          header="STAATSBÜRGERSCHAFT"
         >
-        </ControlNationality>
-
-
-        <div class="kv-staying">
-          <!-- text -->
-          <div class="kv-staying__text">
-            <div class="kv-user-text"><b>{{$lng('step2.modalDefaultInfo')}}</b> <span v-html="serviceDetails.durationsInfo"></span></div>
+          <div class="kv-processing__label">
+            {{ $lng("step2.nationalitiesLabel") }}
           </div>
-          <!-- /text -->
+          <ControlTouristsGroup
+              :data="item"
+              v-for="item in touristGroups"
+              :key="item"
+              @change="changeTouristsGroup"
+              @remove="removeTouristsGroup"
+          ></ControlTouristsGroup>
 
-          <ControlDuration
-            :list="mockData.durations"
-            :selected="selectedDuration"
-            @change="updateDuration"
-            @showModal="showModal"
-          ></ControlDuration>
 
-          <div class="kv-staying__info">
-            <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
+          <ControlNationality
+            :nationalities="listNationalities"
+            :setup="{
+              nationality: CONFIG.nationality,
+            }"
+            @add="addTouristsGroup"
+            @change="updateNationality"
+          >
+          </ControlNationality>
+
+
+        </TheBlock>
+
+        <!-- /Step 2 -->
+
+
+        <!-- Step 3 -->
+
+        <TheBlock
+          icon="step_1"
+          header="KOSTEN"
+        >
+
+
+          <div class="kv-staying">
+            <!-- text -->
             <div class="kv-staying__text">
-              <p>Туристическая виза срок пребывания <b>до 180 дней</b>, возможен одно-/дву-/трехкратный визит</p>
+              <div class="kv-user-text"><b>{{$lng('step2.modalDefaultInfo')}}</b> <span v-html="serviceDetails.durationsInfo"></span></div>
+            </div>
+            <!-- /text -->
+
+            <ControlDuration
+              :list="mockData.durations"
+              :selected="selectedDuration"
+              @change="updateDuration"
+              @showModal="showModal"
+            ></ControlDuration>
+
+            <div class="kv-staying__info">
+              <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
+              <div class="kv-staying__text">
+                <p>Туристическая виза срок пребывания <b>до 180 дней</b>, возможен одно-/дву-/трехкратный визит</p>
+              </div>
             </div>
           </div>
-        </div>
-        {{selectedDuration}}
+          {{selectedDuration}}
 
 
-        <control-price
-          :serviceDetails="serviceDetails"
-          :prices="prices"
-          :setup="{
-            duration: selectedDuration,
-            price: selectedPrice,
-            redirectUrl: CONFIG.redirectUrl,
-            mode: CONFIG.mode
-            }"
+          <control-price
+            :serviceDetails="serviceDetails"
+            :prices="prices"
+            :setup="{
+              duration: selectedDuration,
+              price: selectedPrice,
+              redirectUrl: CONFIG.redirectUrl,
+              mode: CONFIG.mode
+              }"
 
-          @update:price="updatePrice"
-          @showModal="showModal"
+            @update:price="updatePrice"
+            @showModal="showModal"
+          >
+          </control-price>
+
+        </TheBlock>
+        <!-- /Step3 -->
+
+
+        <!-- Step 4 -->
+        <TheBlock
+          icon="step_1"
+          header="TARIFAUSWAHL"
         >
-        </control-price>
+
+          <control-packages
+            :data="productDetails"
+            :selectedServicePackage="selectedServicePackage"
+            :selectedSuppServices="selectedSuppServices"
+
+            @showModal="showModal"
+            @changePackage="changePackage"
+            @changeSuppService="changeSuppService"
+            @calculate="sendCalculateAndValidate"
+          >
+          </control-packages>
+
+        </TheBlock>
 
 
-        <control-packages
-          :data="productDetails"
-          :selectedServicePackage="selectedServicePackage"
-          :selectedSuppServices="selectedSuppServices"
 
-          @showModal="showModal"
-          @changePackage="changePackage"
-          @changeSuppService="changeSuppService"
-          @calculate="sendCalculateAndValidate"
+        <!-- Step 5 -->
+        <TheBlock
+          icon="step_1"
+          header="TARIFAUSWAHL"
         >
-        </control-packages>
 
-
-        <ControlPostal
-          :postalServices="mockData.postalServices"
-          :selectedPostalService="selectedPostalService.id"
-          @change="postalChange"
-          @showModal="showModal"
-          ref="step6"
-        ></ControlPostal>
-        {{ selectedPostalService }}
-<div>
+          <ControlPostal
+            :postalServices="mockData.postalServices"
+            :selectedPostalService="selectedPostalService.id"
+            @change="postalChange"
+            @showModal="showModal"
+            ref="step6"
+          ></ControlPostal>
+          {{ selectedPostalService }}
+        </TheBlock>
+  <div>
 
 </div>
 

@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="kv-block__content">
-      <slot name="content"></slot>
+      <slot></slot>
     </div>
   </div>
 </template>
