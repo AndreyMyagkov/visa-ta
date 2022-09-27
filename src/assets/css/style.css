@@ -40,6 +40,7 @@
     --c-prim-50: hsla(189, 100%, 42%, 50%);
     --dark-grey_bdv: #406A72;
     --blue_bdv_50: rgba(0, 179, 212, 0.5);
+    --background-green_bdv: #EBFAED;
 }
 
 .kv-app,
@@ -2508,16 +2509,16 @@
     -webkit-box-flex: 1;
     -ms-flex: 1 1 0%;
     flex: 1 1 0%;
-    padding: 0 0 0 3px;
+    padding: 0 20px 0 3px;
 }
 
 .kv-app .kv-buch .kv-buch__list.kv-buch__list_scroll {
     overflow-y: auto;
-    max-height: 280px;
+    max-height: 370px;
 }
 
 .kv-app .kv-buch .kv-buch__list .kv-buch__list-item {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .kv-app .kv-buch .kv-buch__list *:last-child {
@@ -2628,15 +2629,14 @@
 .kv-app .kv-buch-chb {
     --kv-buch-chb_bd: transparent;
     --kv-buch-chb_bdl: var(--c-second);
-    --kv-buch-chb_bg: var(--c-disabled);
+    --kv-buch-chb_bg: #fff;
     display: block;
     min-height: 40px;
     padding: 1px;
     position: relative;
-    -webkit-box-shadow: -3px 0 0 0 var(--kv-buch-chb_bdl);
-    box-shadow: -3px 0 0 0 var(--kv-buch-chb_bdl);
+    box-shadow: -3px 0 0 0 var(--blue_bdv_50);
     border-left: 0px solid transparent !important;
-    border: 1px solid var(--kv-buch-chb_bd);
+    border: 1px solid var(--blue_bdv_50);
     background-color: var(--kv-buch-chb_bg);
     border-radius: 0px 6px 6px 0px;
     display: block;
@@ -2657,7 +2657,8 @@
 }
 
 .kv-app .kv-buch-chb.kv-buch-chb_marked {
-    --kv-buch-chb_bdl: var(--c-prim);
+    --kv-buch-chb_bdl: var(--background-green_bdv);
+    border: 1px solid rgba(48, 197, 75, 0.5);
 }
 
 .kv-app .kv-buch-chb.kv-buch-chb_marked .kv-buch-chb__icon {
@@ -2668,21 +2669,24 @@
     --kv-buch-chb_bd: var(--c-success);
     --kv-buch-chb_bdl: var(--c-success);
     --kv-buch-chb_bg: var(--c-success_light);
+  border: 1px solid rgba(48, 197, 75, 0.5);
+  background-color: var(--background-green_bdv);
+  box-shadow: -3px 0 0 0 rgba(48, 197, 75, 0.5);
 }
 
 .kv-app .kv-buch-chb .kv-buch-chb__title {
     font-family: var(--fnt-main);
     font-style: normal;
     font-weight: normal;
-    font-size: 15px;
-    line-height: 1.2;
+    font-size: 18px;
+    line-height: 1.39;
     color: var(--c-second);
     min-height: calc(1em * 1.2);
     position: relative;
     -webkit-box-flex: 1;
     -ms-flex: 1 1 0%;
     flex: 1 1 0%;
-    padding: 8px 35px 8px 10px;
+    padding: 17px 35px 18px 20px;
     display: block;
     border-right: 1px solid var(--c-main);
     word-break: break-all;
