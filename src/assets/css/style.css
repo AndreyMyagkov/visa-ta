@@ -5821,7 +5821,8 @@
 }
 
 .kv-country-text,
-.kv-packages-text {
+.kv-packages-text,
+.kv-delivery-text{
   margin-bottom: 30px;
   font-size: 15px;
   line-height: 21px;

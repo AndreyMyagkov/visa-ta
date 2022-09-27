@@ -23,6 +23,7 @@ import vSelect from "vue-select";
 
 import ControlCountries from "@/components/Control/ControlCountries.vue";
 import ControlServices from "@/components/Control/ControlServices.vue";
+import ControlDeliveryType from "@/components/Control/ControlDeliveryType.vue";
 
 // FIXME:
 import ControlTourists from "@/components/Control/ControlTourists.vue";
@@ -70,6 +71,7 @@ export default {
     ControlDuration,
     ControlPrice,
     ControlPackages,
+    ControlDeliveryType,
     ControlPostal,
 
   },
@@ -2249,7 +2251,10 @@ export default {
           header="TARIFAUSWAHL"
         >
 
-          <ControlDeliveryType></ControlDeliveryType>
+          <ControlDeliveryType
+            :selected = "delivery.type"
+            @change="delivery.type = $event"
+          ></ControlDeliveryType>
 
           <ControlPostal
             :postalServices="mockData.postalServices"
