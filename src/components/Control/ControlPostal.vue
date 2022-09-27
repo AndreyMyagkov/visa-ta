@@ -8,7 +8,8 @@
         <div class="kv-form__item-wrap kv-form__col_half"  v-for="item in row" :key="item.id">
           <div class="kv-form__item kv-form__item_chb kv-form__item_light kv_height-100"
                :class="{
-              'kv-form__item_error': error
+              'kv-form__item_error': error,
+              'kv-form__item_selected': item.id === postalService
             }"
           >
             <label class="kv-form-radio" :id="`kv-postal__${item.id}`">
@@ -125,6 +126,15 @@ export default {
 </script>
 
 <style scoped>
+  .kv-form__item_selected .kv-form__item_light {
+    background-color: #EBFAED;
+  }
+  .kv-form__item_selected .kv-form__badge {
+    background-color: #30C54B;
+  }
+  .kv-form__item_selected  .kv-form-radio {
+    border: solid 2px #30C54B;
+  }
 
 </style>
 

@@ -2249,6 +2249,8 @@ export default {
           header="TARIFAUSWAHL"
         >
 
+          <ControlDeliveryType></ControlDeliveryType>
+
           <ControlPostal
             :postalServices="mockData.postalServices"
             :selectedPostalService="selectedPostalService.id"

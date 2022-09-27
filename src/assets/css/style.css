@@ -935,7 +935,7 @@
 }
 
 .kv-app .kv-form__item_light {
-    background-color: var(--c-disabled);
+    background-color: #fff;
 }
 
 .kv-app .kv-form__item_chb {
@@ -1501,10 +1501,13 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 8px 20px;
+    padding: 7px 20px;
     -webkit-box-flex: 1;
     -ms-flex: 1 1 0%;
     flex: 1 1 0%;
+  border: 1px solid rgba(0, 179, 212, 0.5);
+  border-right: none;
+  border-radius: 6px 0 0 6px;
 }
 
 .kv-app .kv-form-radio,
@@ -1553,7 +1556,27 @@
 .kv-app .kv-form-radio .kv-form-radio__mark svg {
     width: 100%;
     height: 100%;
-    fill: var(--c-prim);
+    color: var(--c-prim);
+}
+
+.kv-app .kv-form-radio .kv-form-radio__mark  circle {
+  stroke: var(--c-prim);
+  color: var(--c-prim);
+}
+
+.kv-app .kv-form-radio .kv-form-radio__mark  {
+  stroke: var(--c-prim);
+  color: var(--c-prim);
+}
+
+
+
+.kv-form__item_selected  .kv-form-radio__mark svg {
+  fill: #30C54B;
+  stroke: #30C54B;;
+}
+.kv-form__item_selected  .kv-form-radio__mark svg .kv-inner {
+  stroke: #30C54B;
 }
 
 .kv-app .kv-form-radio .kv-form-radio__caption {
@@ -1575,7 +1598,6 @@
     overflow: hidden;
     line-clamp: 1;
     min-width: 0;
-    word-break: break-all;
     display: block;
 }
 .kv-app .kv-form-radio .kv-form-radio__title[cq-max-w-480] {
@@ -1585,8 +1607,8 @@
 
 .kv-app .kv-form-radio .kv-form-radio__text {
     font-weight: normal;
-    font-size: 14px;
-    line-height: 19px;
+    font-size: 15px;
+    line-height: 20px;
     color: var(--c-second);
     display: block;
 }
@@ -3819,6 +3841,10 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 41px;
+  color: #fff;
 }
 .kv-app  .kv-cart__value {
     font-weight: bold;
