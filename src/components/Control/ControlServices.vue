@@ -1,8 +1,8 @@
 <template>
   <!-- Groups -->
-  <div class="kv-buch__col">
+  <div class="kv-buch__col kv-col-12- kv-col-md-3-">
     <div class="kv-buch__col-inner" v-if="serviceGroups.length">
-      <div class="kv-buch__title">{{ $lng("step1.serviceGrpLabel") }}</div>
+<!--      <div class="kv-buch__title">{{ $lng("step1.serviceGrpLabel") }}</div>-->
       <VisaTypes
         :data="serviceGroups"
         :selected="init.serviceGroups"
@@ -16,9 +16,9 @@
   <!-- /Groups -->
 
   <!-- Services -->
-  <div class="kv-buch__col" id="kv-services">
+  <div class="kv-buch__col kv-col-12- kv-col-md-3-" id="kv-services">
     <div class="kv-buch__col-inner" v-if="serviceGroupsSelected.length">
-      <div class="kv-buch__title">{{ $lng("step1.serviceLabel") }}</div>
+<!--      <div class="kv-buch__title">{{ $lng("step1.serviceLabel") }}</div>-->
       <VisaTypes
         :data="serviceGroupsSelected"
         :selected="init.service"

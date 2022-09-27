@@ -244,6 +244,7 @@
     width: auto;
     word-spacing: normal;
     z-index: auto;
+    color: var(--dark-grey_bdv);
 }
 /* git merge - */
 .vld-overlay svg g g {
@@ -2126,19 +2127,14 @@
 .kv-app .kv-step-values .kv-step-values__aside {
     padding-left: 4px;
     min-height: 40px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    -ms-flex-preferred-size: 0 1 calc(calc(539px - 100%) * 999);
     flex-basis: 0 1 calc(calc(539px - 100%) * 999);
 }
-
+.kv-app .kv-cart {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  height: 100%;
+}
 .kv-app .kv-progress {
     --kv-progress: 0%;
     --kv-progress-color: var(--c-prim);
@@ -2512,7 +2508,7 @@
     -webkit-box-flex: 1;
     -ms-flex: 1 1 0%;
     flex: 1 1 0%;
-    padding: 0 20px;
+    padding: 0 0 0 3px;
 }
 
 .kv-app .kv-buch .kv-buch__list.kv-buch__list_scroll {
@@ -2599,7 +2595,7 @@
     border: 1px solid var(--c-second);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-radius: 0px 6px 6px 0px;
+    border-radius: 6px 6px 6px 6px;
     height: 100%;
     padding: 1px 32px 1px 10px;
     -webkit-box-flex: 1;
@@ -5705,4 +5701,94 @@
 .kv-processing-days .carousel:not(.is-empty) {
   margin: 0 auto;
   max-width: calc(100% - 90px);
+}
+
+
+/* micro grid */
+.kv-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  --gutter: 10px;
+  margin-left: calc(-1 * var(--gutter));
+  margin-right: calc(-1 * var(--gutter));
+}
+.kv-row > * {
+  flex: 1 1 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.kv-col-12 {
+  flex-basis: 100%;
+  max-width: 100%;
+}
+
+.kv-col-6 {
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+.kv-col-4 {
+  flex-basis: 33.33333%;
+  max-width: 33.33333%;
+}
+
+.kv-col-3  {
+  flex-basis: 25%;
+  max-width: 25%;
+}
+
+/* MD  */
+[cq-min-w-640] .kv-col-md-12 {
+  flex-basis: 100%;
+  max-width: 100%;
+}
+
+[cq-min-w-640] .kv-col-md-6 {
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+[cq-min-w-640] .kv-col-md-4 {
+  flex-basis: 33.33333%;
+  max-width: 33.33333%;
+}
+
+[cq-min-w-640] .kv-col-md-3 {
+  flex-basis: 25%;
+  max-width: 25%;
+}
+
+/* LG */
+[cq-min-w-991] .kv-col-lg-12 {
+  flex-basis: 100%;
+  max-width: 100%;
+}
+
+[cq-min-w-991] .kv-col-lg-6 {
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+[cq-min-w-991] .kv-col-lg-4 {
+  flex-basis: 33.33333%;
+  max-width: 33.33333%;
+}
+
+[cq-min-w-991] .kv-col-lg-3 {
+  flex-basis: 25%;
+  max-width: 25%;
+}
+
+
+.kv-control-country {
+  margin-bottom: 30px;
+}
+
+.kv-country-text {
+  margin-bottom: 30px;
+  font-size: 15px;
+  line-height: 21px;
 }

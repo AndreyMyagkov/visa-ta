@@ -1,13 +1,11 @@
 <template>
   <div class="kv-buch__col kv-buch__col-mobile-expand">
-    <div class="kv-buch__col-inner">
-      <div class="kv-buch__title">{{ $lng("step1.countryLabel") }}</div>
-      <div class="kv-buch__list">
+    <div class="kv-buch__col-inner kv-control-country">
+<!--      <div class="kv-buch__title">{{ $lng("step1.countryLabel") }}</div>-->
+      <div class="kv-buch__list kv-row">
         <!-- select -->
-        <div class="kv-select">
-          <div class="kv-select__badge">
-            <svg class="kv-select__icon"><use href="#kv-icons_pin"></use></svg>
-          </div>
+        <div class="kv-select kv-col-12 kv-col-md-4">
+
           <div class="kv-select__input kv-select_hide-arrow">
             <v-select
               :options="countries"
@@ -25,7 +23,6 @@
           </div>
         </div>
 
-        <!-- <PopularList :list="popular" @change="change"/>-->
         <!-- /select -->
       </div>
     </div>
@@ -34,12 +31,10 @@
 
 <script>
 import vSelect from "vue-select";
-import PopularList from "@/components/Control/PopularList.vue";
 
 export default {
   name: "ControlCountries",
   components: {
-    PopularList,
     vSelect,
   },
   props: {

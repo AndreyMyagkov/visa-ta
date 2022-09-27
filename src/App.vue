@@ -1888,7 +1888,7 @@ export default {
     },
 
     /**
-     * Возращает информацию по текущему шагу
+     * Возвращает информацию по текущему шагу
      * @return {{crumb: string, icon: string, header: string}}
      */
     stepInfo() {
@@ -2073,7 +2073,7 @@ export default {
     <iconSprite />
 
     <StatusBar>
-      <template v-slot:info>
+      <template #info>
         <StatusBarInfo
           :selectedCountry="selectedCountry"
           :selectedService="selectedService"
@@ -2082,7 +2082,7 @@ export default {
         >
         </StatusBarInfo>
       </template>
-      <template v-slot:cart>
+      <template #aside>
         <StatusBarCart
           :calculation="calculate.calculation"
           :tourists="tourists"
@@ -2097,20 +2097,12 @@ export default {
 
 
 
-        <the-block
+        <TheBlock
           icon="step_1"
-          header="Lorem ipsum dolor sit amet, consectetur"
+          header="VISA-AUSWAHL"
         >
           <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor est facere hic laborum natus necessitatibus nisi omnis porro. Dicta eos fugit mollitia nemo, nesciunt quasi recusandae tempora unde voluptates voluptatibus!
-          </template>
-        </the-block>
 
-
-
-        <!-- step 1 -->
-        <div class="kv-buch">
-          <div class="kv-buch__row">
             <ControlCountries
               :countries="listCountries"
               :default="{
@@ -2119,20 +2111,40 @@ export default {
               @change:country="countryChange"
             ></ControlCountries>
 
-            <ControlServices
-              :serviceGroups="serviceGroups"
-              :serviceGroupsSelected="serviceGroupsSelected"
-              :init="{
-                serviceGroups: selectedServiceGroup.id
-                  ? [selectedServiceGroup.id, selectedService.id]
-                  : [selectedService.id],
-                service: [selectedService.id],
-              }"
-              @change:service="selectVisaType"
-              @showModal="showModal"
-            ></ControlServices>
+            <div class="kv-country-text kv-user-text">
+              is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            </div>
+
+            <div class="kv-buch">
+              <div class="kv-buch__row kv-row">
+                <ControlServices
+                  :serviceGroups="serviceGroups"
+                  :serviceGroupsSelected="serviceGroupsSelected"
+                  :init="{
+                  serviceGroups: selectedServiceGroup.id
+                    ? [selectedServiceGroup.id, selectedService.id]
+                    : [selectedService.id],
+                  service: [selectedService.id],
+                }"
+                  @change:service="selectVisaType"
+                  @showModal="showModal"
+                ></ControlServices>
+              </div>
+            </div>
+
+
+          </template>
+        </TheBlock>
+
+
+        <!-- step 1 -->
+
+          <div class="kv-buch__row">
+            <!-- cnt -->
+
+
           </div>
-        </div>
+
         <!-- /step 1 -->
 
         <!-- step 2 -->
