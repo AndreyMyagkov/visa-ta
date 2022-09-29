@@ -146,7 +146,7 @@
     -moz-column-width: auto;
     column-width: auto;
     content: '';
-    /*content: none;*/ /* fix FireFox select options*/
+
     counter-increment: none;
     counter-reset: none;
     cursor: auto;
@@ -158,7 +158,7 @@
     font-style: normal;
     font-variant: normal;
     font-weight: normal;
-    height: auto;
+    /*height: auto;*/
     -webkit-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
@@ -242,10 +242,11 @@
     visibility: visible;
     white-space: normal;
     widows: 0;
-    width: auto;
+    /*width: auto;*/
     word-spacing: normal;
     z-index: auto;
     color: var(--dark-grey_bdv);
+
 }
 /* git merge - */
 .vld-overlay svg g g {
@@ -2397,13 +2398,13 @@
 }
 
 .kv-app .kv-content__header {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    border-bottom: 1px solid var(--blue_bdv_50);
-    padding-bottom: 5px;
+  display: flex;
+  border-bottom: 1px solid var(--blue_bdv_50);
+  padding-bottom: 5px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
-
 .kv-app .kv-content__icon {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 30px;
@@ -2679,8 +2680,8 @@
 }
 
 .kv-app .kv-buch-chb.kv-buch-chb_marked {
-    --kv-buch-chb_bdl: var(--background-green_bdv);
-    border: 1px solid rgba(48, 197, 75, 0.5);
+    /*--kv-buch-chb_bdl: var(--background-green_bdv);*/
+    /*border: 1px solid rgba(48, 197, 75, 0.5);*/
 }
 
 .kv-app .kv-buch-chb.kv-buch-chb_marked .kv-buch-chb__icon {
@@ -2775,7 +2776,6 @@
 
 .kv-app .kv-staying {
     padding: 20px;
-    background-color: var(--c-prim_light);
 }
 
 .kv-app .kv-staying .kv-staying__text {
@@ -2950,7 +2950,7 @@
     pointer-events: none;
 }
 
-.kv-app .kv-staying-chb.kv-staying-chb__active .kv-staying-chb__text {
+.kv-app .kv-staying-chb.kv-staying-chb__active .kv-staying-chb__text * {
     color: var(--c-main);
 }
 
@@ -3321,11 +3321,9 @@
 
 
 .kv-app .kv-calc-info {
-    background-color: var(--c-disabled);
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     padding: 14px 10px;
+  border-top: 1px solid rgba(0, 179, 212, 0.5);
 }
 
 .kv-app .kv-calc-info .kv-calc-info__icon {
@@ -5699,14 +5697,19 @@
 }
 .kv-processing-days .carousel .carousel__prev,
 .kv-processing-days .carousel .carousel__next {
-  height: 100%;
+  height: 120px;
   padding: 0;
-  background: whitesmoke;
-  border-radius: 6px;
-  width: 35px;
+  background: #fff;
+
+  width: 30px;
   text-align: center;
 }
-
+.kv-processing-days .carousel .carousel__prev {
+  border-radius: 0 50px 50px 0px;
+}
+.kv-processing-days .carousel .carousel__next {
+  border-radius: 50px 0px 0px 50px;
+}
 .carousel .carousel__next svg,
 .carousel .carousel__prev svg {
   fill: var(--c-second);
@@ -5723,7 +5726,7 @@
 
 .kv-processing-days .carousel:not(.is-empty) {
   margin: 0 auto;
-  max-width: calc(100% - 90px);
+  max-width: calc(100% - 40px);
 }
 
 
@@ -5828,4 +5831,86 @@
 }
 .vs__dropdown-toggle {
   padding: 12px 0 16px;
+}
+
+
+.kv-footer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.kv-app .kv-footer-buttons__button {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 11px 50px;
+  border-radius: 6px;
+}
+.kv-app .kv-footer-buttons__button:hover {
+  opacity: 0.85;
+}
+
+.kv-app .kv-footer-buttons__buchen {
+  background: #30C54B;
+}
+
+.kv-app .kv-footer-buttons__angebot {
+  background: #FF7C00;
+}
+
+.kv-block1-info {
+  background: #EBFAED;
+  border-width: 1px 1px 1px 3px;
+  border-style: solid;
+  border-color: rgba(48, 197, 75, 0.5);
+  border-radius: 0 6px 6px 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  cursor: pointer;
+
+}
+.kv-block1-info__info {
+  font-size: 18px;
+  line-height: 25px;
+}
+.kv-block-info__action {
+  font-size: 18px;
+  line-height: 25px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+.kv-block-info__action * {
+  cursor: pointer;
+}
+.kv-kv-block-info__icon {
+  fill: var(--dark-grey_bdv);
+}
+.kv-kv-block-info__icon_card,
+.kv-kv-block-info__icon_table{
+  opacity: 0.5;
+}
+
+.kv-kv-block-info__icon_table.active,
+.kv-kv-block-info__icon_card.active{
+  opacity: 1;
+}
+
+.kv-participants-add,
+.kv-is-hover .kv-nationality-control{
+  display: block;
+}
+.kv-is-hover .kv-add,
+.kv-nationality-control {
+  display: none;
+}
+
+.kv-app .kv-kv-block-info__icon,
+.kv-app .kv-kv-block-info__icon svg{
+  width: 20px !important;
+  height: 20px !important;
 }

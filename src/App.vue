@@ -47,12 +47,16 @@ import mockPrices from "@/mock/prices";
 import mockServiceDetails from "@/mock/serviceDetails";
 
 import produckDetails from "@/mock/produckDetails";
+import ControlDeliveryAddress from "@/components/Control/ControlDeliveryAddress.vue";
+import ReviewTotal from "@/components/ReviewTotal.vue";
 
 
 
 export default {
   name: "App",
   components: {
+    ReviewTotal,
+    ControlDeliveryAddress,
     StatusBarInfo,
     StatusBar,
     StatusBarCart,
@@ -150,6 +154,7 @@ export default {
           //header: this.$lng('step1.header'),//'Buchungsauftrag',
           icon: "step_1",
           showModalWhenChangeVisa: true, // Флаг показа модалки, при возврате на первый шаг и смене визы
+          isOpen: true // Флаг раскрытия блока кнопкой
         },
         {
           crumb: "Aufenthaltsdauer",
@@ -157,6 +162,7 @@ export default {
           icon: "step_2",
           allowOrder: false,
           showModalCorrectParticipant: true,
+          priceMode: "cards"
         },
         {
           crumb: "Заполнение данных о туристах",
@@ -512,7 +518,7 @@ export default {
       }
       if (step === 8) {
         this.CONFIG.mode = "payment";
-        this.addNewPageToHistory(false);
+
         // TODO: step 1?
       }
       //this.moduleMove(this.CONFIG.mode, step);
@@ -1434,6 +1440,9 @@ export default {
         return;
       }
 
+      if (item.type === "item") {
+        this.steps[0].isOpen = false;
+      }
       if (item.type === "item" && this.selectedService.id === item.id) {
         this.nextStep();
         return;
@@ -1862,7 +1871,7 @@ export default {
         this.isLoading = false;
         if (responseJSON.state >= 0) {
           // Ставим новый статус истории, затем меняем заголовок и режим
-          this.addNewPageToHistory(false);
+
           this.CONFIG.mode = "success";
           document.title = this.$lng("success.header");
           setTimeout(() => {
@@ -2103,33 +2112,47 @@ export default {
           icon="step_1"
           header="VISA-AUSWAHL"
         >
+          <template #header-aside>
+            <div class="kv-block-info__action" @click="steps[0].isOpen = !steps[0].isOpen">
+              <span>Edit</span>
+              <svg class="kv-kv-block-info__icon kv-kv-block-info__down" width="10" height="9"><use href="#kv-arrow-down"></use></svg>
+            </div>
+          </template>
 
-          <ControlCountries
-            :countries="listCountries"
-            :default="{
-              country: selectedCountry,
-            }"
-            @change:country="countryChange"
-          ></ControlCountries>
-
-          <div class="kv-country-text kv-user-text">
-            is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+          <div class="kv-block1-info" v-if="!steps[0].isOpen">
+            <div class="kv-block1-info__info">
+              <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
+              {{ selectedService.name }}</div>
           </div>
 
-          <div class="kv-buch">
-            <div class="kv-buch__row kv-row">
-              <ControlServices
-                :serviceGroups="serviceGroups"
-                :serviceGroupsSelected="serviceGroupsSelected"
-                :init="{
-                serviceGroups: selectedServiceGroup.id
-                  ? [selectedServiceGroup.id, selectedService.id]
-                  : [selectedService.id],
-                service: [selectedService.id],
+          <div v-if="steps[0].isOpen">
+            <ControlCountries
+              :countries="listCountries"
+              :default="{
+                country: selectedCountry,
               }"
-                @change:service="selectVisaType"
-                @showModal="showModal"
-              ></ControlServices>
+              @change:country="countryChange"
+            ></ControlCountries>
+
+            <div class="kv-country-text kv-user-text">
+              is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            </div>
+
+            <div class="kv-buch">
+              <div class="kv-buch__row kv-row">
+                <ControlServices
+                  :serviceGroups="serviceGroups"
+                  :serviceGroupsSelected="serviceGroupsSelected"
+                  :init="{
+                  serviceGroups: selectedServiceGroup.id
+                    ? [selectedServiceGroup.id, selectedService.id]
+                    : [selectedService.id],
+                  service: [selectedService.id],
+                }"
+                  @change:service="selectVisaType"
+                  @showModal="showModal"
+                ></ControlServices>
+              </div>
             </div>
           </div>
 
@@ -2171,12 +2194,33 @@ export default {
 
 
         <!-- Step 3 -->
-
         <TheBlock
           icon="step_1"
           header="KOSTEN"
         >
 
+          <template #header-aside>
+            <div class="kv-block-info__action">
+              <span>Изменить отображение</span>
+              <svg
+                class="kv-kv-block-info__icon kv-kv-block-info__icon_card"
+                :class="{'active': steps[1].priceMode === 'cards'}"
+                width="20" height="20"
+                @click="steps[1].priceMode ='cards'"
+              >
+                <use href="#kv-price-cards"></use>
+              </svg>
+
+
+              <svg class="kv-kv-block-info__icon kv-kv-block-info__icon_table"
+                   :class="{'active': steps[1].priceMode === 'table'}"
+                   width="20" height="20"
+                   @click="steps[1].priceMode = 'table'"
+              >
+                <use href="#kv-price-table"></use>
+              </svg>
+            </div>
+          </template>
 
           <div class="kv-staying">
             <!-- text -->
@@ -2255,7 +2299,23 @@ export default {
             :selected = "delivery.type"
             @change="delivery.type = $event"
           ></ControlDeliveryType>
+<!--
+          <ControlDeliveryAddress
+            :addressingCountries="addressingCountries"
+            :pickupPoints="pickupPoints"
+            :deliveryDefault="delivery"
+            :isDeliveryByEmail="calculate.deliveryMedia === 'digital'"
 
+            @active="loadStep5Data"
+            @isValid="steps[4].isValid = $event"
+            @update="setCustomerDelivery"
+            @postalReset="postalReset"
+            @showModal="showModal"
+            @scroll-to="scrollTo"
+            ref="step5"
+
+          ></ControlDeliveryAddress>
+-->
           <ControlPostal
             :postalServices="mockData.postalServices"
             :selectedPostalService="selectedPostalService.id"
@@ -2265,6 +2325,27 @@ export default {
           ></ControlPostal>
           {{ selectedPostalService }}
         </TheBlock>
+
+
+
+<!--        <ReviewTotal-->
+<!--          :data="{-->
+<!--                  tourists: tourists,-->
+<!--                  calculate: this.calculate,-->
+<!--               }"-->
+<!--          @setStep="setStep"-->
+<!--        >-->
+
+<!--        </ReviewTotal>-->
+
+
+        <div class="kv-footer-buttons">
+          <button class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen">Buchen</button>
+          <button class="kv-button kv-footer-buttons__button kv-footer-buttons__angebot">Angebot</button>
+        </div>
+
+
+
   <div>
 
 </div>

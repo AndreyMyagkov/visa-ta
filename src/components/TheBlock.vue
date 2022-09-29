@@ -1,5 +1,9 @@
 <template>
-  <div class="kv-block">
+  <div class="kv-block"
+       :class="{'kv-is-hover': isHover}"
+       @mouseover="isHover = true"
+       @mouseleave="isHover = false"
+  >
     <div class="kv-block__header">
       <div class="kv-content__header">
         <div class="kv-content__icon">
@@ -7,6 +11,8 @@
         </div>
 
         <div class="kv-content__title">{{header}}</div>
+
+        <slot name="header-aside"></slot>
       </div>
     </div>
     <div class="kv-block__content">
@@ -27,6 +33,11 @@ export default {
     "header": {
       "type": String
     },
+  },
+  data() {
+    return {
+      isHover: true
+    }
   }
 
 }
@@ -41,6 +52,7 @@ export default {
   }
   .kv-block__header {
     padding-bottom: 20px;
+
   }
   .kv-block__content {
 

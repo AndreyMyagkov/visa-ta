@@ -2,13 +2,12 @@
 
   <div class="kv-row">
     <div class="kv-col-12 kv-col-md-6">
-      <div id="kv-participants-add" class="kv-add"><svg><use href="#kv-icons_plus"></use></svg>
+      <div id="kv-participants-add" class="kv-add">
+        <svg><use href="#kv-icons_plus"></use></svg>
         HINZUFÜGEN
       </div>
-    </div>
 
-    <div class="kv-col-12 kv-col-md-6">
-
+      <div class="kv-nationality-control">
         <div class="kv-select">
           <div class="kv-select__input kv-select_hide-arrow">
             <v-select
@@ -24,28 +23,15 @@
               <use href="#kv-icons_select"></use>
             </svg>
           </div>
-
-
+        </div>
+        <PopularList :list="popular" @change="change" />
       </div>
-      <PopularList :list="popular" @change="change" />
+
+
     </div>
+
   </div>
 
-  <!-- selects -->
-  <div class="kv-processing__row">
-    <div class="kv-processing__item">
-      <div class="kv-processing__item-wr">
-        <!--        <div class="kv-processing__label">-->
-        <!--          {{ $lng("step2.nationalitiesLabel") }}-->
-        <!--        </div>-->
-
-
-
-
-      </div>
-    </div>
-  </div>
-  <!-- /selects -->
 </template>
 
 <script>

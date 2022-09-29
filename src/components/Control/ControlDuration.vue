@@ -30,9 +30,6 @@
     </slide>
 
     <template #addons>
-      <div class="kv-slider-navigation">
-        <navigation/>
-      </div>
       <div class="kv-slider-pagination">
         <pagination/>
       </div>
@@ -95,6 +92,7 @@ export default {
 .kv-app .kv-staying-chb {
   width: 100%;
   justify-content: space-between;
+  border: solid 1px rgba(0, 179, 212, 0.5);
 }
 .kv-app .kv-staying .kv-staying__item {
   flex: 0 0 auto;
@@ -104,4 +102,5 @@ export default {
   align-items: center;
   width: 100%;
 }
+
 </style>

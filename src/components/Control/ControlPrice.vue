@@ -117,6 +117,22 @@
            v-html="prices.stateDescription"
       ></div>
 
+      <!-- Calc block info-->
+      <div class="kv-calc-block__info"  v-if="setup.duration.name  && prices.state === 0">
+
+        <div class="kv-calc-info">
+
+          <div class="kv-calc-info__icon">
+            <svg><use href="#kv-icons_surface"></use></svg>
+          </div>
+
+          <div class="kv-calc-info__text kv-user-text" v-html="$lng('step2.included')"></div>
+
+        </div>
+      </div>
+      <!-- /Calc bloc info-->
+
+
     </div>
 
 
