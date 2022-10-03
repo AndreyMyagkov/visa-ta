@@ -46,15 +46,20 @@ import mockPrices from "@/mock/prices";
 
 import mockServiceDetails from "@/mock/serviceDetails";
 
-import produckDetails from "@/mock/produckDetails";
+import productDetails from "@/mock/productDetails";
+
+import pickupPoints from "@/mock/pickupPoints";
+
 import ControlDeliveryAddress from "@/components/Control/ControlDeliveryAddress.vue";
 import ReviewTotal from "@/components/ReviewTotal.vue";
+import ControlPickupPoints from "@/components/Control/ControlPickupPoints.vue";
 
 
 
 export default {
   name: "App",
   components: {
+    ControlPickupPoints,
     ReviewTotal,
     ControlDeliveryAddress,
     StatusBarInfo,
@@ -212,7 +217,7 @@ export default {
       serviceDetails: mockServiceDetails, //{},
       prices: mockPrices, //{},
       addressingCountries: [],
-      pickupPoints: [],
+      pickupPoints: pickupPoints.points, //[],
       //postalServices: [],
       paymentMethods: [],
 
@@ -221,7 +226,7 @@ export default {
       //   servedResidenceRegions: null,
       //   discounts: null,
       // },
-      productDetails: produckDetails.product,
+      productDetails: productDetails.product,
 
       serviceGroupsPrepared: [],
 
@@ -1642,6 +1647,10 @@ export default {
     },
 
     /* Step 6 */
+    setBranch(data) {
+      this.delivery.branch = data;
+      this.postalReset();
+    },
     setCustomerDelivery(data) {
       //data = Object.assign({}, data);
       let changePostalData = false;
@@ -2067,6 +2076,7 @@ export default {
 
     // Грузим справочник стран
     this.loadCountries();
+    this.loadAddressingCountries();
 
     // Грузим справочник гражданств
     this.loadNationalities();
@@ -2112,14 +2122,14 @@ export default {
           icon="step_1"
           header="VISA-AUSWAHL"
         >
-          <template #header-aside>
+          <template #header-aside v-if="selectedService.id">
             <div class="kv-block-info__action" @click="steps[0].isOpen = !steps[0].isOpen">
               <span>Edit</span>
               <svg class="kv-kv-block-info__icon kv-kv-block-info__down" width="10" height="9"><use href="#kv-arrow-down"></use></svg>
             </div>
           </template>
 
-          <div class="kv-block1-info" v-if="!steps[0].isOpen">
+          <div class="kv-block1-info" v-if="!steps[0].isOpen && selectedService.id">
             <div class="kv-block1-info__info">
               <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
               {{ selectedService.name }}</div>
@@ -2299,7 +2309,12 @@ export default {
             :selected = "delivery.type"
             @change="delivery.type = $event"
           ></ControlDeliveryType>
-<!--
+
+          <div class="kv-alert kv-alert_center" v-if="calculate.deliveryMedia === 'digital'">
+            {{ $lng('step5.deliveryByEmail') }}
+          </div>
+
+
           <ControlDeliveryAddress
             :addressingCountries="addressingCountries"
             :pickupPoints="pickupPoints"
@@ -2313,17 +2328,30 @@ export default {
             @showModal="showModal"
             @scroll-to="scrollTo"
             ref="step5"
+            v-if="delivery.type===2"
 
           ></ControlDeliveryAddress>
--->
+
           <ControlPostal
             :postalServices="mockData.postalServices"
-            :selectedPostalService="selectedPostalService.id"
+            :selected="selectedPostalService"
             @change="postalChange"
             @showModal="showModal"
             ref="step6"
+            v-if="delivery.type===2"
           ></ControlPostal>
           {{ selectedPostalService }}
+
+
+
+          <ControlPickupPoints
+            :pickupPoints="pickupPoints"
+            :selected="delivery.branch"
+            @change="setBranch"
+            v-if="delivery.type===3"
+          ></ControlPickupPoints>
+
+          {{delivery.branch}}
         </TheBlock>
 
 

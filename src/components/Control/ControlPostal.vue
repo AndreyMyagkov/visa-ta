@@ -1,48 +1,23 @@
 <template>
-  <div class="kv-content__body">
 
-    <!-- for desktop 2 columns-->
-    <form class="kv-form kv-step6-postal_desktop">
-      <div class="kv-row" v-for="(row, i) in postalServicesPrepared" :key="i">
+  <div class="kv-form">
+    <div class="kv-row">
+      <div class="kv-col-12 kv-col-md-6 kv-py-10"
+           :class="{
+                      'kv-form__item_border': item.id === selected.id,
+                      'kv-form__item_selected': item.id === selected.id,
+                      'kv-form__item_error': error
+                }"
+           v-for="(item, i) in postalServices" :key="i">
 
-        <div class="kv-form__item-wrap kv-form__col_half"  v-for="item in row" :key="item.id">
-          <div class="kv-form__item kv-form__item_chb kv-form__item_light kv_height-100"
-               :class="{
-              'kv-form__item_error': error,
-              'kv-form__item_selected': item.id === postalService
-            }"
-          >
-            <label class="kv-form-radio" :id="`kv-postal__${item.id}`">
-              <input type="radio" name="branch" :value="item.id" v-model="postalService" @change="postalChange(item)">
-              <span class="kv-form-radio__mark">
-                <svg><use href="#kv-icons_form_radio"></use></svg>
-              </span>
-              <span>
-                <div class="kv-form-radio__title">{{item.name}}</div>
-                <div class="kv-form-radio__text" v-html="item.description"></div>
-            </span>
-            </label>
-            <div class="kv-form__badge">
-              <div class="kv-price">
-                {{item.price}}
-                <span class="kv-price__currency">€</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="kv-form__item kv-form__item_chb kv_height-100 kv-form__item-branch">
+          <label class="kv-form-radio"
 
-      </div>
-    </form>
+                 :id="`kv-postal__${item.id}`">
 
-    <!-- for mobile-->
-    <form class="kv-form kv-step6-postal_mobile">
-      <div class="kv-row kv-form__item-wrap" v-for="(item, i) in postalServices" :key="`mobile-${i}`">
-
-        <div class="kv-form__item kv-form__item_chb kv-form__item_light kv_height-100">
-          <label class="kv-form-radio">
-            <input type="radio" name="branch" :value="item.id" v-model="postalServiceMobile" @change="postalChange(item)">
+            <input type="radio" name="postal" :checked="item.id === selected.id"  :value="item.id"  @change="postalChange(item)" :id="`kv-branch__${item.id}`">
             <span class="kv-form-radio__mark">
-                <svg><use href="#kv-icons_form_radio"></use></svg>
+                  <svg><use href="#kv-icons_form_radio"></use></svg>
               </span>
             <span>
                 <div class="kv-form-radio__title">{{item.name}}</div>
@@ -57,14 +32,15 @@
           </div>
         </div>
 
-      </div>
-    </form>
 
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
-import {arrayToCols} from "@/helpers/array";
+
 
 export default {
   name: "ControlPostal",
@@ -73,7 +49,7 @@ export default {
       type: Array,
       required: true
     },
-    selectedPostalService: {
+    selected: {
     },
 
   },
@@ -87,7 +63,6 @@ export default {
     postalChange(item) {
       this.error = false;
       this.$emit('change', item);
-      this.$emit('stepDataChange', 6);
     },
     checkForm(){
       if (this.selectedPostalService === null) {
@@ -96,32 +71,7 @@ export default {
       }
     },
   },
-  computed: {
-    postalServicesPrepared() {
-      return arrayToCols(this.postalServices, 2)
-    },
-    postalService: {
-      get () {
-        return this.selectedPostalService
-      },
-      set() {
 
-      }
-
-    },
-    postalServiceMobile: {
-      get () {
-        return this.selectedPostalService
-      },
-      set() {
-
-      }
-
-    },
-  },
-  mounted() {
-
-  }
 }
 </script>
 
@@ -133,7 +83,7 @@ export default {
     background-color: #30C54B;
   }
   .kv-form__item_selected  .kv-form-radio {
-    border: solid 2px #30C54B;
+
   }
 
 </style>

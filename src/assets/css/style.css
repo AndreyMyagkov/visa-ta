@@ -42,7 +42,12 @@
     --blue_bdv_50: rgba(0, 179, 212, 0.5);
     --background-green_bdv: #EBFAED;
 }
-
+/*.kv-app, .kv-app * {*/
+/*  all: revert;*/
+/*}*/
+.kv-app * {
+  box-sizing: border-box;
+}
 .kv-app,
 .kv-app * {
     font-family: var(--fnt-main);
@@ -473,18 +478,12 @@
 }
 
 .kv-app .kv-row {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
 .kv-app .kv-row_rev {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap-reverse;
     flex-wrap: wrap-reverse;
 }
 
@@ -676,24 +675,19 @@
 }
 
 .kv-app .kv-form__item {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 0%;
     flex: 1 1 0%;
     /* padding: 7px 0px; */
     padding: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
     align-items: stretch;
     background-color: #fff;
     position: relative;
     overflow: visible;
-    border-radius: var(--radius);
-    min-height: var(--height);
+    min-height: 60px;
     position: relative;
     max-width: 100%;
+    border: 1px solid rgba(0, 179, 212, 0.5);
+    border-radius: 6px;
 }
 
 
@@ -706,7 +700,7 @@
     font-size: 18px;
     line-height: 25px;
     color: var(--c-second_dark);
-    padding: 9px 20px 0px;
+    padding: 18px 20px 0px;
 }
 .kv-app .kv-form__item > input[type='date'] {
     padding-top: 18px;
@@ -901,17 +895,16 @@
     width: 100%;
 }
 .kv-form__sel-custom .vs__selected-options {
-    padding-left: 13px;
+    padding-left: 20px;
 }
 
 .kv-app .kv-form__item .v-select {
     height: 100%;
-    padding: 0 0 0 5px;
-
 }
 .kv-form__sel-custom .vs__dropdown-toggle {
     height: 100%;
     cursor: default;
+  border: none;
 }
 .kv-form__sel-custom .vs__dropdown-toggle .vs__selected {
     margin: 18px 0 0;
@@ -931,8 +924,7 @@
 /* /Vue Select */
 
 .kv-app .kv-form__item_error {
-    -webkit-box-shadow: 0 0 0 1px var(--c-error);
-    box-shadow: 0 0 0 1px var(--c-error);
+    border-color: var(--c-error);
 }
 
 .kv-app .kv-form__item_light {
@@ -989,13 +981,14 @@
     border: 0px solid transparent;
 }
 
-.kv-app .kv-form__item_border {
-    -webkit-box-shadow: 0 0 0 1px var(--c-success);
-    box-shadow: 0 0 0 1px var(--c-success);
+.kv-app .kv-form__item_border .kv-form-radio {
+    box-shadow: 0 0 0 2px var(--c-success);
+  background-color: rgba(235, 250, 237, 1);
 }
 
 .kv-app .kv-form__item_border .kv-form__badge {
-    background-color: var(--c-success);
+  background-color: var(--c-success);
+  box-shadow: 0 0 0 2px var(--c-success);
 }
 
 .kv-app .kv-form__sel {
@@ -1506,9 +1499,13 @@
     -webkit-box-flex: 1;
     -ms-flex: 1 1 0%;
     flex: 1 1 0%;
-  border: 1px solid rgba(0, 179, 212, 0.5);
+  box-shadow: 0 0 0 1px rgba(0, 179, 212, 0.5);
   border-right: none;
   border-radius: 6px 0 0 6px;
+  height: 100%;
+}
+.kv-app .kv-form__badge {
+  box-shadow: 0 0 0 1px rgba(0, 179, 212, 0.5);
 }
 
 .kv-app .kv-form-radio,
@@ -3541,6 +3538,7 @@
     text-transform: uppercase;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 42px;
 }
 
 .kv-app .kv-add,
@@ -5734,7 +5732,7 @@
 .kv-row {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: normal;
   flex-wrap: wrap;
   --gutter: 10px;
   margin-left: calc(-1 * var(--gutter));
@@ -5815,7 +5813,10 @@
 .kv-mb-20 {
   margin-bottom: 20px;
 }
-
+.kv-py-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 
 .kv-control-country {
@@ -5911,6 +5912,6 @@
 
 .kv-app .kv-kv-block-info__icon,
 .kv-app .kv-kv-block-info__icon svg{
-  width: 20px !important;
-  height: 20px !important;
+  /*width: 20px;*/
+  /*height: 20px;*/
 }
