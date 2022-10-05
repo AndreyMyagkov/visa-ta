@@ -27,7 +27,7 @@ export default {
    display: flex;
    align-items: center;
    gap: 10px;
-   padding: 10px;
+   padding: 9px;
    background-color: #fff;
    border: solid 1px var(--color);
    border-radius: 6px;

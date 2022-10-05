@@ -88,52 +88,6 @@ export default {
     return {
       mockData: {
         postalServices: mockPostalServices,
-        durations: [
-          {
-            "index": 0,
-            "name": "30 Tage",
-            "nameHTML": "<p>bis zu <b>30</b> Tage</p>",
-            "description": "<p>Туристическая виза срок пребывания <b>до 30 дней</b>, возможен только однократный визит</p>",
-            "multiplicities": [
-              "1"
-            ]
-          },
-          {
-            "index": 1,
-            "name": "90 Tage",
-            "nameHTML": "<p>bis zu <b>90</b> Tage</p>",
-            "description": "<p>Туристическая виза срок пребывания <b>до 60 дней</b>, возможен одно-/двукратный визит</p>",
-            "multiplicities": [
-              "1",
-              "2"
-            ]
-          },
-          {
-            "index": 2,
-            "name": "180 Tage",
-            "nameHTML": "<p>bis zu <b>180</b> Tage</p>",
-            "description": "<p>Туристическая виза срок пребывания <b>до 180 дней</b>, возможен одно-/дву-/трехкратный визит</p>",
-            "multiplicities": [
-              "1",
-              "2",
-              "3"
-            ]
-          },
-          {
-            "index": 3,
-            "name": "1 Jahr",
-            "nameHTML": "<p>bis zu <b>1</b> Jahr</p>",
-            "description": "<p>Туристическая виза срок пребывания <b>до 365 дней</b>, возможен многократный визит</p>",
-            "multiplicities": [
-              "1",
-              "2",
-              "3",
-              "m"
-            ]
-          }
-
-        ],
-
       },
 
       uniqueKey: Date.now(),
@@ -211,6 +165,7 @@ export default {
       // Справочники
       listCountries: [], // Страны
       listNationalities: [], // Гражданства
+      listPopularNationalities: [], // Популярные гражданства
 
       services: [],
       serviceGroups: [],
@@ -275,6 +230,10 @@ export default {
   },
 
   methods: {
+    /**
+     * Добавляет группу туристов
+     * @param data
+     */
     addTouristsGroup(data) {
       this.touristGroups.push({
         nationality: data.nationality,
@@ -282,15 +241,25 @@ export default {
       });
     },
     changeTouristsGroup(data) {
-      this.touristGroups
-          .find(_ => _.nationality.codeA2 === data.nationality.codeA2)
-          .quantity = data.quantity
+      // this.touristGroups
+      //     .find(_ => _.nationality.codeA2 === data.nationality.codeA2)
+      //     .quantity = data.quantity
+      this.touristGroups[data.index].quantity = data.quantity;
     },
     removeTouristsGroup(codeA2) {
       const index = this.touristGroups
           .findIndex(_ => _.nationality.codeA2 === codeA2);
       console.log('index', index);
       this.touristGroups.splice(index, 1);
+    },
+    /**
+     * Загружает прайсы при обновлении групп туристов
+     * Для версии 1 делаем для 1-й группы
+     * @returns {Promise<void>}
+     */
+    async onChangeTouristsGroup() {
+      await this.loadPrices();
+      await this.preselectSingleDuration();
     },
     /**
      * Инициирует виджет, проверяет входные данные
@@ -678,6 +647,21 @@ export default {
     },
 
     /**
+     * Устанавливает список популярных гражданств на основе конфига и
+     * справочника всех гражданств
+     */
+    setListPopularNationalities() {
+      const popular = [];
+      this.CONFIG.popularNationalities.forEach(codeA2 => {
+        const item = this.listNationalities.find(item => item.codeA2 === codeA2);
+        if (item) {
+          popular.push(item)
+        }
+      });
+      this.listPopularNationalities = popular;
+    },
+
+    /**
      * Загружает справочник стран
      */
     async loadCountries() {
@@ -718,6 +702,7 @@ export default {
         }
         this.listNationalities = nationalities.nationalities;
         this.isLoading = false;
+        this.setListPopularNationalities();
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -792,7 +777,7 @@ export default {
         } else {
           this.steps[1].allowOrder = true;
           setTimeout(() => {
-            this.$refs.step2.isSinglePrice();
+            //this.$refs.step2.isSinglePrice();
           }, 500);
         }
 
@@ -1159,14 +1144,14 @@ export default {
       }
     },
 
-    loadStep1Data() {
-      this.loadCountries();
-    },
+    // loadStep1Data() {
+    //   this.loadCountries();
+    // },
 
     async loadStep2Data() {
       this.steps[1].showModalCorrectParticipant = true;
       await this.loadServiceDetails();
-      await this.loadNationalities();
+      //await this.loadNationalities();
       await this.loadPrices();
       await this.preselectSingleDuration();
     },
@@ -1494,6 +1479,12 @@ export default {
           this.selectedServiceGroup = new constants.ServicesDefault();
         }
         // Переход к шагу 2, если выбрали тип визы
+
+        // Загружаем детали сервиса при выборе типа визы
+        this.steps[1].showModalCorrectParticipant = true;
+        this.loadServiceDetails();
+        //this.loadStep2Data();
+
         this.nextStep();
       }
 
@@ -1900,6 +1891,24 @@ export default {
   },
 
   computed: {
+    filteredListPopularNationalities() {
+      const popular = [];
+      // this.touristGroups.forEach(tourist => {
+      //   item = this.listPopularNationalities.find(item => tourist.nationality.codeA2 === item.codeA2)
+      //   if (!item) {
+      //     popular.push(tourist.nationality)
+      //   }
+      // })
+
+      this.listPopularNationalities.forEach(nationality => {
+        const item = this.touristGroups.find(item => nationality.codeA2 === item.nationality.codeA2)
+        if (!item) {
+          popular.push(nationality)
+        }
+      })
+      return popular
+      //return this.listPopularNationalities
+    },
     /**
      * Выводить модалку о сбросе параметров
      */
@@ -2179,8 +2188,8 @@ export default {
           header="STAATSBÜRGERSCHAFT"
         >
           <ControlTouristsGroup
-              :data="item"
-              v-for="item in touristGroups"
+              :data="{...item, index: index}"
+              v-for="(item, index) in touristGroups"
               :key="item"
               @change="changeTouristsGroup"
               @remove="removeTouristsGroup"
@@ -2189,6 +2198,7 @@ export default {
 
           <ControlNationality
             :nationalities="listNationalities"
+            :popular="filteredListPopularNationalities"
             :setup="{
               nationality: CONFIG.nationality,
             }"
@@ -2240,7 +2250,7 @@ export default {
             <!-- /text -->
 
             <ControlDuration
-              :list="mockData.durations"
+              :list="serviceDetails.durations"
               :selected="selectedDuration"
               @change="updateDuration"
               @showModal="showModal"
@@ -2248,10 +2258,9 @@ export default {
 
             <div class="kv-staying__info">
               <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
-              <div class="kv-staying__text">
-                <p>Туристическая виза срок пребывания <b>до 180 дней</b>, возможен одно-/дву-/трехкратный визит</p>
-              </div>
+              <div class="kv-staying__text" v-html="selectedDuration.description"></div>
             </div>
+
           </div>
           {{selectedDuration}}
 

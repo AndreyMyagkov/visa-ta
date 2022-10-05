@@ -50,6 +50,10 @@ export default {
       // eslint-disable-next-line vue/require-valid-default-prop
       default: [],
     },
+    popular: {
+      type: Array,
+      default: []
+    },
     setup: {
       type: Object,
       default: null,
@@ -58,11 +62,6 @@ export default {
   emits: ["change", "add"],
   data() {
     return {
-      popular: [
-        { codeA2: "DE", codeA3: "DEU", name: "Deutschland" },
-        { codeA2: "RU", codeA3: "RUS", name: "Russland" },
-        { codeA2: "TR", codeA3: "TUR", name: "Türkei" },
-      ],
       quantity: 1,
       nationalitiesModel: null,
     };

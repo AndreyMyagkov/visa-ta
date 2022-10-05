@@ -56,9 +56,9 @@ export default {
     // change(data) {
     //   this.$emit("change", data);
     // },
-    changeQuantity(data) {
+    changeQuantity(quantity) {
       //this.quantity = data;
-      this.$emit("change", { nationality: this.data.nationality, quantity: data });
+      this.$emit("change", { nationality: this.data.nationality, quantity: quantity, index: this.data.index });
     },
   },
   computed: {},
