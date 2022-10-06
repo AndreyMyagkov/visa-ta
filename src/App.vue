@@ -1368,28 +1368,24 @@ export default {
       this.selectedPrice = data;
       this.resetStep4();
       this.resetStep6();
+      this.loadProductDetails();
       this.sendCalculateAndValidate();
 
       // Установка национальности по умолчанию для шага 3
       // Устанавливаем, если для текущей национальности
       // Пришла цена и она успешно выбрана сейчас
-      if (
-        this.selectedPrice.price.price &&
-        this.calculate.state === 0 &&
-        this.getPriceByProductId(this.selectedPrice.price.id)
-      ) {
-        //console.log('Дефолтный при смене цены')
-        this.steps[2].defaultNationality = listNationalities.find(
-          (item) => item.codeA2 === this.CONFIG.nationality
-        );
-      }
-
-      // Если цена не доступна - не пускаем на 3-й шаг
-      // if (this.selectedPrice.price.id && this.getPriceByProductId(this.selectedPrice.price.id) === null) {
-      //   this.steps[1].allowOrder = false;
-      // } else {
-      //   this.steps[1].allowOrder = true;
+      // if (
+      //   this.selectedPrice.price.price &&
+      //   this.calculate.state === 0 &&
+      //   this.getPriceByProductId(this.selectedPrice.price.id)
+      // ) {
+      //   //console.log('Дефолтный при смене цены')
+      //   this.steps[2].defaultNationality = listNationalities.find(
+      //     (item) => item.codeA2 === this.CONFIG.nationality
+      //   );
       // }
+
+
     },
     //  ПО выбору смотреть тип. Выбирать группу или сервис и открывать шаг
     /**

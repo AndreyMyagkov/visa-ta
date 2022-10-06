@@ -175,8 +175,8 @@
           <div
             class="kv-class__item"
             :class="{
-                'kv-class__item_active': packageSelected.id === pcg.id /*&& packageShowed === pcg.id*/,
-                'kv-class__item_showed': packageShowed === pcg.id /*&& packageSelected.id !== pcg.id*/,
+                'kv-class__item_active': packageSelected.id === pcg.id,
+                'kv-class__item_showed': packageShowed === pcg.id,
                 'kv-class__item_checked': serviceSelected.indexOf(item.id) !== -1,
                 'kv-class__item_add': isIncluded(item.id, packageIndex)
               }"
@@ -192,7 +192,7 @@
             <template v-else>
 
 
-              <label class="kv-switcher kv-class__switcher" :id="`kv-btn-suppService__${item.id}`">
+              <label class="kv-switcher kv-class__switcher test1" :id="`kv-btn-suppService__${item.id}`">
                 <input class="kv-switcher__input"
                        type="checkbox"
                        name="suppService"
@@ -227,8 +227,8 @@
           >
 
 
-            <template >
-              <label class="kv-switcher kv-class__switcher" :id="`kv-btn-suppService__${item.id}`">
+
+              <label class="kv-switcher kv-class__switcher test2" :id="`kv-btn-suppService__${item.id}`">
                 <input class="kv-switcher__input"
                        type="checkbox"
                        name="suppService"
@@ -244,9 +244,9 @@
                           </svg>
                           <div class="kv-switcher__mark"></div>
                       </div>
-                    </span>
+                </span>
               </label>
-            </template>
+
 
           </div>
           <!--/ -->
@@ -327,9 +327,14 @@ export default {
   },
   data() {
     return {
-      packageSelected: {id: null }, //this.selectedServicePackage, //Object.assign({}, this.selectedServicePackage), //new constants.ServicePackage(),
-      packageShowed: null,
-      serviceSelected: [],
+      // packageSelected: {id: null }, //this.selectedServicePackage, //Object.assign({}, this.selectedServicePackage), //new constants.ServicePackage(),
+      // packageShowed: null,
+      // serviceSelected: [],
+
+      packageSelected: Object.assign({}, this.selectedServicePackage), //this.selectedServicePackage, //Object.assign({}, this.selectedServicePackage), //new constants.ServicePackage(),
+      packageShowed: this.selectedServicePackage.id,
+      serviceSelected: this.selectedSuppServices.map(_ => _.id),
+
       isTopButtonsShow_: false
     }
   },

@@ -3609,7 +3609,7 @@
     flex: 1 1 100px;
 }
 
-.kv-app .kv-service__price {
+.kv-app .kv-price.kv-service__price {
     color: #00B3D4;
 }
 
