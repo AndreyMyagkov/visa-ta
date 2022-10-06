@@ -46,7 +46,8 @@ export default {
    flex: 0 0 18px;
  }
  .kv-alert__icon {
-    fill: var(--color);
+   fill: var(--color);
+   display: block;
  }
  .kv-alert__content {
    flex: 1 1 calc(100% - 28px);

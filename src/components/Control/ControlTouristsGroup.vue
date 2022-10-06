@@ -20,8 +20,11 @@
       </div>
     </div>
     <div class="kv-col-12 kv-col-md-6">
-      <kv-alert>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+      <kv-alert
+        :type="alertType"
+        v-if="data.index === 0 && alert.state !== 0"
+      >
+        {{ alert.text }}
       </kv-alert>
     </div>
   </div>
@@ -42,6 +45,9 @@ export default {
     data: {
       type: Object,
     },
+    alert: {
+      type: Object
+    }
   },
   emits: ["change", "remove"],
   data() {
@@ -61,7 +67,19 @@ export default {
       this.$emit("change", { nationality: this.data.nationality, quantity: quantity, index: this.data.index });
     },
   },
-  computed: {},
+  computed: {
+    alertType() {
+      if (this.alert.state === -1) {
+        return "danger";
+      }
+
+      if (this.alert.state === 1) {
+        return "success";
+      }
+
+      return "info";
+    }
+  },
   mounted() {},
 };
 </script>
@@ -88,5 +106,8 @@ export default {
 }
 .kv-tg__action {
   flex: 0 0 34px;
+}
+.kv-alert {
+  min-height: 100%;
 }
 </style>

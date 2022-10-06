@@ -235,17 +235,33 @@ export default {
      * @param data
      */
     addTouristsGroup(data) {
+      // Проверка на то, что такой группы уже нет
+      if (this.touristGroups.find(item => item.nationality.codeA2 === data.nationality.codeA2)) {
+        return
+      }
       this.touristGroups.push({
         nationality: data.nationality,
         quantity: data.quantity,
       });
+      // FIXME: Загружаем цены, для версии 1 по первой национальности
+      if (this.touristGroups.length === 1) {
+        this.onChangeTouristsGroup();
+      }
     },
-    changeTouristsGroup(data) {
+    /**
+     * Изменение кол-ва в группе туристов
+     * @param data
+     */
+    changeTouristsGroupCount(data) {
       // this.touristGroups
       //     .find(_ => _.nationality.codeA2 === data.nationality.codeA2)
       //     .quantity = data.quantity
       this.touristGroups[data.index].quantity = data.quantity;
     },
+    /**
+     * Удаление группы туристов
+     * @param codeA2
+     */
     removeTouristsGroup(codeA2) {
       const index = this.touristGroups
           .findIndex(_ => _.nationality.codeA2 === codeA2);
@@ -751,7 +767,7 @@ export default {
       try {
         this.isLoading = true;
         let response = await fetch(
-          `${this.CONFIG.API_URL}getCSPrices?clientId=${this.CONFIG.clientId}&serviceId=${this.selectedService.id}&nationalityA2=${this.CONFIG.nationality}&residenceCode=${this.CONFIG.residenceRegions}&withDetails=false`
+          `${this.CONFIG.API_URL}getCSPrices?clientId=${this.CONFIG.clientId}&serviceId=${this.selectedService.id}&nationalityA2=${this.touristGroups[0].nationality.codeA2}&residenceCode=${this.CONFIG.residenceRegions}&withDetails=false`
         );
         let prices = await response.json();
         if (response.status >= 400 && response.status < 600) {
@@ -2189,9 +2205,13 @@ export default {
         >
           <ControlTouristsGroup
               :data="{...item, index: index}"
+              :alert="{
+                state: prices?.state || 0,
+                text: prices?.stateDescription || ''
+              }"
               v-for="(item, index) in touristGroups"
               :key="item"
-              @change="changeTouristsGroup"
+              @change="changeTouristsGroupCount"
               @remove="removeTouristsGroup"
           ></ControlTouristsGroup>
 
