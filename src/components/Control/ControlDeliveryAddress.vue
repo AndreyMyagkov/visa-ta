@@ -5,8 +5,8 @@
         <div class="kv-form__item"
              ref="addressingCountries2"
              :class="{
-                      /*'kv-form__item_error': $v.delivery.addressingCountry.$error,
-                      'kv_is-focused': $v.delivery.addressingCountry.$model.codeA3 !== null,*/
+                      /*'kv-form__item_error': $v.delivery.addressingCountry.$error,*/
+                      'kv_is-focused': v$.delivery.addressingCountry.$model.codeA3 !== null,
                    }">
           <div class="kv-form__sel-custom">
             <v-select
@@ -72,10 +72,6 @@ export default {
       type: Array,
       required: true
     },
-    pickupPoints: {
-      type: Array,
-      required: true
-    },
 
     deliveryDefault: {
       type: Object,
@@ -130,7 +126,6 @@ export default {
         delivery: this.delivery
       });
 
-      this.$emit('stepDataChange', 5);
 
       const deliveryIsValid =  !this.v$.delivery.$invalid;
 

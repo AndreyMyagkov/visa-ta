@@ -86,10 +86,6 @@ export default {
   },
   data: () => {
     return {
-      mockData: {
-        postalServices: mockPostalServices,
-      },
-
       uniqueKey: Date.now(),
       isMobile: false,
       isModalShow: false,
@@ -173,7 +169,7 @@ export default {
       prices: mockPrices, //{},
       addressingCountries: [],
       pickupPoints: pickupPoints.points, //[],
-      //postalServices: [],
+      postalServices: [],
       paymentMethods: [],
 
       // productDetails: {
@@ -1102,6 +1098,12 @@ export default {
         }
         this.pickupPoints = pickupPoints.points;
         this.isLoading = false;
+
+        // Выбор единственного филиала
+        if (this.pickupPoints.length === 1 ) {
+          this.delivery.branch = this.pickupPoints[0];
+        }
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -1114,8 +1116,14 @@ export default {
       //console.log('Загрузка почтовых сервисов');
       const headers = new Headers();
       headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-      const postalData = this.getPostalData(this.customer, this.delivery);
+      console.log(this.delivery);
+      const postalData = {
+        zip: this.delivery.zip,
+        city: this.delivery.city,
+        countryA3: this.delivery.addressingCountry.codeA3,
+      };
+      console.log(postalData);
+      console.log(network.toFormUrlEncoded(postalData));
       const requestOptions = {
         method: "POST",
         headers: headers,
@@ -1655,35 +1663,40 @@ export default {
       this.postalReset();
     },
     setCustomerDelivery(data) {
+
       //data = Object.assign({}, data);
-      let changePostalData = false;
+      //let changePostalData = false;
       // Сброс почтовых сервисов и калькуляция:
       // если выбрали самовывоз
       // если поменялся фактический адрес доставки и он заполнен полностью
-      if (data.delivery.type == 3) {
-        changePostalData = true;
-      }
+      // if (data.delivery.type == 3) {
+      //   changePostalData = true;
+      // }
+      //
+      // const postalDataNew = this.getPostalData(data.customer, data.delivery);
+      // const postalDataOld = this.getPostalData(this.customer, this.delivery);
+      // if (JSON.stringify(postalDataNew) !== JSON.stringify(postalDataOld)) {
+      //   changePostalData = true;
+      // }
 
-      const postalDataNew = this.getPostalData(data.customer, data.delivery);
-      const postalDataOld = this.getPostalData(this.customer, this.delivery);
-      if (JSON.stringify(postalDataNew) !== JSON.stringify(postalDataOld)) {
-        changePostalData = true;
-      }
-
-      this.customer = Object.assign({}, data.customer);
+      //this.customer = Object.assign({}, data.customer);
       this.delivery = Object.assign({}, data.delivery);
-      console.log(changePostalData);
-      if (changePostalData) {
-        if (
-          postalDataNew !== null /*&& this.selectedPostalService.id*/ ||
-          data.delivery.type == 3
-        ) {
-          this.preselectSinglePickupPoints();
-          this.resetStep6(true);
-        } else {
-          this.resetStep6();
-        }
+
+      if (data.delivery.addressingCountry.codeA3 !== null) {
+        this.loadPostalServices();
       }
+
+      // if (changePostalData) {
+      //   if (
+      //     postalDataNew !== null  ||
+      //     data.delivery.type == 3
+      //   ) {
+      //     this.preselectSinglePickupPoints();
+      //     this.resetStep6(true);
+      //   } else {
+      //     this.resetStep6();
+      //   }
+      // }
     },
 
     /**
@@ -2097,10 +2110,15 @@ export default {
 
     // Грузим справочник стран
     this.loadCountries();
-    this.loadAddressingCountries();
 
     // Грузим справочник гражданств
     this.loadNationalities();
+    // Справочник стран доставки
+    this.loadAddressingCountries();
+
+    // Справочник филиалов офиса
+    this.loadPickupPoints();
+
   },
 };
 </script>
@@ -2342,11 +2360,9 @@ export default {
 
           <ControlDeliveryAddress
             :addressingCountries="addressingCountries"
-            :pickupPoints="pickupPoints"
             :deliveryDefault="delivery"
             :isDeliveryByEmail="calculate.deliveryMedia === 'digital'"
 
-            @active="loadStep5Data"
             @isValid="steps[4].isValid = $event"
             @update="setCustomerDelivery"
             @postalReset="postalReset"
@@ -2358,7 +2374,7 @@ export default {
           ></ControlDeliveryAddress>
 
           <ControlPostal
-            :postalServices="mockData.postalServices"
+            :postalServices="postalServices"
             :selected="selectedPostalService"
             @change="postalChange"
             @showModal="showModal"
