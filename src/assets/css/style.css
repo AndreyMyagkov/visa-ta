@@ -48,6 +48,7 @@
 .kv-app * {
   box-sizing: border-box;
 }
+
 .kv-app,
 .kv-app * {
     font-family: var(--fnt-main);
@@ -154,7 +155,7 @@
 
     counter-increment: none;
     counter-reset: none;
-    cursor: auto;
+    /*cursor: auto;*/
     direction: ltr;
     empty-cells: show;
     float: none;
@@ -253,6 +254,7 @@
     color: var(--dark-grey_bdv);
 
 }
+
 /* git merge - */
 .vld-overlay svg g g {
     transform: translate(1px, 1px) !important;
