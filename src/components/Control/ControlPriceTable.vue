@@ -24,7 +24,7 @@
         <div class="kv-ptable-multiplicity">
           <div
             class="kv-ptable-multiplicity__item"
-            :class="{'kv-selected': false}"
+            :class="{'kv-selected': item.index === setup.duration.index && mult === setup.price.price.m}"
             v-for="mult in item.multiplicities"
             :key="mult">
             {{ mult }}-malige
@@ -39,7 +39,9 @@
     <div class="kv-ptable-right">
       <div class="kv-ptable-col" v-for="(item, pd) in [...serviceDetails.processDurations].reverse()" :key="pd">
         <!-- header -->
-        <div class="kv-ptable-processing kv-ptable-processing_selected">
+        <div class="kv-ptable-processing"
+            :class="{'kv-ptable-processing_selected': item.hours === setup.price.info.hours}"
+        >
           <div class="kv-ptable-processing__title">{{ $lng('step2.processingDuration') }}</div>
           <div class="kv-ptable-processing__value">{{ item.quantity }}</div>
           <div class="kv-ptable-processing__label">{{ $lng('step2.dimension')[item.dimension] }}</div>
@@ -50,9 +52,35 @@
         <div class="kv-ptable-data" v-for="(data, d) in priceTable[pd].prices" :key="d">
 
 
-          <div class="kv-ptable-data__item"  v-for="(td, m) in data" :key="m">
-            <label class="kv-ptable-data__radio" :id="`kv-ptable-data__${td.id}`" v-if="td.price">
-              <input type="radio" name="ptable" :value="td.id" class="kv-ptable-data__input">
+          <div class="kv-ptable-data__item"
+               :class="{
+                'kv-ptable-data_selected': td.id === setup.price.price.id
+                 || item.hours === setup.price.info.hours
+                 || (d === setup.duration.index && td.m === setup.price.price.m),
+                'kv-ptable-data_bordered': td.id === setup.price.price.id
+              }"
+              v-for="(td, m) in data" :key="m"
+          >
+            <label
+              class="kv-ptable-data__radio"
+              :class="{
+                'kv-ptable-data_bordered': td.id === setup.price.price.id
+              }"
+              :id="`kv-ptable-data__${td.id}`"
+              @click="setPrice({
+                price: {price: td, info: item, index: pd},
+                duration: durations[d]
+                })"
+              v-if="td.price"
+            >
+              <input
+                type="radio"
+                name="ptable"
+                :value="td.id"
+                class="kv-ptable-data__input"
+                :checked="td.id === setup.price.price.id"
+                :disabled="!td.price"
+              >
               <span class="kv-ptable-data__mark">
                 <svg width="20" height="20"><use href="#kv-icons_form_radio"></use></svg>
               </span>
@@ -70,110 +98,8 @@
     </div>
 
   </div>
-  <!--/vue -->
-
-  <!-- -->
-  <div class="kv-ptable">
-    <div class="kv-ptable-left">
-      <div class="kv-ptable-left__header">
-        <div class="kv-ptable-left__label-dur">Gültigkeits-dauer</div>
-        <div class="kv-ptable-left__label-mul">Einreise</div>
-      </div>
-
-      <div class="kv-ptable-left__item">
-        <div class="kv-ptable-duration">
-          <div class="kv-ptable-duration__value">30</div>
-          <div class="kv-ptable-duration__label">Tage</div>
-          <div class="kv-ptable-duration__info">
-            <svg class="kv-ptable-duration__icon" width="18" height="18"><use href="#kv-icons_info"></use></svg>
-          </div>
-        </div>
-        <div class="kv-ptable-multiplicity">
-          <div class="kv-ptable-multiplicity__item">
-            1-malige
-          </div>
-          <div class="kv-ptable-multiplicity__item">
-            2-malige
-          </div>
-          <div class="kv-ptable-multiplicity__item">
-            3-malige
-          </div>
-        </div>
-      </div>
-
-      <!-- item selected -->
-      <div class="kv-ptable-left__item">
-        <div class="kv-ptable-duration kv-selected">
-          <div class="kv-ptable-duration__value">180</div>
-          <div class="kv-ptable-duration__label">Tage</div>
-          <div class="kv-ptable-duration__info">
-            <svg class="kv-ptable-duration__icon" width="18" height="18"><use href="#kv-icons_info"></use></svg>
-          </div>
-        </div>
-        <div class="kv-ptable-multiplicity">
-          <div class="kv-ptable-multiplicity__item kv-selected">
-            1-malige
-          </div>
-          <div class="kv-ptable-multiplicity__item">
-            2-malige
-          </div>
-          <div class="kv-ptable-multiplicity__item">
-            3-malige
-          </div>
-        </div>
-      </div>
-      <!-- /item selected -->
-
-    </div>
 
 
-    <div class="kv-ptable-right">
-      <div class="kv-ptable-col">
-        <!-- header -->
-        <div class="kv-ptable-processing kv-ptable-processing_selected">
-          <div class="kv-ptable-processing__title">Bearbeitungszeit</div>
-          <div class="kv-ptable-processing__value">30</div>
-          <div class="kv-ptable-processing__label">Arbeitstage</div>
-        </div>
-        <!-- /header -->
-
-        <!-- data -->
-        <div class="kv-ptable-data">
-          <div class="kv-ptable-data__item"></div>
-
-          <div class="kv-ptable-data__item">
-            <label class="kv-ptable-data__radio" id="kv-ptable-data__">
-              <input type="radio" name="ptable" value="1" class="kv-ptable-data__input">
-              <span class="kv-ptable-data__mark">
-                <svg width="20" height="20"><use href="#kv-icons_form_radio"></use></svg>
-              </span>
-              <span class="kv-ptable-price">
-                <span class="kv-ptable-price__value">105</span>
-                <span class="kv-ptable-price__label">€</span>
-              </span>
-            </label>
-          </div>
-
-          <div class="kv-ptable-data__item">
-            <label class="kv-ptable-data__radio kv-ptable-data_selected kv-ptable-data_bordered" id="kv-ptable-data__">
-              <input type="radio" name="ptable" value="2" class="kv-ptable-data__input">
-              <span class="kv-ptable-data__mark">
-                <svg width="20" height="20"><use href="#kv-icons_form_radio"></use></svg>
-              </span>
-              <span class="kv-ptable-price">
-                <span class="kv-ptable-price__value">105</span>
-                <span class="kv-ptable-price__label">€</span>
-              </span>
-            </label>
-          </div>
-
-  <!--        <div class="kv-ptable-data__item"></div>-->
-        </div>
-        <!-- /data -->
-      </div>
-    </div>
-
-  </div>
 </template>
 
 <script>
@@ -193,7 +119,7 @@ export default {
       required: true
     }
   },
-  emits: ["showModal"],
+  emits: ["update:price", "update:duration", "showModal"],
   data() {
     return {
 
@@ -206,11 +132,11 @@ export default {
      */
     setPrice(data) {
       // Если цены нет
-      if (data.price.price === null) {
+      if (data.price.price.price === null) {
         return
       }
-      //this.$emit('update:duration', item);
-      this.$emit('update:price', data);
+      this.$emit('update:duration', data.duration);
+      this.$emit('update:price', data.price);
     },
 
     /**
@@ -252,22 +178,14 @@ export default {
       const tmpArr = [];
       // Цикл по длительности процесса
       for (let pd = 0; pd < this.serviceDetails.processDurations.length; pd++) {
-        console.log('pd',pd)
         const tmpArrd = [];
         // Цикл по сроку визы
 
         for (let d = 0; d < this.serviceDetails.durations.length; d++) {
-          console.log('d');
-          console.log(d);
           const tmpArrm = [];
-          //console.log('m');
-          //console.log(this.serviceDetails.durations[d].multiplicities)
           // Цикл по кратностям
           for (let m = 0; m < this.serviceDetails.durations[d].multiplicities.length; m++) {
-            console.log('m', m)
             const product = this.serviceDetails.products[d][m][pd] || [];
-            console.log('product')
-            console.log(product)
             tmpArrm.push(
               {
                 id: product,
@@ -510,7 +428,7 @@ export default {
 .kv-ptable-data_selected {
   background-color: var(--green_bdv_50);
 }
-.kv-ptable-data_selected .kv-ptable-data__mark,
+/*.kv-ptable-data_selected .kv-ptable-data__mark,*/
 .kv-ptable-data__input:checked+.kv-ptable-data__mark {
   fill: var(--green_bdv);
   stroke: var(--green_bdv);

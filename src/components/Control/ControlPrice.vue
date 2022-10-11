@@ -4,15 +4,6 @@
     <div class="kv-calc-block" v-if="serviceDetails.id">
 
 
-
-      <!-- Processing-->
-      <div class="kv-processing">
-        <div class="kv-processing__caption">
-          <div class="kv-processing__text kv-user-text" v-html="$lng('step2.processingText')"></div>
-        </div>
-      </div>
-      <!-- /Processing-->
-
       <!-- Processing days-->
       <div
           class="kv-processing-days kv-processing-days_slide-"
@@ -169,6 +160,7 @@ export default {
       required: true
     }
   },
+  emits: ["update:price", "showModal"],
   data() {
     return {
       constants,

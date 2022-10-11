@@ -53,12 +53,14 @@ import pickupPoints from "@/mock/pickupPoints";
 import ControlDeliveryAddress from "@/components/Control/ControlDeliveryAddress.vue";
 import ReviewTotal from "@/components/ReviewTotal.vue";
 import ControlPickupPoints from "@/components/Control/ControlPickupPoints.vue";
+import ControlPriceTable from "@/components/Control/ControlPriceTable.vue";
 
 
 
 export default {
   name: "App",
   components: {
+    ControlPriceTable,
     ControlPickupPoints,
     ReviewTotal,
     ControlDeliveryAddress,
@@ -2260,7 +2262,7 @@ export default {
                 class="kv-kv-block-info__icon kv-kv-block-info__icon_card"
                 :class="{'active': steps[1].priceMode === 'cards'}"
                 width="20" height="20"
-                @click="steps[1].priceMode ='cards'"
+                @click="steps[1].priceMode = 'cards'"
               >
                 <use href="#kv-price-cards"></use>
               </svg>
@@ -2288,9 +2290,10 @@ export default {
               :selected="selectedDuration"
               @change="updateDuration"
               @showModal="showModal"
+              v-if="steps[1].priceMode === 'cards'"
             ></ControlDuration>
 
-            <div class="kv-staying__info">
+            <div class="kv-staying__info" v-if="selectedDuration.description && steps[1].priceMode === 'cards'">
               <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
               <div class="kv-staying__text" v-html="selectedDuration.description"></div>
             </div>
@@ -2298,6 +2301,13 @@ export default {
           </div>
           {{selectedDuration}}
 
+          <!-- Processing-->
+          <div class="kv-processing">
+            <div class="kv-processing__caption">
+              <div class="kv-processing__text kv-user-text" v-html="$lng('step2.processingText')"></div>
+            </div>
+          </div>
+          <!-- /Processing-->
 
           <control-price
             :serviceDetails="serviceDetails"
@@ -2311,8 +2321,23 @@ export default {
 
             @update:price="updatePrice"
             @showModal="showModal"
+            v-if="steps[1].priceMode === 'cards'"
           >
           </control-price>
+
+          <control-price-table
+            :serviceDetails="serviceDetails"
+            :prices="prices"
+            :setup="{
+              duration: selectedDuration,
+              price: selectedPrice
+              }"
+
+            @update:price="updatePrice"
+            @update:duration="updateDuration"
+            @showModal="showModal"
+            v-if="steps[1].priceMode === 'table'"
+          ></control-price-table>
 
         </TheBlock>
         <!-- /Step3 -->
@@ -2396,17 +2421,17 @@ export default {
         </TheBlock>
 
 
+<!--
+        <ReviewTotal
+          :data="{
+                  tourists: tourists,
+                  calculate: this.calculate,
+               }"
+          v-if="calculate.calculation.participants.length"
+        >
 
-<!--        <ReviewTotal-->
-<!--          :data="{-->
-<!--                  tourists: tourists,-->
-<!--                  calculate: this.calculate,-->
-<!--               }"-->
-<!--          @setStep="setStep"-->
-<!--        >-->
-
-<!--        </ReviewTotal>-->
-
+        </ReviewTotal>
+-->
 
         <div class="kv-footer-buttons">
           <button class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen">Buchen</button>

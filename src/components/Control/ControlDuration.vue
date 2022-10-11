@@ -56,6 +56,7 @@ export default {
       type: Object,
     },
   },
+  emits: ["change", "showModal"],
   data() {
     return {
       error: false,
