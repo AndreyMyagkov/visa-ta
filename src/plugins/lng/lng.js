@@ -198,7 +198,7 @@ export const lng = {
             "crumb": "Buchungsauftrag",
             "header": "Buchungsauftrag",
             "countryLabel": "Выберите страну назначения:",
-            "countryPlaceholder": "Выберите",
+            "countryPlaceholder": "Выберите страну назначения",
             "serviceGrpLabel": "Выберите группу:",
             "serviceLabel": "Выберите подтип визы:",
             "confirmReset": {
@@ -218,7 +218,7 @@ export const lng = {
             "modalInfoHeader": "Информация",
             "modalDefaultInfo": "СРОК ПРЕБЫВАНИЯ",
             "nationalitiesLabel": "Гражданство:",
-            "nationalitiesPlaceholder": "Выберите",
+            "nationalitiesPlaceholder": "Выберите гражданство",
             "residenceRegionsLabel": "Место жительства:",
             "residenceRegionsPlaceholder": "Выберите",
             "processingDuration": "Bearbeitungszeit",

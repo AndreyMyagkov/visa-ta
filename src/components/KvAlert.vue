@@ -15,7 +15,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: "info"
+      default: "default"
     }
   }
 }
@@ -32,6 +32,12 @@ export default {
    border: solid 1px var(--color);
    border-radius: 6px;
    color: var(--color);
+ }
+ .kv-alert_default {
+   --color: rgba(0, 179, 212, 1);
+   background-color: transparent;
+   border: none;
+   padding: 9px 0;
  }
  .kv-alert_info {
    --color: rgba(0, 179, 212, 1);
