@@ -1,5 +1,5 @@
 <template>
-  <carousel :settings="sliderDurations" :breakpoints="breakpoints">
+  <carousel :settings="sliderDurations" :breakpoints="breakpoints" style="margin: 25px 26px 0px 26px">
     <slide
       class="story-carousel__slide"
       v-for="(item, index) in list"
@@ -97,7 +97,7 @@ export default {
 }
 .kv-app .kv-staying .kv-staying__item {
   flex: 0 0 auto;
-  padding: 10px 5px;
+  padding: 5px 5px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -32,12 +32,13 @@ export default {
 }
 
 .kv-popular__item:not(:last-child)::after {
-  content: ', ';
+  /*content: ', ';*/
 }
 
 .kv-popular__item span {
   border-bottom: dashed 1px currentColor;
   cursor: pointer;
-  font-size: 0.8em;
+  font-size: 15px;
+  line-height: 20px;
 }
 </style>

@@ -55,6 +55,8 @@ import ReviewTotal from "@/components/ReviewTotal.vue";
 import ControlPickupPoints from "@/components/Control/ControlPickupPoints.vue";
 import ControlPriceTable from "@/components/Control/ControlPriceTable.vue";
 
+import KvAlert from "@/components/KvAlert.vue";
+
 
 
 export default {
@@ -84,6 +86,7 @@ export default {
     ControlPackages,
     ControlDeliveryType,
     ControlPostal,
+    KvAlert,
 
   },
   data: () => {
@@ -2170,11 +2173,18 @@ export default {
             </div>
           </template>
 
-          <div class="kv-block1-info" v-if="!steps[0].isOpen && selectedService.id">
-            <div class="kv-block1-info__info">
-              <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
-              {{ selectedService.name }}</div>
-          </div>
+          <template v-if="!steps[0].isOpen && selectedService.id">
+            <div class="kv-block1-info">
+              <div class="kv-block1-info__info">
+                <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
+                {{ selectedService.name }}
+              </div>
+            </div>
+
+            <kv-alert type="default" v-if="selectedService.description" style="margin-top: 6px">
+              <div v-html="selectedService.description"></div>
+            </kv-alert>
+          </template>
 
           <div v-if="steps[0].isOpen">
             <ControlCountries
@@ -2281,7 +2291,8 @@ export default {
           <div class="kv-staying">
             <!-- text -->
             <div class="kv-staying__text">
-              <div class="kv-user-text"><b>{{$lng('step2.modalDefaultInfo')}}</b> <span v-html="serviceDetails.durationsInfo"></span></div>
+              <div class="kv-staying__text-label">{{$lng('step2.modalDefaultInfo')}}:</div>
+              <div class="kv-staying__text-text kv-user-text" v-html="serviceDetails.durationsInfo"></div>
             </div>
             <!-- /text -->
 
@@ -2295,11 +2306,10 @@ export default {
 
             <div class="kv-staying__info" v-if="selectedDuration.description && steps[1].priceMode === 'cards'">
               <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
-              <div class="kv-staying__text" v-html="selectedDuration.description"></div>
+              <div class="kv-staying__text-text kv-user-text" v-html="selectedDuration.description"></div>
             </div>
 
           </div>
-          {{selectedDuration}}
 
           <!-- Processing-->
           <div class="kv-processing">
@@ -2338,6 +2348,33 @@ export default {
             @showModal="showModal"
             v-if="steps[1].priceMode === 'table'"
           ></control-price-table>
+
+          <div class="kv-staying" v-if="selectedDuration.description && steps[1].priceMode === 'table'">
+            <div class="kv-staying__info" style="margin: 0">
+              <svg class="kv-staying__info-icon"><use href="#kv-icons_info"></use></svg>
+              <div class="kv-staying__text-text kv-user-text" v-html="selectedDuration.description"></div>
+            </div>
+          </div>
+
+          <div class="kv-alert kv-alert_center"
+               v-if="prices.state !== 0 && selectedDuration.index !== null"
+               v-html="prices.stateDescription"
+          ></div>
+
+          <!-- Calc block info-->
+          <div class="kv-calc-block__info"  v-if="selectedDuration.name && prices.state === 0">
+
+            <div class="kv-calc-info">
+
+              <div class="kv-calc-info__icon">
+                <svg><use href="#kv-icons_surface"></use></svg>
+              </div>
+
+              <div class="kv-calc-info__text kv-user-text" v-html="$lng('step2.included')"></div>
+
+            </div>
+          </div>
+          <!-- /Calc bloc info-->
 
         </TheBlock>
         <!-- /Step3 -->
@@ -2406,9 +2443,6 @@ export default {
             ref="step6"
             v-if="delivery.type===2"
           ></ControlPostal>
-          {{ selectedPostalService }}
-
-
 
           <ControlPickupPoints
             :pickupPoints="pickupPoints"
@@ -2417,21 +2451,17 @@ export default {
             v-if="delivery.type===3"
           ></ControlPickupPoints>
 
-          {{delivery.branch}}
         </TheBlock>
 
 
-<!--
+
         <ReviewTotal
-          :data="{
-                  tourists: tourists,
-                  calculate: this.calculate,
-               }"
+          :calculation="calculate.calculation"
+          :totalAmount="totalAmount"
           v-if="calculate.calculation.participants.length"
         >
-
         </ReviewTotal>
--->
+
 
         <div class="kv-footer-buttons">
           <button class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen">Buchen</button>
@@ -2447,74 +2477,11 @@ export default {
 
 
 
-<div style="margin-bottom: 0px"></div>
-
-
-<!--
-        <ControlTourists v-slot="scope">
-          <ControlTouristsItem
-            :nationalities="listNationalities"
-            :setup="{
-              nationality: CONFIG.nationality,
-            }"
-            @change="scope.updateNationality"
-          ></ControlTouristsItem>
-        </ControlTourists>
-        -->
-        <!-- /step 2 -->
-
-        <!--
-        <Step2
-            :serviceDetails="serviceDetails"
-            :nationalities="nationalities"
-            :prices="prices"
-
-            :setup="{
-              nationality: CONFIG.nationality,
-              residenceRegions: CONFIG.residenceRegions,
-              duration: selectedDuration,
-              price: selectedPrice,
-              redirectUrl: CONFIG.redirectUrl,
-              mode: CONFIG.mode
-            }"
-
-            @active="loadStep2Data"
-            @update:nationality="updateNationality"
-            @update:residenceRegions="updateResidenceRegions"
-            @update:duration="updateDuration"
-            @update:price="updatePrice"
-            @stepDataChange="stepDataChange"
-
-            @load:prices="loadPrices"
-            @showModal="showModal"
-            ref="step2"
-            v-if="currentStep === 2 && CONFIG.mode === 'order'"/>
-         -->
       </div>
     </div>
 
-    <loading :active="isLoading" :can-cancel="false" :is-full-page="true">
+    <loading :active="isLoading" :can-cancel="false" :is-full-page="true" :lock-scroll="true">
     </loading>
-    <!--
-    <simple-modal v-model="isModalShow" :title="modal.title" size="small">
-      <template slot="body">
-        <div v-html="modal.content" class="kv-user-text"></div>
-      </template>
-    </simple-modal>
-
-
-    <simple-modal v-model="confirm.isShow" :title="confirm.title" size="small">
-      <template slot="body">
-        <div v-html="confirm.content"></div>
-        <div v-if="confirmReset">
-          <div class="kv-step-buttons-centered kv-modal-buttons">
-            <button class="kv-step-button kv-step-button_second" @click="setResetStepDate(true)">{{ $lng('common.btnYes') }}</button>
-            <button class="kv-step-button" @click = "setResetStepDate(false)">{{ $lng('common.btnNo') }}</button>
-          </div>
-        </div>
-      </template>
-    </simple-modal>
-    -->
 
     <vue-final-modal
       v-model="isModalShow"
@@ -2559,8 +2526,5 @@ export default {
       </div>
     </vue-final-modal>
 
-    <!--<button @click="confirm.isShow = true">Open Modal</button>-->
   </div>
 </template>
-
-<style scoped></style>

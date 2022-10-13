@@ -1,7 +1,7 @@
 <template>
   <div  class="kv-content__body">
 
-    <div class="kv-calc-block" v-if="serviceDetails.id">
+    <div class="kv-calc-block" v-if="serviceDetails.id" style="margin-top: 17px;">
 
 
       <!-- Processing days-->
@@ -102,26 +102,6 @@
         </carousel>
       </div>
       <!-- /Processing days-->
-
-      <div class="kv-alert kv-alert_center"
-           v-if="prices.state !== 0 && setup.duration.index !== null"
-           v-html="prices.stateDescription"
-      ></div>
-
-      <!-- Calc block info-->
-      <div class="kv-calc-block__info"  v-if="setup.duration.name  && prices.state === 0">
-
-        <div class="kv-calc-info">
-
-          <div class="kv-calc-info__icon">
-            <svg><use href="#kv-icons_surface"></use></svg>
-          </div>
-
-          <div class="kv-calc-info__text kv-user-text" v-html="$lng('step2.included')"></div>
-
-        </div>
-      </div>
-      <!-- /Calc bloc info-->
 
 
     </div>
@@ -399,7 +379,6 @@ export default {
 
   },
   mounted() {
-    this.$emit('active');
 
     // Устранение ошибки расчета ширины слайда при сворачивании окна
     window.addEventListener('resize',  () => {

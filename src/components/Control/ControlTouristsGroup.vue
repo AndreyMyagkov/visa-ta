@@ -1,6 +1,6 @@
 <template>
   <!-- selects -->
-  <div class="kv-row kv-mb-20">
+  <div class="kv-row kv-mb-20 kv-mt-10">
     <div class="kv-col-12 kv-col-md-6">
       <div class="kv-tg">
         <div class="kv-tg__row">
