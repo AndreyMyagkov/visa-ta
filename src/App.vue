@@ -2137,6 +2137,30 @@ export default {
     // Справочник филиалов офиса
     this.loadPickupPoints();
 
+    // функция всего лишь добавляет CSS-класс, который и осуществляет анимацию
+    const scrollImations = (entries, observer) => {
+      entries.forEach((entry) => {
+        // анимируем, если элемент целиком попадает в отслеживаемую область
+        console.log(entry);
+        if(entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+          entry.target.classList.add('kv-hidden');
+        } else {
+          entry.target.classList.remove('kv-hidden');
+        }
+      });
+    }
+
+// создаём обсервер с параметрами
+    const options = {
+      threshold: 0.1,
+    };
+    // const observer = new IntersectionObserver(scrollImations, options);
+    //
+    // const boxes = document.querySelectorAll('#kv-block-1');
+    // boxes.forEach((box) => {
+    //   observer.observe(box);
+    // });
+
   },
 };
 </script>
@@ -2178,19 +2202,24 @@ export default {
         <TheBlock
           icon="step_1"
           header="VISA-AUSWAHL"
+          id="kv-block-1"
         >
           <template #header-aside v-if="selectedService.id">
-            <div class="kv-block-info__action" @click="steps[0].isOpen = !steps[0].isOpen">
+            <!--<div class="kv-block-info__action" @click="steps[0].isOpen = !steps[0].isOpen">
               <span>Edit</span>
               <svg class="kv-kv-block-info__icon kv-kv-block-info__down" width="10" height="9"><use href="#kv-arrow-down"></use></svg>
-            </div>
+            </div>-->
           </template>
 
           <template v-if="!steps[0].isOpen && selectedService.id">
-            <div class="kv-block1-info">
+            <div class="kv-block1-info"  @click="steps[0].isOpen = !steps[0].isOpen">
               <div class="kv-block1-info__info">
                 <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
                 {{ selectedService.name }}
+              </div>
+              <div class="kv-block-info__action">
+                <span>Edit</span>
+                <svg class="kv-kv-block-info__icon kv-kv-block-info__down" width="10" height="9"><use href="#kv-arrow-down"></use></svg>
               </div>
             </div>
 
@@ -2454,7 +2483,7 @@ export default {
             @change="postalChange"
             @showModal="showModal"
             ref="step6"
-            v-if="delivery.type === 2"
+            v-if="delivery.type === 2 && steps[4].isValid"
           ></ControlPostal>
 
           <ControlPickupPoints
