@@ -5938,3 +5938,7 @@
   /*width: 20px;*/
   /*height: 20px;*/
 }
+
+.kv-hidden#kv-block-1 .kv-block__content {
+  display: none;
+}

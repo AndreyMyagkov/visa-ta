@@ -40,15 +40,12 @@ import ControlPostal from "@/components/Control/ControlPostal.vue";
 
 import ControlPackages from "@/components/Control/ControlPackages.vue";
 
-import mockPostalServices from "@/mock/postalServices";
 
-import mockPrices from "@/mock/prices";
-
-import mockServiceDetails from "@/mock/serviceDetails";
-
-import productDetails from "@/mock/productDetails";
-
-import pickupPoints from "@/mock/pickupPoints";
+//import mockPrices from "@/mock/prices";
+//import mockServiceDetails from "@/mock/serviceDetails";
+//import productDetails from "@/mock/productDetails";
+//import mockPostalServices from "@/mock/postalServices";
+//import pickupPoints from "@/mock/pickupPoints";
 
 import ControlDeliveryAddress from "@/components/Control/ControlDeliveryAddress.vue";
 import ReviewTotal from "@/components/ReviewTotal.vue";
@@ -170,19 +167,21 @@ export default {
 
       services: [],
       serviceGroups: [],
-      serviceDetails: mockServiceDetails, //{},
-      prices: mockPrices, //{},
+      serviceDetails: {}, //mockServiceDetails, //{},
+      prices: {}, //mockPrices, //{},
       addressingCountries: [],
-      pickupPoints: pickupPoints.points, //[],
+      pickupPoints: [], //pickupPoints.points, //[],
       postalServices: [],
       paymentMethods: [],
 
-      // productDetails: {
-      //   id: null,
-      //   servedResidenceRegions: null,
-      //   discounts: null,
-      // },
-      productDetails: productDetails.product,
+      productDetails: {
+        id: null,
+        servedResidenceRegions: null,
+        discounts: null,
+        servicePackages: null,
+        suppServices: null
+      },
+      //productDetails: productDetails.product,
 
       serviceGroupsPrepared: [],
 
@@ -2203,6 +2202,7 @@ export default {
           icon="step_1"
           header="VISA-AUSWAHL"
           id="kv-block-1"
+          v-if="listCountries.length && services.length"
         >
           <template #header-aside v-if="selectedService.id">
             <!--<div class="kv-block-info__action" @click="steps[0].isOpen = !steps[0].isOpen">
@@ -2262,14 +2262,11 @@ export default {
         </TheBlock>
         <!-- /step 1 -->
 
-        <!-- step 1 -->
-
-
         <!-- step 2 -->
-
         <TheBlock
           icon="step_1"
           header="STAATSBÜRGERSCHAFT"
+          v-if="listNationalities.length && selectedService.id"
         >
           <ControlTouristsGroup
               :data="{...item, index: index}"
@@ -2297,7 +2294,6 @@ export default {
 
 
         </TheBlock>
-
         <!-- /Step 2 -->
 
 
@@ -2305,6 +2301,7 @@ export default {
         <TheBlock
           icon="step_1"
           header="KOSTEN"
+          v-if="serviceDetails.id && touristGroups.length"
         >
 
           <template #header-aside>
@@ -2373,7 +2370,7 @@ export default {
 
             @update:price="updatePrice"
             @showModal="showModal"
-            v-if="steps[1].priceMode === 'cards'"
+            v-if="steps[1].priceMode === 'cards' && selectedDuration.index"
           >
           </control-price>
 
@@ -2426,6 +2423,7 @@ export default {
         <TheBlock
           icon="step_1"
           header="TARIFAUSWAHL"
+          v-if="selectedPrice.price.id && productDetails.id && (productDetails.servicePackages || productDetails.suppServices)"
         >
 
           <div class="kv-packages-text kv-user-text"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s </div>
@@ -2439,17 +2437,19 @@ export default {
             @changePackage="changePackage"
             @changeSuppService="changeSuppService"
             @calculate="sendCalculateAndValidate"
+            v-if="productDetails.id"
           >
           </control-packages>
 
         </TheBlock>
-
+        <!-- /Step 4 -->
 
 
         <!-- Step 5 -->
         <TheBlock
           icon="step_1"
           header="TARIFAUSWAHL"
+          v-if="selectedPrice.price.id && productDetails.id && pickupPoints.length && addressingCountries.length"
         >
 
           <ControlDeliveryType
