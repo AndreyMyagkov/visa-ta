@@ -245,9 +245,9 @@ export default {
         quantity: data.quantity,
       });
       // FIXME: Загружаем цены, для версии 1 по первой национальности
-      if (this.touristGroups.length === 1) {
+      //if (this.touristGroups.length === 1) {
         this.onChangeTouristsGroup();
-      }
+      //}
     },
     /**
      * Изменение кол-ва в группе туристов
@@ -258,6 +258,7 @@ export default {
       //     .find(_ => _.nationality.codeA2 === data.nationality.codeA2)
       //     .quantity = data.quantity
       this.touristGroups[data.index].quantity = data.quantity;
+      this.onChangeTouristsGroup();
     },
     /**
      * Удаление группы туристов
@@ -266,8 +267,8 @@ export default {
     removeTouristsGroup(codeA2) {
       const index = this.touristGroups
           .findIndex(_ => _.nationality.codeA2 === codeA2);
-      console.log('index', index);
       this.touristGroups.splice(index, 1);
+      this.onChangeTouristsGroup();
     },
     /**
      * Загружает прайсы при обновлении групп туристов
@@ -277,6 +278,7 @@ export default {
     async onChangeTouristsGroup() {
       await this.loadPrices();
       await this.preselectSingleDuration();
+      await this.sendCalculateAndValidate();
     },
     /**
      * Инициирует виджет, проверяет входные данные
@@ -901,8 +903,8 @@ export default {
      * Адрес клиента или другой выбранный адрес. Если доставка цифровая или самовывоз - null
      * @return {Object}
      */
-    getPostalData(customer, delivery) {
-      if (!customer || !delivery) {
+    getPostalData(delivery) {
+      if (!delivery) {
         return null;
       }
       let postalData = null;
@@ -925,14 +927,8 @@ export default {
         }
         return false;
       };
-      if (delivery.type == 1 && !isEmptyPostalData(customer)) {
-        postalData = {
-          zip: customer.zip,
-          city: customer.city,
-          countryA3: customer.addressingCountry.codeA3,
-        };
-      }
-      if (delivery.type == 2 && !isEmptyPostalData(delivery)) {
+
+      if (delivery.type === 2 && !isEmptyPostalData(delivery)) {
         postalData = {
           zip: delivery.zip,
           city: delivery.city,
@@ -954,17 +950,21 @@ export default {
 
       let participants;
       // Для 3-го шага, когда уже завели участников
-      if (this.tourists.length) {
-        participants = this.tourists.map((item, i) => {
-          return {
-            nr: i + 1,
-            nationalityA2:
-              item.nationality.codeA2 ||
-              this.steps[2].defaultNationality.codeA2, // || this.CONFIG.nationality
-            residenceCode: item.residenceRegion.code, //  || this.CONFIG.residenceRegions
-            discountCode: item.discount,
-          };
-        });
+      if (this.touristGroups.length) {
+        participants = [];
+        this.touristGroups.forEach((item, i) => {
+          for(let q = 0; q < item.quantity; q++) {
+            participants.push(
+              {
+                nr: participants.length + 1,
+                nationalityA2: item.nationality.codeA2,
+                residenceCode: this.CONFIG.residenceRegions,
+                /*discountCode: null,*/
+              }
+            )
+          }
+        })
+
       } else {
         // Для шага 2, когда еще не создали туристов используем фейкового туриста
         // с национальностью и местом жительства из шага 2
@@ -2431,7 +2431,7 @@ export default {
             @showModal="showModal"
             @scroll-to="scrollTo"
             ref="step5"
-            v-if="delivery.type===2"
+            v-if="delivery.type === 2"
 
           ></ControlDeliveryAddress>
 
@@ -2441,14 +2441,14 @@ export default {
             @change="postalChange"
             @showModal="showModal"
             ref="step6"
-            v-if="delivery.type===2"
+            v-if="delivery.type === 2"
           ></ControlPostal>
 
           <ControlPickupPoints
             :pickupPoints="pickupPoints"
             :selected="delivery.branch"
             @change="setBranch"
-            v-if="delivery.type===3"
+            v-if="delivery.type === 3"
           ></ControlPickupPoints>
 
         </TheBlock>
@@ -2480,6 +2480,7 @@ export default {
       </div>
     </div>
 
+    <div style="margin-bottom: 200px"></div>
     <loading :active="isLoading" :can-cancel="false" :is-full-page="true" :lock-scroll="true">
     </loading>
 
