@@ -693,10 +693,11 @@ export default {
           `${this.CONFIG.API_URL}getCSCountries?clientId=${this.CONFIG.clientId}`
         );
         let countries = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(countries.Message);
         }
-        this.isLoading = false;
+
 
         this.listCountries = countries.countries;
         this.setDefaultCountry();
@@ -716,11 +717,12 @@ export default {
           `${this.CONFIG.API_URL}getCSNationalities?clientId=${this.CONFIG.clientId}`
         );
         let nationalities = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(nationalities.Message);
         }
+
         this.listNationalities = nationalities.nationalities;
-        this.isLoading = false;
         this.setListPopularNationalities();
       } catch (err) {
         this.isLoading = false;
@@ -738,6 +740,7 @@ export default {
           `${this.CONFIG.API_URL}getCSServiceDetails?clientId=${this.CONFIG.clientId}&serviceId=${this.selectedService.id}`
         );
         let serviceDetails = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(serviceDetails.Message);
         }
@@ -756,7 +759,7 @@ export default {
 
         this.serviceDetails = serviceDetails.service;
 
-        this.isLoading = false;
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -773,6 +776,7 @@ export default {
           `${this.CONFIG.API_URL}getCSPrices?clientId=${this.CONFIG.clientId}&serviceId=${this.selectedService.id}&nationalityA2=${this.touristGroups[0].nationality.codeA2}&residenceCode=${this.CONFIG.residenceRegions}&withDetails=false`
         );
         let prices = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(prices.Message);
         }
@@ -800,7 +804,7 @@ export default {
           }, 500);
         }
 
-        this.isLoading = false;
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -874,6 +878,7 @@ export default {
           `${this.CONFIG.API_URL}getCSProductDetails?clientId=${this.CONFIG.clientId}&productId=${this.selectedPrice.price.id}`
         );
         let productDetails = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(productDetails.Message);
         }
@@ -888,7 +893,7 @@ export default {
         */
         this.productDetails = productDetails.product;
 
-        this.isLoading = false;
+
 
         this.setResidenceRegionsRequired();
         //this.setFirstPackage();
@@ -977,7 +982,7 @@ export default {
         ];
       }
 
-      const postalData = this.getPostalData(this.customer, this.delivery);
+      const postalData = this.getPostalData(this.delivery);
 
       const requestOptions = {
         method: "POST",
@@ -1002,6 +1007,7 @@ export default {
           requestOptions
         );
         let calculate = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(calculate.Message);
         }
@@ -1060,7 +1066,7 @@ export default {
           this.steps[2].allowOrder = true;
         }
 
-        this.isLoading = false;
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -1077,11 +1083,12 @@ export default {
           `${this.CONFIG.API_URL}getAddressingCountries?clientId=${this.CONFIG.clientId}`
         );
         let countries = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(countries.Message);
         }
         this.addressingCountries = countries.countries;
-        this.isLoading = false;
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -1098,11 +1105,12 @@ export default {
           `${this.CONFIG.API_URL}getCSPickupPoints?clientId=${this.CONFIG.clientId}`
         );
         let pickupPoints = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(pickupPoints.Message);
         }
         this.pickupPoints = pickupPoints.points;
-        this.isLoading = false;
+
 
         // Выбор единственного филиала
         if (this.pickupPoints.length === 1 ) {
@@ -1142,12 +1150,13 @@ export default {
           requestOptions
         );
         let responseJSON = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(responseJSON.Message);
         }
 
         this.postalServices = responseJSON.services;
-        this.isLoading = false;
+
 
         // Сброс выбранного почтового сервиса, если его нет в доступных сервисах
         const selectedPostalServiceIndex = this.postalServices.findIndex(
@@ -1273,6 +1282,7 @@ export default {
           `${this.CONFIG.API_URL}getCSServices?clientId=${this.CONFIG.clientId}&countryA3=${selectedCountryId}`
         );
         let services = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(services.Message);
         }
@@ -1293,7 +1303,7 @@ export default {
           this.nextStep();
         }
 
-        this.isLoading = false;
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -1804,11 +1814,12 @@ export default {
           requestOptions
         );
         let responseData = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           throw new Error(responseData.Message);
         }
 
-        this.isLoading = false;
+
 
         this.CONFIG.order = responseData.orderNr;
         if (responseData.state >= 0 && responseData.orderNr) {
@@ -1853,6 +1864,7 @@ export default {
           requestOptions
         );
         let responseJSON = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           if (responseJSON.Message) {
             this.showModal(responseJSON.Message, this.$lng("common.error"));
@@ -1860,7 +1872,7 @@ export default {
           throw new Error(responseJSON.Message);
         }
 
-        this.isLoading = false;
+
         this.paymentMethods = responseJSON.paymentMethods;
       } catch (err) {
         this.isLoading = false;
@@ -1891,6 +1903,7 @@ export default {
           requestOptions
         );
         let responseJSON = await response.json();
+        this.isLoading = false;
         if (response.status >= 400 && response.status < 600) {
           if (responseJSON.Message) {
             this.showModal(responseJSON.Message, this.$lng("common.error"));
@@ -1898,7 +1911,7 @@ export default {
           throw new Error(responseJSON.Message);
         }
 
-        this.isLoading = false;
+
         if (responseJSON.state >= 0) {
           // Ставим новый статус истории, затем меняем заголовок и режим
 
