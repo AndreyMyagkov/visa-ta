@@ -2454,7 +2454,7 @@ export default {
         <!-- Step 5 -->
         <TheBlock
           icon="step_1"
-          header="TARIFAUSWAHL"
+          header="LIEFERUNG"
           v-if="selectedPrice.price.id && productDetails.id && pickupPoints.length && addressingCountries.length"
         >
 

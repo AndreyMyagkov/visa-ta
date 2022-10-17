@@ -5,8 +5,8 @@
         <div class="kv-form__item"
              ref="addressingCountries2"
              :class="{
-                      /*'kv-form__item_error': $v.delivery.addressingCountry.$error,*/
-                      'kv_is-focused': v$.delivery.addressingCountry.$model.codeA3 !== null,
+                      'kv-form__item_error': v$.delivery.addressingCountry.$error,
+                      'kv_is-focused': isFocused,
                    }">
           <div class="kv-form__sel-custom">
             <v-select
@@ -17,8 +17,8 @@
               v-model="v$.delivery.addressingCountry.$model"
               :clearable="false"
               @option:selected="$refs.addressingCountries2.classList.add('kv_is-focused');isFormCorrect()"
-              @search:focus="$refs.addressingCountries2.classList.add('kv_is-focused');"
-              @search:blur="v$.delivery.addressingCountry.$touch()"
+              @search:focus="isFocused = true; /*$refs.addressingCountries2.classList.add('kv_is-focused');*/"
+              @search:blur="addressingBlur()"
             />
             <label class="kv-form__label" for="kv-delivery-country">{{ $lng('step5.country') }}</label>
             <svg class="kv-form__sel-arrow"><use href="#kv-icons_select"></use></svg>
@@ -95,7 +95,8 @@ export default {
       delivery: Object.assign({}, this.deliveryDefault),
       error: {
         branch: false
-      }
+      },
+      isFocused: false
     }
   },
   validations()  {
@@ -120,6 +121,10 @@ export default {
 
   },
   methods: {
+    addressingBlur() {
+      this.v$.delivery.addressingCountry.$touch();
+      this.isFocused = this.v$.delivery.addressingCountry.$model.codeA3 !== null;
+    },
 
     isFormCorrect() {
       this.$emit('update', {
