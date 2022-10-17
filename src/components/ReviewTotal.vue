@@ -7,8 +7,11 @@
         <svg class="kv-review-total__icon">
           <use href="#kv-icons_user"></use>
         </svg>
+        <div class="kv-review-total__multiply">
+          <svg width="8" height="8"><use href="#kv-icons_multiply"></use></svg>
+        </div>
         <div class="kv-review-total__counter">
-          <span class="kv-review-total__cross">+</span> {{ calculation.participants.length }}
+          <!--<span class="kv-review-total__cross">+</span>--> {{ calculation.participants.length }}
         </div>
       </div>
       <div class="kv-review-total__title">{{ $lng('step7.amount') }}</div>

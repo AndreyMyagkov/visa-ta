@@ -4499,6 +4499,15 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     text-align: center;
     color: var(--c-second_dark);
     padding: 0 15px;
+  align-items: center;
+}
+.kv-review-total__multiply {
+  padding: 5px;
+}
+.kv-review-total__multiply svg {
+  fill: var(--c-second);
+  width: 8px;
+  height: 8px;
 }
 
 .kv-app .kv-review-total__icon {
