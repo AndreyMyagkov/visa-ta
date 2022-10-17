@@ -918,10 +918,10 @@ export default {
       // Проверка на не 100% заполненность адреса
       const isEmptyPostalData = (data) => {
         if (data.zip === null || data.zip.length < 3) {
-          return true;
+          //return true;
         }
         if (data.city === null || !data.city.length) {
-          return true;
+          //return true;
         }
         if (
           data.addressingCountry.codeA3 === null ||
@@ -1128,14 +1128,15 @@ export default {
       //console.log('Загрузка почтовых сервисов');
       const headers = new Headers();
       headers.append("Content-Type", "application/x-www-form-urlencoded");
-      console.log(this.delivery);
+
       const postalData = {
         zip: this.delivery.zip,
         city: this.delivery.city,
         countryA3: this.delivery.addressingCountry.codeA3,
       };
       console.log(postalData);
-      console.log(network.toFormUrlEncoded(postalData));
+      console.log(network.toFormUrlEncoded(postalData))
+
       const requestOptions = {
         method: "POST",
         headers: headers,
@@ -1163,10 +1164,11 @@ export default {
         );
         if (selectedPostalServiceIndex === -1) {
           this.selectedPostalService = new constants.PostalServiceDefault();
-          await this.sendCalculateAndValidate();
+
         }
 
         this.preselectPostalService();
+        await this.sendCalculateAndValidate();
       } catch (err) {
         this.isLoading = false;
         console.log(err);

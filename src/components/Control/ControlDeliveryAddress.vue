@@ -28,6 +28,7 @@
 
     </div>
 
+    <!--
     <div class="kv-col-12 kv-col-md-4">
       <div class="kv-form__item-wrap kv-form__col" id="kv-delivery-field-city">
         <div class="kv-form__item" :class="{ 'kv-form__item_error': v$.delivery.city.$error }">
@@ -35,21 +36,17 @@
           <label class="kv-form__label" for="kv-delivery-city">{{ $lng('step5.city') }}</label>
         </div>
       </div>
-
-
     </div>
-    <div class="kv-col-12 kv-col-md-4">
 
+    <div class="kv-col-12 kv-col-md-4">
       <div class="kv-form__item-wrap kv-form__col" id="kv-delivery-field-zip">
         <div class="kv-form__item" :class="{ 'kv-form__item_error': v$.delivery.zip.$error }">
           <input type="text" placeholder=" " id="kv-delivery-zip" name="zip2" maxlength="10" v-model.trim="v$.delivery.zip.$model"  @blur="isFormCorrect">
           <label class="kv-form__label" for="kv-delivery-zip">{{ $lng('step5.zip') }}</label>
         </div>
       </div>
-
-
     </div>
-
+-->
   </div>
 </template>
 
@@ -104,13 +101,13 @@ export default {
       delivery: {
 
         zip: {
-          required,
+         /* required,
           minLength: minLength(3),
-          maxLength: maxLength(10)
+          maxLength: maxLength(10)*/
         },
         city: {
-          required,
-          minLength: minLength(1)
+         /* required,
+          minLength: minLength(1)*/
         },
         addressingCountry: {
           isCountrySelected
