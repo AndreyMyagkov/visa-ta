@@ -1,7 +1,7 @@
 <template>
   <div class="kv-alert" :class="`kv-alert_${type}`">
     <div class="kv-alert__badge">
-      <svg class="kv-alert__icon" width="18" height="18"><use href="#kv-icons_info"></use></svg>
+      <svg class="kv-alert__icon" width="18" height="22"><use href="#kv-icons_info"></use></svg>
     </div>
     <div class="kv-alert__content">
       <slot></slot>
@@ -38,6 +38,7 @@ export default {
    background-color: transparent;
    border: none;
    padding: 9px 0;
+   align-items: flex-start;
  }
  .kv-alert_info {
    --color: rgba(0, 179, 212, 1);
