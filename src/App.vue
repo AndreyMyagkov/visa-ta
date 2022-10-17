@@ -1933,15 +1933,12 @@ export default {
   },
 
   computed: {
+    /**
+     * Список Популярных национальностей, с отфильтрованными выбранными национальностями
+     * @returns {*[]}
+     */
     filteredListPopularNationalities() {
       const popular = [];
-      // this.touristGroups.forEach(tourist => {
-      //   item = this.listPopularNationalities.find(item => tourist.nationality.codeA2 === item.codeA2)
-      //   if (!item) {
-      //     popular.push(tourist.nationality)
-      //   }
-      // })
-
       this.listPopularNationalities.forEach(nationality => {
         const item = this.touristGroups.find(item => nationality.codeA2 === item.nationality.codeA2)
         if (!item) {
@@ -1949,8 +1946,17 @@ export default {
         }
       })
       return popular
-      //return this.listPopularNationalities
     },
+    /**
+     * Список всех национальностей, с отфильтрованными выбранными национальностями
+     * @returns {*[]}
+     */
+    filteredListNationalities() {
+      return this.listNationalities.filter(nationality => {
+          return this.touristGroups.findIndex(item => nationality.codeA2 === item.nationality.codeA2) === -1
+      })
+    },
+
     /**
      * Выводить модалку о сбросе параметров
      */
@@ -2282,7 +2288,7 @@ export default {
 
 
           <ControlNationality
-            :nationalities="listNationalities"
+            :nationalities="filteredListNationalities"
             :popular="filteredListPopularNationalities"
             :setup="{
               nationality: CONFIG.nationality,
