@@ -2885,7 +2885,7 @@
 .kv-app .kv-staying .kv-staying__info-icon {
     margin-right: 10px;
     width: 18px;
-    height: 18px;
+    height: 20px;
     min-width: 18px;
     fill: var(--c-prim);
     cursor: pointer;
@@ -3725,7 +3725,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 }
 
 .kv-app .kv-class__item_checked {
-    background-color: var(--c-prim_light);
+    background-color: #EBFAED;
 }
 
 .kv-app .kv-class__item_active {
