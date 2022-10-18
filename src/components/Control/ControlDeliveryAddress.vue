@@ -6,7 +6,7 @@
              ref="addressingCountries2"
              :class="{
                       'kv-form__item_error': v$.delivery.addressingCountry.$error,
-                      'kv_is-focused': isFocused,
+                      'kv_is-focused': isFocused || deliveryDefault.addressingCountry.codeA3,
                    }">
           <div class="kv-form__sel-custom">
             <v-select

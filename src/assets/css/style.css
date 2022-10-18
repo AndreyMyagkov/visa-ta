@@ -3753,7 +3753,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-class__item_add .kv-class__caption {
     color: var(--c-success);
 }
-.kv-class__item_showed > * {
+.kv-class__item:not(.kv-class__item_active) > * {
   opacity: 0.5;
 }
 
