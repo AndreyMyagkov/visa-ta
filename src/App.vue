@@ -53,7 +53,7 @@ import ControlPickupPoints from "@/components/Control/ControlPickupPoints.vue";
 import ControlPriceTable from "@/components/Control/ControlPriceTable.vue";
 
 import KvAlert from "@/components/KvAlert.vue";
-
+import StatusBarInfoBottom from "@/components/StatusBar/StatusBarInfoBottom.vue"
 
 
 export default {
@@ -84,6 +84,7 @@ export default {
     ControlDeliveryType,
     ControlPostal,
     KvAlert,
+    StatusBarInfoBottom,
 
   },
   data: () => {
@@ -2503,6 +2504,15 @@ export default {
 
         </TheBlock>
 
+
+        <StatusBarInfoBottom
+          :selectedCountry="selectedCountry"
+          :selectedService="selectedService"
+          :selectedDuration="selectedDuration"
+          :selectedPrice="selectedPrice"
+          v-if="selectedPrice.price.id"
+        >
+        </StatusBarInfoBottom>
 
 
         <ReviewTotal
