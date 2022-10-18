@@ -183,10 +183,10 @@
             v-for="(pcg, packageIndex) in data.servicePackages" :key="packageIndex">
 
             <template v-if="isIncluded(item.id, packageIndex)">
-              <div class="kv-class__caption">{{ $lng('step4.included') }}</div>
               <svg class="kv-class__check">
                 <use href="#kv-icons_check"></use>
               </svg>
+              <div class="kv-class__caption">{{ $lng('step4.included') }}</div>
             </template>
 
             <template v-else>
