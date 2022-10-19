@@ -5980,3 +5980,11 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-hidden#kv-block-1 .kv-block__content {
   display: none;
 }
+
+.kv-hidden {
+  display: none;
+}
+
+.kv-outline {
+  outline: solid 1px red;
+}

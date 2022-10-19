@@ -39,7 +39,8 @@ export default {
     position: relative;
   }
   .kv-status-bar-bottom__item:not(:last-child):after {
-    content: '»';
+    /*content: '»';*/
+    content: '•';
     margin-left: 15px;
   }
 </style>

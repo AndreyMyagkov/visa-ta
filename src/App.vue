@@ -2150,24 +2150,28 @@ export default {
       entries.forEach((entry) => {
         // анимируем, если элемент целиком попадает в отслеживаемую область
         console.log(entry);
-        if(entry.isIntersecting && entry.intersectionRatio >= 0.1) {
-          entry.target.classList.add('kv-hidden');
+
+        if(entry.isIntersecting /*&& entry.intersectionRatio >= 0.9*/) {
+          //entry.target.classList.add('kv-hidden');
+          document.querySelector('.kv-header')?.classList.add('kv-hidden');
         } else {
-          entry.target.classList.remove('kv-hidden');
+          //entry.target.classList.remove('kv-hidden');
+          document.querySelector('.kv-header')?.classList.remove('kv-hidden');
         }
       });
     }
 
 // создаём обсервер с параметрами
     const options = {
-      threshold: 0.1,
+      threshold: 0,
     };
-    // const observer = new IntersectionObserver(scrollImations, options);
-    //
-    // const boxes = document.querySelectorAll('#kv-block-1');
-    // boxes.forEach((box) => {
-    //   observer.observe(box);
-    // });
+    const observer = new IntersectionObserver(scrollImations, options);
+
+    //const boxes = document.querySelectorAll('#kv-block-1');
+    const boxes = document.querySelectorAll('.kv-observer');
+    boxes.forEach((box) => {
+      observer.observe(box);
+    });
 
   },
 };
@@ -2510,7 +2514,8 @@ export default {
           :selectedService="selectedService"
           :selectedDuration="selectedDuration"
           :selectedPrice="selectedPrice"
-          v-if="selectedPrice.price.id"
+          v-show="selectedPrice.price.id"
+          class="kv-observer"
         >
         </StatusBarInfoBottom>
 
