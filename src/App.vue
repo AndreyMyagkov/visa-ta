@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+  function handlePlusNationalityButton() {
+    //$refs.kvblock2.$el.classList.remove('kv-is-hover')
+    document.querySelector('#kv-block-2').classList.remove('kv-is-hover')
+  }
+</script>
 
 <script>
 import * as network from "@/helpers/network";
@@ -2107,7 +2112,7 @@ export default {
   },
 
   async mounted() {
-    if (!this.initiateWidget()) {
+    if (!await this.initiateWidget()) {
       return false;
     }
 
@@ -2169,7 +2174,7 @@ export default {
      */
     // const observerNationalitiesHandler = (entries) => {
     //   entries.forEach((entry) => {
-    //     console.log(entry)
+    //     //console.log(entry)
     //     if(entry.isIntersecting && entry.intersectionRatio && entry.intersectionRatio !==1) {
     //       document.querySelector('#kv-block-2')?.classList.remove('kv-is-hover');
     //       document.querySelector('#kv-block-2')?.classList.remove('kv-outline');
@@ -2180,7 +2185,7 @@ export default {
     // }
     //
     // const observerNationalities = new IntersectionObserver(observerNationalitiesHandler, {
-    //   threshold: 0,
+    //   threshold: 0.5,
     // });
     // observerNationalities.observe(document.querySelector('#kv-block-2'));
 
@@ -2293,7 +2298,8 @@ export default {
           header="STAATSBÜRGERSCHAFT"
           id="kv-block-2"
           class="kv-is-hover"
-          v-if="listNationalities.length && selectedService.id"
+          ref="kvblock2"
+          v-show="listNationalities.length && selectedService.id"
         >
           <ControlTouristsGroup
             :data="{...item, index: index}"
@@ -2329,6 +2335,8 @@ export default {
           icon="step_1"
           header="KOSTEN"
           class="kv-observer__product"
+          @mouseover="handlePlusNationalityButton()"
+          @click="handlePlusNationalityButton()"
           v-if="serviceDetails.id && touristGroups.length"
         >
 
@@ -2451,6 +2459,8 @@ export default {
         <TheBlock
           icon="step_1"
           header="TARIFAUSWAHL"
+          @mouseover="handlePlusNationalityButton()"
+          @click="handlePlusNationalityButton()"
           v-if="selectedPrice.price.id && productDetails.id && (productDetails.servicePackages || productDetails.suppServices)"
         >
 
@@ -2477,6 +2487,8 @@ export default {
         <TheBlock
           icon="step_1"
           header="LIEFERUNG"
+          @mouseover="handlePlusNationalityButton()"
+          @click="handlePlusNationalityButton()"
           v-if="selectedPrice.price.id && productDetails.id && pickupPoints.length && addressingCountries.length"
         >
 
@@ -2538,6 +2550,8 @@ export default {
         <ReviewTotal
           :calculation="calculate.calculation"
           :totalAmount="totalAmount"
+          @mouseover="handlePlusNationalityButton()"
+          @click="handlePlusNationalityButton()"
           v-if="calculate.calculation.participants.length"
         >
         </ReviewTotal>
