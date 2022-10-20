@@ -2875,7 +2875,7 @@
     -ms-flex-align: start;
     align-items: flex-start;
     padding-top: 10px;
-  margin: 0 31px;
+  margin: 0 26px;
 }
 
 .kv-app .kv-staying .kv-staying__info:not(:last-child) {
@@ -5781,7 +5781,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 
 .kv-processing-days .carousel:not(.is-empty) {
   margin: 0 auto;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 30px);
 }
 
 

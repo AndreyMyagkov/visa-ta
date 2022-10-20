@@ -393,7 +393,7 @@ export default {
 /* поправить в исходнике на */
 .kv-app .kv-processing-days__item {
   flex: 1 0 auto;
-  padding: 0 5px;
+  padding: 0 10px;
 }
 
 .kv-app .kv-processing-days__item:first-child:last-child {
