@@ -2,7 +2,7 @@
 
   <div class="kv-row">
     <div class="kv-col-12 kv-col-md-6">
-      <div id="kv-participants-add" class="kv-add">
+      <div id="kv-participants-add" class="kv-add" @click="hidePlusButton">
         <svg><use href="#kv-icons_plus"></use></svg>
         HINZUFÜGEN
       </div>
@@ -79,6 +79,10 @@ export default {
       //this.$emit("change", data);
       this.$emit("add", { nationality: data, quantity: 1 });
     },
+    hidePlusButton() {
+      //document.querySelector('#kv-block-2')?.classList.add('kv-outline');
+      document.querySelector('#kv-block-2')?.classList.add('kv-is-hover');
+    }
   },
   computed: {
     // v-model для селекта национальности

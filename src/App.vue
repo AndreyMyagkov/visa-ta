@@ -246,7 +246,7 @@ export default {
       });
       // FIXME: Загружаем цены, для версии 1 по первой национальности
       //if (this.touristGroups.length === 1) {
-        this.onChangeTouristsGroup();
+      this.onChangeTouristsGroup();
       //}
     },
     /**
@@ -266,7 +266,7 @@ export default {
      */
     removeTouristsGroup(codeA2) {
       const index = this.touristGroups
-          .findIndex(_ => _.nationality.codeA2 === codeA2);
+        .findIndex(_ => _.nationality.codeA2 === codeA2);
       this.touristGroups.splice(index, 1);
       this.onChangeTouristsGroup();
     },
@@ -1327,14 +1327,14 @@ export default {
         this.getPriceByProductId(this.selectedPrice.price.id)
       ) {
         //console.log('Дефолтный при смене нац')
-        this.steps[2].defaultNationality = listNationalities.find(
+        this.steps[2].defaultNationality = this.listNationalities.find(
           (item) => item.codeA2 === this.CONFIG.nationality
         );
       }
       this.resetStep4();
       this.resetStep6();
 
-      this.scrollTo("#kv-residence-regions", true);
+      //this.scrollTo("#kv-residence-regions", true);
     },
 
     updateResidenceRegions(data) {
@@ -1778,8 +1778,8 @@ export default {
               this.calculate.deliveryMedia === "digital"
                 ? "electronic"
                 : this.delivery.type == 3
-                ? "pick-up"
-                : "post",
+                  ? "pick-up"
+                  : "post",
             pickupPointId:
               this.delivery.type == 3 ? this.delivery.branch.id : null,
             postalServiceId:
@@ -1789,20 +1789,20 @@ export default {
             deliveryAddress:
               this.delivery.type == 2
                 ? {
-                    title: this.delivery.gender,
-                    lastName: this.delivery.sname,
-                    firstName: this.delivery.name,
-                    organization: this.delivery.companyName,
-                    phone: this.delivery.tel,
-                    mobilePhone: this.delivery.mobile,
-                    email: this.delivery.email,
-                    address: {
-                      address: this.delivery.address,
-                      zip: this.delivery.zip,
-                      city: this.delivery.city,
-                      countryA3: this.delivery.addressingCountry.codeA3,
-                    },
-                  }
+                  title: this.delivery.gender,
+                  lastName: this.delivery.sname,
+                  firstName: this.delivery.name,
+                  organization: this.delivery.companyName,
+                  phone: this.delivery.tel,
+                  mobilePhone: this.delivery.mobile,
+                  email: this.delivery.email,
+                  address: {
+                    address: this.delivery.address,
+                    zip: this.delivery.zip,
+                    city: this.delivery.city,
+                    countryA3: this.delivery.addressingCountry.codeA3,
+                  },
+                }
                 : null,
           },
           uniqueKey: this.uniqueKey,
@@ -1956,7 +1956,7 @@ export default {
      */
     filteredListNationalities() {
       return this.listNationalities.filter(nationality => {
-          return this.touristGroups.findIndex(item => nationality.codeA2 === item.nationality.codeA2) === -1
+        return this.touristGroups.findIndex(item => nationality.codeA2 === item.nationality.codeA2) === -1
       })
     },
 
@@ -1975,10 +1975,10 @@ export default {
       return this.currentStep
         ? this.steps[this.currentStep - 1]
         : {
-            crumb: "",
-            header: "",
-            icon: "",
-          };
+          crumb: "",
+          header: "",
+          icon: "",
+        };
     },
 
     /**
@@ -2145,33 +2145,45 @@ export default {
     // Справочник филиалов офиса
     this.loadPickupPoints();
 
-    // функция всего лишь добавляет CSS-класс, который и осуществляет анимацию
-    const scrollImations = (entries, observer) => {
+    /**
+     * Observer for StatusBar
+     */
+    const observerStatusBarHandler = (entries) => {
       entries.forEach((entry) => {
-        // анимируем, если элемент целиком попадает в отслеживаемую область
-        console.log(entry);
 
         if(entry.isIntersecting /*&& entry.intersectionRatio >= 0.9*/) {
-          //entry.target.classList.add('kv-hidden');
           document.querySelector('.kv-header')?.classList.add('kv-hidden');
         } else {
-          //entry.target.classList.remove('kv-hidden');
           document.querySelector('.kv-header')?.classList.remove('kv-hidden');
         }
       });
     }
 
-// создаём обсервер с параметрами
-    const options = {
+    const observerStatusBar = new IntersectionObserver(observerStatusBarHandler, {
       threshold: 0,
-    };
-    const observer = new IntersectionObserver(scrollImations, options);
-
-    //const boxes = document.querySelectorAll('#kv-block-1');
-    const boxes = document.querySelectorAll('.kv-observer');
-    boxes.forEach((box) => {
-      observer.observe(box);
     });
+    observerStatusBar.observe(document.querySelector('.kv-observer__statusbar'));
+
+    /**
+     * Observer for block Nationalities
+     */
+    // const observerNationalitiesHandler = (entries) => {
+    //   entries.forEach((entry) => {
+    //     console.log(entry)
+    //     if(entry.isIntersecting && entry.intersectionRatio && entry.intersectionRatio !==1) {
+    //       document.querySelector('#kv-block-2')?.classList.remove('kv-is-hover');
+    //       document.querySelector('#kv-block-2')?.classList.remove('kv-outline');
+    //     } else {
+    //       //document.querySelector('#kv-block-2')?.classList.remove('kv-outline');
+    //     }
+    //   });
+    // }
+    //
+    // const observerNationalities = new IntersectionObserver(observerNationalitiesHandler, {
+    //   threshold: 0,
+    // });
+    // observerNationalities.observe(document.querySelector('#kv-block-2'));
+
 
   },
 };
@@ -2279,18 +2291,20 @@ export default {
         <TheBlock
           icon="step_1"
           header="STAATSBÜRGERSCHAFT"
+          id="kv-block-2"
+          class="kv-is-hover"
           v-if="listNationalities.length && selectedService.id"
         >
           <ControlTouristsGroup
-              :data="{...item, index: index}"
-              :alert="{
+            :data="{...item, index: index}"
+            :alert="{
                 state: prices?.state || 0,
                 text: prices?.stateDescription || ''
               }"
-              v-for="(item, index) in touristGroups"
-              :key="item"
-              @change="changeTouristsGroupCount"
-              @remove="removeTouristsGroup"
+            v-for="(item, index) in touristGroups"
+            :key="item"
+            @change="changeTouristsGroupCount"
+            @remove="removeTouristsGroup"
           ></ControlTouristsGroup>
 
 
@@ -2314,6 +2328,7 @@ export default {
         <TheBlock
           icon="step_1"
           header="KOSTEN"
+          class="kv-observer__product"
           v-if="serviceDetails.id && touristGroups.length"
         >
 
@@ -2514,8 +2529,8 @@ export default {
           :selectedService="selectedService"
           :selectedDuration="selectedDuration"
           :selectedPrice="selectedPrice"
+          class="kv-observer__statusbar"
           v-show="selectedPrice.price.id"
-          class="kv-observer"
         >
         </StatusBarInfoBottom>
 
@@ -2535,9 +2550,9 @@ export default {
 
 
 
-  <div>
+        <div>
 
-</div>
+        </div>
 
 
 

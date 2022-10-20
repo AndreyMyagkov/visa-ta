@@ -1,8 +1,6 @@
 <template>
   <div class="kv-block"
        :class="{'kv-is-hover': isHover}"
-       @mouseover="isHover = true"
-       @mouseleave="isHover = false"
   >
     <div class="kv-block__header">
       <div class="kv-content__header">
