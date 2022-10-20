@@ -2106,7 +2106,7 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
     if (!this.initiateWidget()) {
       return false;
     }
@@ -2135,15 +2135,15 @@ export default {
     head.appendChild(meta);
 
     // Грузим справочник стран
-    this.loadCountries();
+    await this.loadCountries();
 
     // Грузим справочник гражданств
-    this.loadNationalities();
+    await this.loadNationalities();
     // Справочник стран доставки
-    this.loadAddressingCountries();
+    await this.loadAddressingCountries();
 
     // Справочник филиалов офиса
-    this.loadPickupPoints();
+    await this.loadPickupPoints();
 
     /**
      * Observer for StatusBar
