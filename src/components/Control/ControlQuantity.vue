@@ -10,7 +10,7 @@
     <div class="kv-quantity__value">{{ quantity }}</div>
     <button
       class="kv-quantity__btn kv-quantity__btn-plus"
-      :disabled="quantity >= maxQuantity"
+      :disabled="maxQuantity && (quantity >= maxQuantity)"
       @click="plus"
     >
       +
@@ -26,8 +26,8 @@ export default {
       default: 1,
     },
     maxQuantity: {
-      type: Number,
-      default: 10,
+      type: [Number, null],
+      default: null,
     },
     minQuantity: {
       type: Number,
@@ -44,7 +44,7 @@ export default {
       this.change(q);
     },
     plus() {
-      if (this.quantityValue >= this.maxQuantity) {
+      if (this.maxQuantity !== null && (this.quantity >= this.maxQuantity)) {
         return false;
       }
       const q = this.quantity + 1;
