@@ -2536,17 +2536,8 @@ export default {
         </TheBlock>
 
 
-        <StatusBarInfoBottom
-          :selectedCountry="selectedCountry"
-          :selectedService="selectedService"
-          :selectedDuration="selectedDuration"
-          :selectedPrice="selectedPrice"
-          class="kv-observer__statusbar"
-          v-show="selectedPrice.price.id"
-        >
-        </StatusBarInfoBottom>
-
-
+        <div class="kv-observer__statusbar"
+             v-show="calculate.calculation.participants.length"></div>
         <ReviewTotal
           :calculation="calculate.calculation"
           :totalAmount="totalAmount"
@@ -2554,6 +2545,24 @@ export default {
           @click="handlePlusNationalityButton()"
           v-if="calculate.calculation.participants.length"
         >
+          <StatusBarInfo
+            :selectedCountry="selectedCountry"
+            :selectedService="selectedService"
+            :selectedDuration="selectedDuration"
+            :selectedPrice="selectedPrice"
+          >
+          </StatusBarInfo>
+
+          <!--<StatusBarInfoBottom
+            :selectedCountry="selectedCountry"
+            :selectedService="selectedService"
+            :selectedDuration="selectedDuration"
+            :selectedPrice="selectedPrice"
+            class="kv-observer__statusbar"
+            v-show="selectedPrice.price.id"
+          >
+          </StatusBarInfoBottom>-->
+
         </ReviewTotal>
 
 

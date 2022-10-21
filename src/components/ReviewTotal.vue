@@ -1,8 +1,14 @@
 <template>
   <!-- Reveiw total-->
   <div class="kv-review-total">
-    <div class="kv-review-total__plug"></div>
-    <div class="kv-review-total__container">
+    <div class="kv-review-total__plug_ kv-review-total_col-status">
+      <div class="kv-step-values">
+        <div class="kv-step-values__row">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+    <div class="kv-review-total__container_ kv-review-total_col-total">
       <div class="kv-review-total__user">
         <svg class="kv-review-total__icon">
           <use href="#kv-icons_user"></use>
@@ -21,7 +27,7 @@
       </div>
     </div>
     <!-- Cart-->
-    <div class="kv-review-total__more kv-cart kv-review-total__plug">
+    <div class="kv-review-total__more kv-cart kv-review-total__plug_ kv-review-total_col-cart">
       {{ $lng('step7.more') }}
       <svg class="kv-review-total__arrow">
         <use href="#kv-icons_arrow_down"></use>
@@ -49,13 +55,13 @@
               {{ calculation.servicePackage.participants.length }}
             </div>
             <div class="kv-price kv-cart-table__item">
-              <span class="kv-price__value">{{ priceFormat(calculation.servicePackage.price *  calculation.servicePackage.participants.length) }}</span>
+              <span class="kv-price__value">{{ priceFormat(calculation.servicePackage.price * calculation.servicePackage.participants.length) }}</span>
               <span class="kv-price__currency">€</span>
             </div>
           </div>
 
           <!-- Услуги -->
-          <template v-if="calculation.suppServices !== null && calculation.suppServices.length">
+          <template v-if="calculation.suppServices !== null /*&& calculation.suppServices.participants.length*/">
             <!-- .filter(_ => !_.isIncluded) -->
             <div class="kv-cart-table__row" v-for="suppServices in calculation.suppServices" :key="suppServices.id">
               <div class="kv-cart-table__item kv-cart-table__item_col">
@@ -104,3 +110,55 @@ export default {
   },
 }
 </script>
+
+<style>
+.kv-review-total_col-total {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kv-review-total_col-status {
+  padding-left: 10px;
+}
+.kv-app .kv-review-total_col-status .kv-step-values .kv-step-values__item:not(:last-child) {
+  margin-right: 2px;
+  border-right: solid 1px #406a7291;
+}
+.kv-review-total_col-status .kv-step-values__item,
+.kv-review-total_col-status .kv-step-values {
+  background-color: transparent !important;
+}
+
+.kv-review-total_col-status {
+  flex: 1 1 100%;
+}
+.kv-review-total_col-total {
+  flex: 1 1 100%;
+}
+.kv-review-total_col-cart {
+  flex: 1 1 100%;
+}
+
+
+[cq-min-w-640] .kv-review-total_col-total {
+  flex: 1 1 60%;
+  max-width: 60%;
+}
+[cq-min-w-640] .kv-review-total_col-cart {
+  flex: 1 1 40%;
+  max-width: 40%;
+}
+
+[cq-min-w-991] .kv-review-total_col-status {
+  flex: 1 1 40%;
+  max-width: 40%;
+}
+[cq-min-w-991] .kv-review-total_col-total {
+  flex: 1 1 40%;
+  max-width: 40%;
+}
+[cq-min-w-991] .kv-review-total_col-cart {
+  flex: 1 1 20%;
+  max-width: 20%;
+}
+</style>
