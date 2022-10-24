@@ -583,7 +583,7 @@ export default {
       }*/
 
       setTimeout(() => {
-        this.scrollTo(data.block);
+        //this.scrollTo(data.block);
       }, 500);
     },
 
@@ -1942,6 +1942,25 @@ export default {
 
   computed: {
     /**
+     * Флаг полного и корректного заполнения всей формы
+     * Выбран способ доставки и необходимые данные
+     */
+    isFormCorrect() {
+      // По email
+      if (this.delivery.type === 1) {
+        return true
+      }
+      // Служба доставки
+      if (this.delivery.type === 2 && this.selectedPostalService.id) {
+        return true
+      }
+      // Забрать в офисе
+      if (this.delivery.type === 3 && this.delivery.branch.id) {
+        return true
+      }
+      return false
+    },
+    /**
      * Список Популярных национальностей, с отфильтрованными выбранными национальностями
      * @returns {*[]}
      */
@@ -2519,6 +2538,7 @@ export default {
 
           <ControlDeliveryType
             :selected = "delivery.type"
+            :isDigital="calculate.deliveryMedia === 'digital'"
             @change="delivery.type = $event"
           ></ControlDeliveryType>
 
@@ -2591,7 +2611,7 @@ export default {
         </ReviewTotal>
 
 
-        <div class="kv-footer-buttons">
+        <div class="kv-footer-buttons" v-if="isFormCorrect">
           <button class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen">Buchen</button>
           <button class="kv-button kv-footer-buttons__button kv-footer-buttons__angebot">Angebot</button>
         </div>

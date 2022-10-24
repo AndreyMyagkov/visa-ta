@@ -132,7 +132,7 @@ export class CustomerDefault {
 // Доставка
 export class DeliveryDefault {
     constructor() {
-        this.type = 1;
+        this.type = 0;
         this.isCompany = false;
         this.addressingCountry = {name: " ", codeA3: null};
         this.gender = "";

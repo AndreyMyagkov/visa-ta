@@ -1,13 +1,16 @@
 <template>
   <div class="kv-row kv-mb-30">
-    <div class="kv-col-12 kv-col-md-4" v-for="item in delivery" :key="item">
-      <button
-        class="kv-button kv-button__delivery-type"
-        :class="{
-          'kv-button__delivery-type_selected': item.id === selected
-        }"
-        @click="changeDeliveryType(item.id)">{{ item.name}}</button>
-    </div>
+    <template v-for="item in delivery" :key="item" >
+      <div class="kv-col-12 kv-col-md-4" v-if="!(item.id === 1 && !isDigital)">
+        <button
+          class="kv-button kv-button__delivery-type"
+          :class="{
+            'kv-button__delivery-type_selected': item.id === selected
+          }"
+          @click="changeDeliveryType(item.id)"
+        >{{ item.name}}</button>
+      </div>
+    </template>
   </div>
 
   <div class="kv-delivery-text kv-user-text"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s </div>
@@ -17,7 +20,7 @@
 <script>
 export default {
   name: "ControlDeliveryType",
-  props: ["selected"],
+  props: ["selected", "isDigital"],
   emits: ["change"],
   data() {
     return {
