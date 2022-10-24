@@ -129,6 +129,13 @@ export class CustomerDefault {
     }
 }
 
+export const branchDefault = {
+  id: null,
+  name: "",
+  countryA3: "",
+  address: "",
+  workingTime: "",
+}
 // Доставка
 export class DeliveryDefault {
     constructor() {

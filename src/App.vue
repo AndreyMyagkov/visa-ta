@@ -1118,9 +1118,7 @@ export default {
 
 
         // Выбор единственного филиала
-        if (this.pickupPoints.length === 1 ) {
-          this.delivery.branch = this.pickupPoints[0];
-        }
+       // this.preselectSinglePickupPoints();
 
       } catch (err) {
         this.isLoading = false;
@@ -1228,11 +1226,11 @@ export default {
      */
     preselectSinglePickupPoints() {
       if (
-        this.delivery.type == 3 &&
+        this.delivery.type === 3 &&
         this.delivery.branch.id === null &&
         this.pickupPoints.length === 1
       ) {
-        this.$refs.step5.changeBranch(this.pickupPoints[0]);
+        this.delivery.branch = this.pickupPoints[0];
       }
     },
 
@@ -1680,6 +1678,26 @@ export default {
     },
 
     /* Step 6 */
+    /**
+     * Смена типа доставки
+     */
+    changeDeliveryType(type) {
+      this.delivery.type = type;
+      if (type === 1) {
+        this.selectedPostalService = new constants.PostalServiceDefault();
+        this.delivery.branch = constants.branchDefault;
+      }
+      if (type === 2) {
+        this.selectedPostalService = new constants.PostalServiceDefault();
+        this.delivery.branch = constants.branchDefault;
+      }
+      if (type === 3) {
+        this.selectedPostalService = new constants.PostalServiceDefault();
+        this.delivery.branch = constants.branchDefault;
+        this.preselectSinglePickupPoints();
+      }
+      this.sendCalculateAndValidate();
+    },
     setBranch(data) {
       this.delivery.branch = data;
       this.postalReset();
@@ -2539,7 +2557,7 @@ export default {
           <ControlDeliveryType
             :selected = "delivery.type"
             :isDigital="calculate.deliveryMedia === 'digital'"
-            @change="delivery.type = $event"
+            @change="changeDeliveryType($event)"
           ></ControlDeliveryType>
 
           <div class="kv-alert kv-alert_center" v-if="calculate.deliveryMedia === 'digital'">
