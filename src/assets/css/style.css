@@ -256,6 +256,9 @@
 }
 
 /* git merge - */
+.vld-overlay.is-active {
+  position: fixed !important;
+}
 .vld-overlay svg g g {
     transform: translate(1px, 1px) !important;
 }

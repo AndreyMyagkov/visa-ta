@@ -2189,6 +2189,31 @@ export default {
     // });
     // observerNationalities.observe(document.querySelector('#kv-block-2'));
 
+    /**
+     * Observer for block Services
+     */
+    const observerServicesHandler = (entries) => {
+      entries.forEach((entry) => {
+        //console.log(entry)
+        if (!entry.isIntersecting && entry.intersectionRatio < 0.25 && this.selectedService.id && this.steps[0].isOpen) {
+          const heightContentFull = document.querySelector('#kv-block-1__content-full').getBoundingClientRect().height;
+          this.steps[0].isOpen = false;
+          document.querySelector('#kv-block-1__content-small').style.display = 'block';
+          //const heightContentSmall = document.querySelector('#kv-block-1__content-small').getBoundingClientRect().height;
+          //console.log(heightContentFull);
+          //console.log(heightContentSmall);
+          /*- heightContentSmall*/
+          window.window.scrollBy(0, -(heightContentFull ));
+        } else {
+        }
+      });
+    }
+
+    const observerServices = new IntersectionObserver(observerServicesHandler, {
+      threshold: 0.25,
+    });
+    observerServices.observe(document.querySelector('#kv-block-1'));
+
 
   },
 };
@@ -2241,7 +2266,7 @@ export default {
             </div>-->
           </template>
 
-          <template v-if="!steps[0].isOpen && selectedService.id">
+          <div v-show="!steps[0].isOpen && selectedService.id" id="kv-block-1__content-small">
             <div class="kv-block1-info"  @click="steps[0].isOpen = !steps[0].isOpen">
               <div class="kv-block1-info__info">
                 <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
@@ -2256,9 +2281,9 @@ export default {
             <kv-alert type="default" v-if="selectedService.description" style="margin-top: 6px">
               <div v-html="selectedService.description"></div>
             </kv-alert>
-          </template>
+          </div>
 
-          <div v-if="steps[0].isOpen">
+          <div v-show="steps[0].isOpen" id="kv-block-1__content-full">
             <ControlCountries
               :countries="listCountries"
               :default="{
@@ -2584,7 +2609,7 @@ export default {
     </div>
 
     <div style="margin-bottom: 200px"></div>
-    <loading :active="isLoading" :can-cancel="false" :is-full-page="true" :lock-scroll="true">
+    <loading :active="isLoading" :can-cancel="false" :is-full-page="false" :lock-scroll="false">
     </loading>
 
     <vue-final-modal
