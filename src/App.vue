@@ -281,6 +281,11 @@ export default {
      * @returns {Promise<void>}
      */
     async onChangeTouristsGroup() {
+      this.resetStep6();
+      this.resetStep4();
+      this.selectedPrice = new constants.PriceDefault();
+      this.selectedDuration = new constants.DurationDefault();
+      this.calculate = new constants.calculateDefault();
       await this.loadPrices();
       await this.preselectSingleDuration();
       await this.sendCalculateAndValidate();
@@ -775,6 +780,9 @@ export default {
      * Загружает прайсы
      */
     async loadPrices() {
+      if (!this.touristGroups.length) {
+        return
+      }
       try {
         this.isLoading = true;
         let response = await fetch(
@@ -951,7 +959,7 @@ export default {
     async sendCalculateAndValidate(index = null) {
       this.currentEditTourist = index;
 
-      if (!this.selectedPrice.price.id) {
+      if (!this.selectedPrice.price.id || !this.touristGroups.length) {
         this.calculate = new constants.calculateDefault();
         return;
       }
@@ -976,15 +984,16 @@ export default {
         })
 
       } else {
+        return
         // Для шага 2, когда еще не создали туристов используем фейкового туриста
         // с национальностью и местом жительства из шага 2
-        participants = [
-          {
-            nr: 1,
-            nationalityA2: this.CONFIG.nationality,
-            residenceCode: this.CONFIG.residenceRegions,
-          },
-        ];
+        // participants = [
+        //   {
+        //     nr: 1,
+        //     nationalityA2: this.CONFIG.nationality,
+        //     residenceCode: this.CONFIG.residenceRegions,
+        //   },
+        // ];
       }
 
       const postalData = this.getPostalData(this.delivery);
