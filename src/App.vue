@@ -1532,7 +1532,10 @@ export default {
         // Загружаем детали сервиса при выборе типа визы
         this.steps[1].showModalCorrectParticipant = true;
         this.loadServiceDetails();
-        //this.loadStep2Data();
+        // Загрузка цен, если вывбрана группа туристов
+        if (this.touristGroups.length) {
+          this.loadStep2Data();
+        }
 
         this.nextStep();
       }
