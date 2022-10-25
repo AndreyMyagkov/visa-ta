@@ -198,7 +198,7 @@
                        name="suppService"
                        :value="item.id"
                        v-model="serviceSelected"
-                       @change="suppServiceChange"
+                       @change="suppServiceChange($event.target.value)"
                 >
                 <span class="kv-switcher__inner">
                       <div class="kv-switcher__caption kv-class__caption" :data-kv_on="$lng('step4.added')" :data-kv_off="$lng('step4.add')"></div>
@@ -234,7 +234,7 @@
                        name="suppService"
                        :value="item.id"
                        v-model="serviceSelected"
-                       @change="suppServiceChange"
+                       @change="suppServiceChange($event.target.value)"
                 >
                 <span class="kv-switcher__inner">
                       <div class="kv-switcher__caption kv-class__caption" :data-kv_on="$lng('step4.added')" :data-kv_off="$lng('step4.add')"></div>
@@ -333,8 +333,7 @@ export default {
 
       packageSelected: Object.assign({}, this.selectedServicePackage), //this.selectedServicePackage, //Object.assign({}, this.selectedServicePackage), //new constants.ServicePackage(),
       packageShowed: this.selectedServicePackage.id,
-      serviceSelected: this.selectedSuppServices.map(_ => _.id),
-
+      //serviceSelected: this.selectedSuppServices.map(_ => _.id),
       isTopButtonsShow_: false
     }
   },
@@ -425,14 +424,14 @@ export default {
     },
     /**
      * Выбрать услугу в  пакете
-     * @param {Object} item
+     * @param value
      */
-    suppServiceChange() {
+    suppServiceChange(value) {
       const suppServices = this.data.suppServices.filter(_ => {
-        return this.serviceSelected.indexOf(_.id) !== -1
+         return _.id === value
       });
 
-      this.$emit('changeSuppService',suppServices);
+      this.$emit('changeSuppService',suppServices[0]);
       this.$emit('stepDataChange', 4);
       this.$emit('calculate');
     },
@@ -467,6 +466,14 @@ export default {
 
   },
   computed: {
+    serviceSelected: {
+      get () {
+        return this.selectedSuppServices.map(_ => _.id)
+      },
+      set (value) {
+        //this.suppServiceChange(value[0])
+      },
+    },
     selectedTabIndex() {
       let selectedTab = 1;
       if (this.packageSelected.id === null) {
@@ -568,7 +575,7 @@ export default {
     //this.$emit('active');
     this.packageSelected = Object.assign({}, this.selectedServicePackage);
     this.packageShowed = this.packageSelected.id
-    this.serviceSelected = this.selectedSuppServices.map(_ => _.id);
+    //this.serviceSelected = this.selectedSuppServices.map(_ => _.id);
     // Выбор первого возможного сервис-пакета, если он еще не выбран
     if (this.data.servicePackages !== null && this.data.servicePackages.length && this.packageSelected.id === null) {
       this.selectPackage(this.data.servicePackages[0])

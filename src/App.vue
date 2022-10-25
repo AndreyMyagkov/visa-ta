@@ -1403,8 +1403,8 @@ export default {
     _updatePrice(data) {
       //console.log('Обновление цены')
       this.selectedPrice = data;
-      this.resetStep4();
-      this.resetStep6();
+      //this.resetStep4();
+      //this.resetStep6();
       this.loadProductDetails();
       this.sendCalculateAndValidate();
 
@@ -1675,7 +1675,15 @@ export default {
      * Выбрать услугу в пакете
      */
     changeSuppService(services) {
-      this.selectedSuppServices = services;
+      console.log(services)
+      const index = this.selectedSuppServices.findIndex(_ => _.id === services.id);
+      console.log(index)
+      if (index === -1) {
+        this.selectedSuppServices.push(services)
+      } else {
+        this.selectedSuppServices.splice(index, 1)
+      }
+      //this.selectedSuppServices = services;
       this.steps[0].showModalWhenChangeVisa = true;
     },
     /**
@@ -2195,6 +2203,10 @@ export default {
 
     // Справочник филиалов офиса
     await this.loadPickupPoints();
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 200)
+
 
     /**
      * Observer for StatusBar
@@ -2313,7 +2325,7 @@ export default {
           </template>
 
           <div v-show="!steps[0].isOpen && selectedService.id" id="kv-block-1__content-small">
-            <div class="kv-block1-info"  @click="steps[0].isOpen = !steps[0].isOpen">
+            <div class="kv-block1-info" id="kv-block1__expand" @click="steps[0].isOpen = !steps[0].isOpen">
               <div class="kv-block1-info__info">
                 <span v-if="selectedServiceGroup.id">{{ selectedServiceGroup.name }} | </span>
                 {{ selectedService.name }}
@@ -2418,6 +2430,7 @@ export default {
                 class="kv-kv-block-info__icon kv-kv-block-info__icon_card"
                 :class="{'active': steps[1].priceMode === 'cards'}"
                 width="20" height="20"
+                id="kv-price-mode__cards"
                 @click="steps[1].priceMode = 'cards'"
               >
                 <use href="#kv-price-cards"></use>
@@ -2427,6 +2440,7 @@ export default {
               <svg class="kv-kv-block-info__icon kv-kv-block-info__icon_table"
                    :class="{'active': steps[1].priceMode === 'table'}"
                    width="20" height="20"
+                   id="kv-price-mode__table"
                    @click="steps[1].priceMode = 'table'"
               >
                 <use href="#kv-price-table"></use>
@@ -2639,8 +2653,14 @@ export default {
 
 
         <div class="kv-footer-buttons" v-if="isFormCorrect">
-          <button class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen">Buchen</button>
-          <button class="kv-button kv-footer-buttons__button kv-footer-buttons__angebot">Angebot</button>
+          <button
+            class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen"
+            id="kv-button__buchen"
+          >Buchen</button>
+          <button
+            class="kv-button kv-footer-buttons__button kv-footer-buttons__angebot"
+            id="kv-button__angebot"
+          >Angebot</button>
         </div>
 
 
@@ -2656,8 +2676,17 @@ export default {
     </div>
 
     <div style="margin-bottom: 200px"></div>
-    <loading :active="isLoading" :can-cancel="false" :is-full-page="false" :lock-scroll="false">
-    </loading>
+<!--    <loading -->
+<!--      :active="isLoading" -->
+<!--      :can-cancel="false" -->
+<!--      :is-full-page="false" -->
+<!--      :lock-scroll="false">-->
+<!--    </loading>-->
+
+<!--    <div-->
+<!--      v-if="isLoading"-->
+<!--      class="vld-overlay is-active" aria-busy="false" aria-label="Loading" style=""><div class="vld-background" style="backdrop-filter: blur(2px);"></div><div class="vld-icon"><svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" width="64" height="64" stroke="#000"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="2"><circle stroke-opacity=".25" cx="18" cy="18" r="18"></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.8s" repeatCount="indefinite"></animateTransform></path></g></g></svg></div>-->
+<!--    </div>-->
 
     <vue-final-modal
       v-model="isModalShow"
