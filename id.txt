@@ -1,0 +1,23 @@
+VISA-AUSWAHL
+kv-block1__expand - развернуть блок VISA-AUSWAHL
+
+STAATSBÜRGERSCHAFT
+kv-tg__remove_0  - Удалить группу участников (национальность). Отсчет Id от 0
+kv-quantity__minus_0  - уменьшить кол-во участников в группе
+kv-quantity__plus_0 - увеличить кол-во участников в группе
+kv-participants-add - добавить группу участников 
+kv-popular-nat__RU - выбрать популярную национальность по codeA2
+
+KOSTEN
+kv-price-mode__cards - режим прайса карточки
+kv-price-mode__table - режим прайса таблица
+kv-ptable-data__6f384706-2aac-4764-8bbe-b21685840870 - в тбалице выбрать продукт
+
+LIEFERUNG
+kv-delivery-type-1 - выбор типа доставки (1 - email, 2 - почта, 3 - в офисе)
+kv-postal__fed7a8cb-e9bb-40a3-b89e-d3969d87cc98 - выбор почтовой службы
+kv-branch__982d2647-7e04-462e-9baa-4e10cf98b6a7  - выбор отделения офиса
+
+ЗАКАЗ
+kv-button__buchen - кнопка Buchen
+kv-button__angebot - кнопка Angebot

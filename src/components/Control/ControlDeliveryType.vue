@@ -7,6 +7,7 @@
           :class="{
             'kv-button__delivery-type_selected': item.id === selected
           }"
+          :id="`kv-delivery-type-${item.id}`"
           @click="changeDeliveryType(item.id)"
         >{{ item.name}}</button>
       </div>

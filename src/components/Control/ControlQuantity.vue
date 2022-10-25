@@ -3,6 +3,7 @@
     <button
       class="kv-quantity__btn kv-quantity__btn-minus"
       :disabled="quantity <= minQuantity"
+      :id="`kv-quantity__minus_${index}`"
       @click="minus"
     >
       -
@@ -11,6 +12,7 @@
     <button
       class="kv-quantity__btn kv-quantity__btn-plus"
       :disabled="maxQuantity && (quantity >= maxQuantity)"
+      :id="`kv-quantity__plus_${index}`"
       @click="plus"
     >
       +
@@ -33,6 +35,9 @@ export default {
       type: Number,
       default: 1,
     },
+    index: {
+      type: Number
+    }
   },
   emits: ["change"],
   methods: {

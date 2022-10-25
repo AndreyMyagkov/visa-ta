@@ -1,6 +1,10 @@
 <template>
   <div class="kv-popular">
-    <div class="kv-popular__item" v-for="item in list" :key="item" @click="onSelect(item)">
+    <div class="kv-popular__item"
+         :id="`kv-popular-nat__${item.codeA2}`"
+         v-for="item in list"
+         :key="item"
+         @click="onSelect(item)">
       <span>{{ item.name }}</span>
     </div>
   </div>

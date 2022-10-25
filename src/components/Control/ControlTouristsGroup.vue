@@ -5,7 +5,7 @@
       <div class="kv-tg">
         <div class="kv-tg__row">
           <div class="kv-tg__action">
-            <button class="kv-btn" @click="remove">✖</button>
+            <button class="kv-btn" :id="`kv-tg__remove_${data.index}`" @click="remove">✖</button>
           </div>
 
           <div class="kv-tg__title">
@@ -13,7 +13,7 @@
           </div>
 
           <div class="kv-tg__quality">
-            <ControlQuantity :quantity="data.quantity" @change="changeQuantity" />
+            <ControlQuantity :quantity="data.quantity" :index="data.index" @change="changeQuantity" />
           </div>
 
         </div>
