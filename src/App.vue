@@ -2586,9 +2586,16 @@ export default {
             @change="changeDeliveryType($event)"
           ></ControlDeliveryType>
 
-          <div class="kv-alert kv-alert_center" v-if="calculate.deliveryMedia === 'digital'">
+<!--          <div class="kv-alert kv-alert_center" v-if="calculate.deliveryMedia === 'digital'">-->
+<!--            {{ $lng('step5.deliveryByEmail') }}-->
+<!--          </div>-->
+
+          <kv-alert
+            type="success"
+            v-if="calculate.deliveryMedia === 'digital' && delivery.type === 1"
+          >
             {{ $lng('step5.deliveryByEmail') }}
-          </div>
+          </kv-alert>
 
 
           <ControlDeliveryAddress
