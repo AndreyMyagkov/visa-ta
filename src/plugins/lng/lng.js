@@ -11,7 +11,8 @@ export const lng = {
             "btnYes": "Ja",
             "btnNo": "Nein",
             "error": "Fehler",
-            "checkFormPopup": "Es sind nicht alle Felder vollständig ausgefüllt."
+            "checkFormPopup": "Es sind nicht alle Felder vollständig ausgefüllt.",
+            "noAvailable": "Es liegen keine Informationen vor. Bitte kontaktieren Sie den Kundenservice"
         },
         "price": {
             "header": "Visum Kalkulator",
@@ -187,7 +188,8 @@ export const lng = {
             "btnYes": "Да",
             "btnNo": "Нет",
             "error": "Ошибка",
-            "checkFormPopup": "Не все данные заполнены."
+            "checkFormPopup": "Не все данные заполнены.",
+            "noAvailable": "Информация недоступна. Пожалуйста, свяжитесь со службой поддержки клиентов"
         },
         "price": {
             "header": "Расчет примерной стоимости для одного человека",

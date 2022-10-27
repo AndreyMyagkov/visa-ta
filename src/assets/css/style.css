@@ -5634,6 +5634,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     flex-direction: column;
     margin: 0 1rem;
     max-width: 500px;
+    min-width: 240px;
     border: 1px solid #e2e8f0;
     border-radius: 0.25rem;
     background: #fff;

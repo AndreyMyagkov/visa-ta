@@ -173,8 +173,15 @@ export default {
 
       services: [],
       serviceGroups: [],
-      serviceDetails: {}, //mockServiceDetails, //{},
-      prices: {}, //mockPrices, //{},
+      serviceDetails: {
+        id: null,
+        durations: [],
+        processDurations: [],
+        products: []
+      }, //mockServiceDetails, //{},
+      prices: {
+        prices: []
+      }, //mockPrices, //{},
       addressingCountries: [],
       pickupPoints: [], //pickupPoints.points, //[],
       postalServices: [],
@@ -769,6 +776,12 @@ export default {
 
         this.serviceDetails = serviceDetails.service;
 
+        if (!this.serviceDetails.durations.length
+          || !this.serviceDetails.processDurations.length
+          || !this.serviceDetails.products.length) {
+          this.showModal(this.$lng("common.noAvailable"), this.$lng("common.error"));
+        }
+
 
       } catch (err) {
         this.isLoading = false;
@@ -798,6 +811,10 @@ export default {
           prices.prices = [];
         }
         this.prices = prices;
+
+        if (!this.prices.prices.length) {
+          //this.showModal(this.$lng("common.noAvailable"), this.$lng("common.error"));
+        }
 
         // console.warn('***');
         // console.log(`prices.state = ${prices.state}`);
@@ -1532,7 +1549,7 @@ export default {
         // Загружаем детали сервиса при выборе типа визы
         this.steps[1].showModalCorrectParticipant = true;
         this.loadServiceDetails();
-        // Загрузка цен, если вывбрана группа туристов
+        // Загрузка цен, если выбрана группа туристов
         if (this.touristGroups.length) {
           this.loadStep2Data();
         }
@@ -2385,7 +2402,12 @@ export default {
           id="kv-block-2"
           class="kv-is-hover"
           ref="kvblock2"
-          v-show="listNationalities.length && selectedService.id"
+          v-show="listNationalities.length
+            && selectedService.id
+            && serviceDetails.durations.length
+            && serviceDetails.processDurations.length
+            && serviceDetails.products.length
+          "
         >
           <ControlTouristsGroup
             :data="{...item, index: index}"
@@ -2423,7 +2445,12 @@ export default {
           class="kv-observer__product"
           @mouseover="handlePlusNationalityButton()"
           @click="handlePlusNationalityButton()"
-          v-if="serviceDetails.id && touristGroups.length"
+          v-if="serviceDetails.id
+            && touristGroups.length
+            && serviceDetails.durations.length
+            && serviceDetails.processDurations.length
+            && serviceDetails.products.length
+            "
         >
 
           <template #header-aside>
@@ -2464,7 +2491,7 @@ export default {
               :selected="selectedDuration"
               @change="updateDuration"
               @showModal="showModal"
-              v-if="steps[1].priceMode === 'cards'"
+              v-if="steps[1].priceMode === 'cards' && serviceDetails.durations.length"
             ></ControlDuration>
 
             <div class="kv-staying__info" v-if="selectedDuration.description && steps[1].priceMode === 'cards'">
@@ -2494,7 +2521,7 @@ export default {
 
             @update:price="updatePrice"
             @showModal="showModal"
-            v-if="steps[1].priceMode === 'cards' && selectedDuration.index"
+            v-if="steps[1].priceMode === 'cards' && selectedDuration.index !== null"
           >
           </control-price>
 
