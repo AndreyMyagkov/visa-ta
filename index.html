@@ -28,9 +28,9 @@
         <script>
             (function (k, o, e, n, i, g) {
                 const config =  {
-                    elementId: 'kt-visa-app-1',
-                    //clientId: '{8B8CB112-716B-41E1-9748-9A193D45A36D}', // common
-                    clientId: '{C27DE0D8-2DA2-4545-BB2B-0F178009E018}', // payment test v2
+                    elementId: "kt-visa-app-1",
+                    //clientId: "{8B8CB112-716B-41E1-9748-9A193D45A36D}", // common
+                    clientId: "{C27DE0D8-2DA2-4545-BB2B-0F178009E018}", // payment test v2
                     mode:  "default", //"default", // "price", "success", "payment"
                     nationality: "DE",
                     residenceRegions: "DEU\\BE",
@@ -43,8 +43,10 @@
                     //API_URL: "https://apisrv.ideo-software.com/Ideo/KoenigVN/Web/api/OrderPortal/",
                     API_URL: "https://apisrv.ideo-software.com/Ideo/Test/Srv/api/OrderPortal/", // payment
                     redirectUrl: "/",
+                    agnr: "1234567",
                     popularNationalities: ["DE", "RU", "TR"],
-                    //css: '/css/widgete.dev.css'
+                    orderModuleUrl: "http://localhost:8000"
+                    //css: "/css/widgete.dev.css"
                 }
                 k[o] = k[o] || [];
                 k[o].push(config);
@@ -52,6 +54,7 @@
         </script>
 
     </div>
+    <div style="margin-bottom: 200px"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

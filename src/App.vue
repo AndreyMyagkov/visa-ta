@@ -244,6 +244,45 @@ export default {
 
   methods: {
     /**
+     * Сбор данных модуля и переход в модуль заказа
+     * @returns {boolean}
+     */
+    jumpToOrderModule() {
+      if (!this.CONFIG.orderModuleUrl) {
+        return false
+      }
+
+      const quantity = this.touristGroups.reduce(
+        (acc, item) => {
+          return acc + item.quantity
+        },
+        0
+      );
+
+      const supServices = this.selectedSuppServices.map(item => item.id).toString();
+
+      const params = {
+        mode: 'all',
+        /*country: '',*/
+        serviceGroup: this.selectedServiceGroup.id,
+        service: this.selectedService.id,
+        product: this.selectedPrice.price.id,
+        lng: this.CONFIG.lng,
+        participants: quantity,
+        duration: this.selectedDuration.index,
+        servicePackage: this.selectedServicePackage.id,
+        supServices: supServices,
+        addressingCountry: this.delivery.type === 2 ? this.delivery.addressingCountry.codeA3 : "",
+        office: this.delivery.type === 3 ? this.delivery.branch.id : "",
+        postalService: this.selectedPostalService === null ? "" : this.selectedPostalService.id,
+        agnr: this.CONFIG.agnr,
+      }
+      //console.log(params);
+      //console.log(new URLSearchParams(params).toString());
+      //document.location.href =  this.CONFIG.orderModuleUrl + '?' + new URLSearchParams(params).toString();
+      window.open(this.CONFIG.orderModuleUrl + '?' + new URLSearchParams(params).toString(), '_blank')
+    },
+    /**
      * Добавляет группу туристов
      * @param data
      */
@@ -1164,8 +1203,6 @@ export default {
         city: this.delivery.city,
         countryA3: this.delivery.addressingCountry.codeA3,
       };
-      console.log(postalData);
-      console.log(network.toFormUrlEncoded(postalData))
 
       const requestOptions = {
         method: "POST",
@@ -1342,7 +1379,6 @@ export default {
     },
 
     async updateNationality(data) {
-      console.log("upn");
       this.CONFIG.nationality = data.codeA2;
       await this.loadPrices();
 
@@ -1695,9 +1731,7 @@ export default {
      * Выбрать услугу в пакете
      */
     changeSuppService(services) {
-      console.log(services)
       const index = this.selectedSuppServices.findIndex(_ => _.id === services.id);
-      console.log(index)
       if (index === -1) {
         this.selectedSuppServices.push(services)
       } else {
@@ -2306,6 +2340,9 @@ export default {
   >
     <iconSprite />
 
+    <div class="kv-agnr" v-if="CONFIG.agnr">
+      AG: {{ CONFIG.agnr }}
+    </div>
     <StatusBar>
       <template #info>
         <StatusBarInfo
@@ -2693,6 +2730,7 @@ export default {
           <button
             class="kv-button kv-footer-buttons__button kv-footer-buttons__buchen"
             id="kv-button__buchen"
+            @click="jumpToOrderModule()"
           >Buchen</button>
           <button
             class="kv-button kv-footer-buttons__button kv-footer-buttons__angebot"
@@ -2712,7 +2750,7 @@ export default {
       </div>
     </div>
 
-    <div style="margin-bottom: 200px"></div>
+
 <!--    <loading -->
 <!--      :active="isLoading" -->
 <!--      :can-cancel="false" -->

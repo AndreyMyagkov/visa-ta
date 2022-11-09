@@ -2788,7 +2788,8 @@
     line-height: 20px;
     color: var(--c-second);
   display: flex;
-  gap: 40px;
+      flex-wrap: wrap;
+      gap: 10px 40px;
   padding: 10px 0 10px 0;
 }
 
@@ -5993,3 +5994,8 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   outline: solid 1px red;
 }
 
+.kv-agnr {
+  text-align: right;
+  color: #d1d1d1;
+  margin-bottom: 5px;
+}
