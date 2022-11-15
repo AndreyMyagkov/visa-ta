@@ -1621,7 +1621,8 @@
     fill: red;
 }
 
-.kv-app .kv-form-radio input:checked ~ .kv-form-radio__mark::before {
+.kv-app .kv-form-radio input:checked ~ .kv-form-radio__mark::before,
+.kv-app  .kv-form__item_selected .kv-form-radio__mark::before {
     display: none;
 }
 

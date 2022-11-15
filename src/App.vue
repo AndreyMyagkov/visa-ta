@@ -94,6 +94,7 @@ export default {
   },
   data: () => {
     return {
+      allowCalculate: true, // Разрешить калькуляцию
       uniqueKey: Date.now(),
       isMobile: false,
       isModalShow: false,
@@ -243,6 +244,130 @@ export default {
   },
 
   methods: {
+    async restoreData(getParams) {
+      this.allowCalculate = false;
+
+      this.CONFIG.mode = "default";
+      this.CONFIG.agnr = getParams.agnr;
+      this.CONFIG.lng = getParams.lng;
+
+
+      // Национальности
+      const nationalities = getParams.nationalities.split(",");
+
+      nationalities.forEach(item => {
+        const data = item.split("-");
+        this.touristGroups.push({
+          nationality: this.listNationalities.find(_ => _.codeA2 === data[0]),
+          quantity: +data[1],
+        });
+      })
+
+      this.CONFIG.product = getParams.product;
+      await this.setDefaultProduct();
+
+
+
+      if (getParams.servicePackage && getParams.servicePackage !== "null") {
+        const pcg = this.productDetails.servicePackages.find(item => item.id === getParams.servicePackage);
+        if (pcg) {
+          this.selectedServicePackage = pcg;
+          this.$refs.package.selectPackage(pcg);
+        }
+      }
+
+      //Доп услуги. Только те, что есть и в справочнике
+      if (getParams.supServices && getParams.supServices !== "null") {
+        const supServices = getParams.supServices.split(',');
+        supServices.forEach(id => {
+          const ss = this.productDetails.suppServices.find(item => item.id === id);
+          if (ss) {
+            this.selectedSuppServices.push(ss)
+          }
+        })
+      }
+
+
+      // Отделение офиса
+      if (getParams.office && getParams.office !== "null") {
+
+        const branch = this.pickupPoints.find(_ => _.id === getParams.office);
+        if (branch) {
+          this.delivery.type = 3;
+          this.delivery.branch = branch
+        }
+      }
+
+      // Страна и почтовая служба
+      if (getParams.addressingCountry && getParams.addressingCountry !== "null"
+        && getParams.postalService && getParams.postalService !== "null"
+      ) {
+
+        const addressingCountry = this.addressingCountries.find(_ => _.codeA3 === getParams.addressingCountry);
+        if (addressingCountry) {
+          this.delivery.type = 2;
+          this.delivery.addressingCountry = addressingCountry;
+
+          await this.loadPostalServices();
+
+          const postalService = this.postalServices.find(_ => _.id === getParams.postalService);
+          if (postalService) {
+            this.selectedPostalService = postalService;
+            //this.selectedPostalService.id = getParams.postalService;
+            this.steps[4].isValid = true;
+            this.steps[0].showModalWhenChangeVisa = true
+          }
+        }
+      }
+
+      this.allowCalculate = true;
+      await this.sendCalculateAndValidate();
+
+    },
+    /**
+     * Сбор данных заполненного модуля
+     * @returns {Object}
+     */
+    collectData() {
+      //Кол-во участников
+      const quantity = this.touristGroups.reduce(
+        (acc, item) => {
+          return acc + item.quantity
+        },
+        0
+      );
+
+      // Национальности и их кол-во
+      const nationalities = this.touristGroups.map(_ => {
+        return `${_.nationality.codeA2}-${_.quantity}`
+      });
+
+
+      const supServices = this.selectedSuppServices.map(item => item.id).join(',');
+
+      const params = {
+        mode: 'restore',
+        /*country: '',*/
+        /*serviceGroup: this.selectedServiceGroup.id,
+        service: this.selectedService.id,*/
+        product: this.selectedPrice.price.id,
+        lng: this.CONFIG.lng,
+        participants: quantity,
+        nationalities: nationalities.join(','),
+        /*duration: this.selectedDuration.index,*/
+        servicePackage: this.selectedServicePackage.id ? this.selectedServicePackage.id : "",
+        supServices: supServices,
+        addressingCountry: this.delivery.type === 2 ? this.delivery.addressingCountry.codeA3 : "",
+        office: this.delivery.type === 3 ? this.delivery.branch.id : "",
+        postalService: this.selectedPostalService === null ? "" : this.selectedPostalService.id,
+        agnr: this.CONFIG.agnr,
+      }
+
+      // Очистить пустые параметры
+      Object.keys(params).forEach((k) => (params[k] === null || params[k] === "") && delete params[k]);
+
+      return params
+    },
     /**
      * Сбор данных модуля и переход в модуль заказа
      * @returns {boolean}
@@ -252,35 +377,14 @@ export default {
         return false
       }
 
-      const quantity = this.touristGroups.reduce(
-        (acc, item) => {
-          return acc + item.quantity
-        },
-        0
-      );
-
-      const supServices = this.selectedSuppServices.map(item => item.id).toString();
-
-      const params = {
-        mode: 'all',
-        /*country: '',*/
-        serviceGroup: this.selectedServiceGroup.id,
-        service: this.selectedService.id,
-        product: this.selectedPrice.price.id,
-        lng: this.CONFIG.lng,
-        participants: quantity,
-        duration: this.selectedDuration.index,
-        servicePackage: this.selectedServicePackage.id,
-        supServices: supServices,
-        addressingCountry: this.delivery.type === 2 ? this.delivery.addressingCountry.codeA3 : "",
-        office: this.delivery.type === 3 ? this.delivery.branch.id : "",
-        postalService: this.selectedPostalService === null ? "" : this.selectedPostalService.id,
-        agnr: this.CONFIG.agnr,
-      }
-      //console.log(params);
-      //console.log(new URLSearchParams(params).toString());
-      //document.location.href =  this.CONFIG.orderModuleUrl + '?' + new URLSearchParams(params).toString();
+      const params = this.collectData();
       window.open(this.CONFIG.orderModuleUrl + '?' + new URLSearchParams(params).toString(), '_blank')
+    },
+    // Обработка кнопки Angebot
+    // TODO: Отправка в API
+    processAngebot() {
+      const params = this.collectData();
+      window.open(document.location.href + '?' + new URLSearchParams(params).toString(), '_blank')
     },
     /**
      * Добавляет группу туристов
@@ -424,7 +528,7 @@ export default {
       await this.loadProductDetails();
 
       // установить страну
-      const country = this.countries.find(
+      const country = this.listCountries.find(
         (_) => _.codeA3 === this.productDetails.countryA3
       );
       if (country) {
@@ -790,6 +894,10 @@ export default {
      * Загружает детальное инфо по сервису
      */
     async loadServiceDetails() {
+      // Не запускать повторный такой же запрос
+      if (this.serviceDetails.id && this.selectedService.id === this.serviceDetails.id) {
+        return
+      }
       try {
         this.isLoading = true;
         let response = await fetch(
@@ -1013,6 +1121,10 @@ export default {
     },
 
     async sendCalculateAndValidate(index = null) {
+      // Выход, если запрещена калькуляция, при развороте модуля из get параметров
+      if (!this.allowCalculate) {
+        return
+      }
       this.currentEditTourist = index;
 
       if (!this.selectedPrice.price.id || !this.touristGroups.length) {
@@ -1180,8 +1292,15 @@ export default {
           throw new Error(pickupPoints.Message);
         }
         this.pickupPoints = pickupPoints.points;
-
-
+        // FIXME: mock
+        //this.pickupPoints = [];
+        // this.pickupPoints.push({
+        //   address: "Тестовый",
+        //   countryA3: "DEU",
+        //   id: "5",
+        //   name: "König тест",
+        //   workingTime: "9:00-17:00, Mo.-Fr."
+        // })
         // Выбор единственного филиала
        // this.preselectSinglePickupPoints();
 
@@ -1223,7 +1342,6 @@ export default {
         }
 
         this.postalServices = responseJSON.services;
-
 
         // Сброс выбранного почтового сервиса, если его нет в доступных сервисах
         const selectedPostalServiceIndex = this.postalServices.findIndex(
@@ -1551,18 +1669,18 @@ export default {
         //this.selectedPrice.price.id !== null ||
 
         if (await this.showResetConfirm(this.getResetConfirmMessage())) {
-          this._selectVisaType(item);
+          await this._selectVisaType(item);
           this.steps[0].showModalWhenChangeVisa = false;
         }
       } else {
-        this._selectVisaType(item);
+        await this._selectVisaType(item);
       }
     },
 
     /**
      * Выбор типа виз (группы или типа)
      */
-    _selectVisaType(item) {
+    async _selectVisaType(item) {
       if (item.type === "group") {
         this.selectedServiceGroup = item;
         this.selectedService = new constants.ServicesDefault();
@@ -1584,10 +1702,10 @@ export default {
 
         // Загружаем детали сервиса при выборе типа визы
         this.steps[1].showModalCorrectParticipant = true;
-        this.loadServiceDetails();
+        await this.loadServiceDetails();
         // Загрузка цен, если выбрана группа туристов
         if (this.touristGroups.length) {
-          this.loadStep2Data();
+          await this.loadStep2Data();
         }
 
         this.nextStep();
@@ -1713,9 +1831,9 @@ export default {
      * Удаляет участника под номером Index
      * @param {Number} index
      */
-    deleteTourist(index) {
+    async deleteTourist(index) {
       this.tourists.splice(index, 1);
-      this.sendCalculateAndValidate();
+      await this.sendCalculateAndValidate();
     },
 
     /* STEP 4 */
@@ -2247,16 +2365,29 @@ export default {
     meta.content = "telephone=no";
     head.appendChild(meta);
 
+    // Заполнение модуля данными, если переданы все необходимые Get параметры
+    const getParams = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
+
     // Грузим справочник стран
     await this.loadCountries();
 
     // Грузим справочник гражданств
     await this.loadNationalities();
+
     // Справочник стран доставки
     await this.loadAddressingCountries();
 
     // Справочник филиалов офиса
     await this.loadPickupPoints();
+
+
+    if (getParams.product && getParams.mode === "restore") {
+      await this.restoreData(getParams);
+    }
+
+
+
+
     setTimeout(() => {
       this.isLoading = false;
     }, 200)
@@ -2325,8 +2456,6 @@ export default {
       threshold: 0.25,
     });
     observerServices.observe(document.querySelector('#kv-block-1'));
-
-
   },
 };
 </script>
@@ -2628,6 +2757,7 @@ export default {
             @changeSuppService="changeSuppService"
             @calculate="sendCalculateAndValidate"
             v-if="productDetails.id"
+            ref="package"
           >
           </control-packages>
 
@@ -2735,6 +2865,7 @@ export default {
           <button
             class="kv-button kv-footer-buttons__button kv-footer-buttons__angebot"
             id="kv-button__angebot"
+            @click="processAngebot()"
           >Angebot</button>
         </div>
 
