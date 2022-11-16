@@ -33,33 +33,18 @@ import ControlDeliveryType from "@/components/Control/ControlDeliveryType.vue";
 // FIXME:
 import ControlTourists from "@/components/Control/ControlTourists.vue";
 import ControlTouristsItem from "@/components/Control/ControlTouristsItem.vue";
-
 import ControlNationality from "@/components/Control/ControlNationality.vue";
 import ControlTouristsGroup from "@/components/Control/ControlTouristsGroup.vue";
-
 import ControlDuration from "@/components/Control/ControlDuration.vue";
-
 import ControlPrice from "@/components/Control/ControlPrice.vue";
-
 import ControlPostal from "@/components/Control/ControlPostal.vue";
-
 import ControlPackages from "@/components/Control/ControlPackages.vue";
-
-
-//import mockPrices from "@/mock/prices";
-//import mockServiceDetails from "@/mock/serviceDetails";
-//import productDetails from "@/mock/productDetails";
-//import mockPostalServices from "@/mock/postalServices";
-//import pickupPoints from "@/mock/pickupPoints";
-
 import ControlDeliveryAddress from "@/components/Control/ControlDeliveryAddress.vue";
 import ReviewTotal from "@/components/ReviewTotal.vue";
 import ControlPickupPoints from "@/components/Control/ControlPickupPoints.vue";
 import ControlPriceTable from "@/components/Control/ControlPriceTable.vue";
-
 import KvAlert from "@/components/KvAlert.vue";
 import StatusBarInfoBottom from "@/components/StatusBar/StatusBarInfoBottom.vue"
-
 
 export default {
   name: "App",
@@ -76,11 +61,11 @@ export default {
     Loading,
     VueFinalModal,
     ModalsContainer,
-    vSelect,
+    //vSelect,
     ControlCountries,
     ControlServices,
-    ControlTourists,
-    ControlTouristsItem,
+    //ControlTourists,
+    //ControlTouristsItem,
     ControlNationality,
     ControlTouristsGroup,
     ControlDuration,
@@ -89,11 +74,16 @@ export default {
     ControlDeliveryType,
     ControlPostal,
     KvAlert,
-    StatusBarInfoBottom,
+    //StatusBarInfoBottom,
 
   },
   data: () => {
     return {
+      restore: { // Процесс разворота из параметров
+        block: '#kv-block-total', // Блок, к которому прокрутим после восстановления
+        hasError: false // Флаг наличия ошибки
+      },
+
       allowCalculate: true, // Разрешить калькуляцию
       uniqueKey: Date.now(),
       isMobile: false,
@@ -244,7 +234,23 @@ export default {
   },
 
   methods: {
+    /**
+     * Устанавливает ошибку при развороте модуля
+     * Ошибка устанавливается однократно
+     * Что бы прокрутиться к первому сбойному блоку
+     * @param {String} block - id блока
+     */
+    setRestoreError(block) {
+      if (this.restore.hasError) {
+        return
+      }
+      this.restore.hasError = true;
+      this.restore.block = block;
+    },
+
+    // Разворот модуля из Get-параметров
     async restoreData(getParams) {
+
       this.allowCalculate = false;
 
       this.CONFIG.mode = "default";
@@ -257,14 +263,27 @@ export default {
 
       nationalities.forEach(item => {
         const data = item.split("-");
-        this.touristGroups.push({
-          nationality: this.listNationalities.find(_ => _.codeA2 === data[0]),
-          quantity: +data[1],
-        });
+        const nationality = this.listNationalities.find(_ => _.codeA2 === data[0]);
+        if (nationality) {
+          this.touristGroups.push({
+            nationality: nationality,
+            quantity: +data[1],
+          });
+        } else {
+          this.setRestoreError('#kv-block-2');
+        }
       })
 
       this.CONFIG.product = getParams.product;
-      await this.setDefaultProduct();
+      if (!await this.setDefaultProduct()) {
+        this.setRestoreError('#kv-block-1');
+        this.showModal(
+          //this.$lng("common.checkFormPopup"),
+          'Ошибка во время разворота...Нужен текст',
+          this.$lng("common.error")
+        );
+        return
+      }
 
 
 
@@ -273,6 +292,8 @@ export default {
         if (pcg) {
           this.selectedServicePackage = pcg;
           this.$refs.package.selectPackage(pcg);
+        } else {
+          this.setRestoreError('#kv-block-4');
         }
       }
 
@@ -283,6 +304,8 @@ export default {
           const ss = this.productDetails.suppServices.find(item => item.id === id);
           if (ss) {
             this.selectedSuppServices.push(ss)
+          } else {
+            this.setRestoreError('#kv-block-4');
           }
         })
       }
@@ -295,6 +318,8 @@ export default {
         if (branch) {
           this.delivery.type = 3;
           this.delivery.branch = branch
+        } else {
+          this.setRestoreError('#kv-block-5');
         }
       }
 
@@ -316,12 +341,27 @@ export default {
             //this.selectedPostalService.id = getParams.postalService;
             this.steps[4].isValid = true;
             this.steps[0].showModalWhenChangeVisa = true
+          } else {
+            this.setRestoreError('#kv-block-5');
           }
+        } else {
+          this.setRestoreError('#kv-block-5');
         }
       }
 
       this.allowCalculate = true;
       await this.sendCalculateAndValidate();
+
+      // Прокручиваем к ошибочному блоку и выводим попап с ошибкой,
+      // Если ошибки нет -  к сводной информации
+      this.scrollTo(this.restore.block);
+      if (this.restore.hasError) {
+        this.showModal(
+          //this.$lng("common.checkFormPopup"),
+          'Ошибка во время разворота...Нужен текст',
+          this.$lng("common.error")
+        );
+      }
 
     },
     /**
@@ -526,6 +566,9 @@ export default {
 
       this.selectedPrice.price.id = this.CONFIG.product;
       await this.loadProductDetails();
+      if (!this.productDetails.serviceId) {
+        return false
+      }
 
       // установить страну
       const country = this.listCountries.find(
@@ -533,6 +576,8 @@ export default {
       );
       if (country) {
         await this.countryChange(country);
+      } else {
+        this.setRestoreError('#kv-block-1');
       }
 
       // установить типы виз
@@ -551,6 +596,8 @@ export default {
         }
 
         await this.selectVisaType(service);
+      } else {
+        this.setRestoreError('#kv-block-1');
       }
 
       // Повторно ставим продукт, т.к. он сбрасывается при смене типа виз
@@ -569,6 +616,7 @@ export default {
 
       if (duration === undefined) {
         duration = new constants.DurationDefault();
+        this.setRestoreError('#kv-block-3');
       }
       this.updateDuration(duration);
 
@@ -592,6 +640,8 @@ export default {
       );
       if (price && "price" in price) {
         priceValue = price.price;
+      } else {
+        this.setRestoreError('#kv-block-3');
       }
 
       const priceData = {
@@ -612,7 +662,7 @@ export default {
 
       // await this.sendCalculateAndValidate();
       this.currentStep = 3;
-      return false;
+      return true;
     },
 
     /**
@@ -2606,6 +2656,7 @@ export default {
 
         <!-- Step 3 -->
         <TheBlock
+          id="kv-block-3"
           icon="step_1"
           header="KOSTEN"
           class="kv-observer__product"
@@ -2738,6 +2789,7 @@ export default {
 
         <!-- Step 4 -->
         <TheBlock
+          id="kv-block-4"
           icon="step_1"
           header="TARIFAUSWAHL"
           @mouseover="handlePlusNationalityButton()"
@@ -2767,6 +2819,7 @@ export default {
 
         <!-- Step 5 -->
         <TheBlock
+          id="kv-block-5"
           icon="step_1"
           header="LIEFERUNG"
           @mouseover="handlePlusNationalityButton()"
@@ -2826,8 +2879,12 @@ export default {
         </TheBlock>
 
 
-        <div class="kv-observer__statusbar"
-             v-show="calculate.calculation.participants.length"></div>
+        <div
+          id="kv-block-total"
+          class="kv-observer__statusbar"
+          v-show="calculate.calculation.participants.length"
+        >
+        </div>
         <ReviewTotal
           :calculation="calculate.calculation"
           :totalAmount="totalAmount"
