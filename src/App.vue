@@ -31,8 +31,6 @@ import ControlServices from "@/components/Control/ControlServices.vue";
 import ControlDeliveryType from "@/components/Control/ControlDeliveryType.vue";
 
 // FIXME:
-import ControlTourists from "@/components/Control/ControlTourists.vue";
-import ControlTouristsItem from "@/components/Control/ControlTouristsItem.vue";
 import ControlNationality from "@/components/Control/ControlNationality.vue";
 import ControlTouristsGroup from "@/components/Control/ControlTouristsGroup.vue";
 import ControlDuration from "@/components/Control/ControlDuration.vue";

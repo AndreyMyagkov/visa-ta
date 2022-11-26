@@ -12,12 +12,12 @@
 
 
           <div class="kv-form__item kv-form__item_chb kv_height-100 kv-form__item-branch">
-            <label class="kv-form-radio"
+            <label class="kv-form-radio kv-custom-control"
                    :id="`kv-branch__${item.id}`">
 
               <input type="radio" name="branch" :checked="item.id === selected.id"  :value="item.id"  @change="changeBranch(item)">
-              <span class="kv-form-radio__mark">
-                  <svg><use href="#kv-icons_form_radio"></use></svg>
+              <span class="kv-form-radio__mark kv-custom-control__icon-radio">
+
               </span>
               <span>
                     <div class="kv-form-radio__title">{{item.name}}</div>

@@ -42,16 +42,14 @@
                   <div class="kv-processing-day__item" v-for="(price, j) in item.prices" :key="`price-${j}`">
 
                     <div class="kv-processing-day-chb" @click="setPrice({price: price, info: item.info, index: i})" :id="`kv-btn-product__${price.id}`">
-                      <input type="radio"
-                             name="kv-processing-day-chb"
-                             aria-label="checkbox"
-                             :checked="price.id === setup.price.price.id"
-                             :disabled="price.price === null"
-                      >
-                      <span class="kv-processing-day-chb__inner">
-                        <span class="kv-processing-day-chb__box">
-                          <svg><use href="#kv-icons_radio"></use></svg>
-                        </span>
+                      <span class="kv-processing-day-chb__inner  kv-custom-control">
+                        <input type="radio"
+                               name="kv-processing-day-chb"
+                               aria-label="checkbox"
+                               :checked="price.id === setup.price.price.id"
+                               :disabled="price.price === null"
+                        >
+                        <span class="kv-processing-day-chb__box kv-custom-control__icon-radio"></span>
                         <span class="kv-processing-day-chb__caption">
                           <span class="kv-processing-day-chb__text">
                             <template v-if="price.m !== 'm'">{{price.m}}-{{ $lng('step2.multiplicity') }}</template>

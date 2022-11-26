@@ -11,14 +11,12 @@
            v-for="(item, i) in row" :key="i">
 
         <div class="kv-form__item kv-form__item_chb kv_height-100 kv-form__item-branch">
-          <label class="kv-form-radio"
+          <label class="kv-form-radio kv-custom-control"
 
                  :id="`kv-postal__${item.id}`">
 
-            <input type="radio" name="postal" :checked="item.id === selected.id"  :value="item.id"  @change="postalChange(item)" :id="`kv-branch__${item.id}`">
-            <span class="kv-form-radio__mark">
-                  <svg><use href="#kv-icons_form_radio"></use></svg>
-              </span>
+            <input type="radio" name="postald" :checked="item.id === selected.id"  :value="item.id"  @change="postalChange(item)" :id="`kv-branch__${item.id}`">
+            <span class="kv-form-radio__mark kv-custom-control__icon-radio"></span>
             <span>
                 <div class="kv-form-radio__title">{{item.name}}</div>
                 <div class="kv-form-radio__text" v-html="item.description"></div>
@@ -49,14 +47,13 @@
            v-for="(item, i) in postalServices" :key="`mobile-${i}`">
 
         <div class="kv-form__item kv-form__item_chb kv_height-100 kv-form__item-branch">
-          <label class="kv-form-radio"
+          <label class="kv-form-radio kv-custom-control"
 
                  :id="`kv-postal__${item.id}`">
 
-            <input type="radio" name="postal" :checked="item.id === selected.id"  :value="item.id"  @change="postalChange(item)" :id="`kv-branch__${item.id}`">
-            <span class="kv-form-radio__mark">
-                  <svg><use href="#kv-icons_form_radio"></use></svg>
-              </span>
+            <input type="radio" name="postal" :checked="item.id === selected.id"  :value="item.id"  @change="postalChange(item)" :id="`kv-branch__m${item.id}`">
+            <span class="kv-form-radio__mark kv-custom-control__icon-radio"></span>
+
             <span>
                 <div class="kv-form-radio__title">{{item.name}}</div>
                 <div class="kv-form-radio__text" v-html="item.description"></div>

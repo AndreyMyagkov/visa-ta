@@ -73,17 +73,18 @@
                 })"
               v-if="td.price"
             >
-              <input
-                type="radio"
-                name="ptable"
-                :value="td.id"
-                class="kv-ptable-data__input"
-                :checked="td.id === setup.price.price.id"
-                :disabled="!td.price"
-              >
-              <span class="kv-ptable-data__mark">
-                <svg width="20" height="20"><use href="#kv-icons_form_radio"></use></svg>
+              <span class="kv-ptable-data__mark kv-custom-control">
+                <input
+                  type="radio"
+                  name="ptable"
+                  :value="td.id"
+                  class="kv-ptable-data__input"
+                  :checked="td.id === setup.price.price.id"
+                  :disabled="!td.price"
+                >
+                <span class="kv-custom-control__icon-radio"></span>
               </span>
+
               <span class="kv-ptable-price">
                 <span class="kv-ptable-price__value">{{ td.price }}</span>
                 <span class="kv-ptable-price__label">€</span>
