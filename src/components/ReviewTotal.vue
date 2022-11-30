@@ -37,7 +37,7 @@
         <div class="kv-cart-table">
 
           <div class="kv-cart-table__row" v-for="(item, i) in calculation.participants" :key="i">
-            <div class="kv-cart-table__item" id="kv-summary-t-index"><svg width="16" height="16"><use href="#kv-icons_user"></use></svg></div>
+            <div class="kv-cart-table__item kv-flex-align-center" style="padding-right: 0" id="kv-summary-t-index"><svg width="16" height="16"><use href="#kv-icons_user"></use></svg></div>
             <div class="kv-cart-table__item kv-cart-table__item_col" :id="`kv-summary-t-name-${item.nr}`"></div>
             <div class="kv-price kv-cart-table__item">
               <span  v-if="item.price !== null" :id="`kv-summary-t-price-${item.nr}`" class="kv-price__value">{{ priceFormat(item.price) }}</span>

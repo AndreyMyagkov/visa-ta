@@ -6022,3 +6022,8 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app input[type="tel"] {
   border-radius: 6px;
 }
+
+.kv-flex-align-center {
+  display: flex;
+  align-items: center;
+}

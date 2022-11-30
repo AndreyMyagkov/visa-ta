@@ -368,12 +368,12 @@ export default {
      */
     collectData() {
       //Кол-во участников
-      const quantity = this.touristGroups.reduce(
-        (acc, item) => {
-          return acc + item.quantity
-        },
-        0
-      );
+      // const quantity = this.touristGroups.reduce(
+      //   (acc, item) => {
+      //     return acc + item.quantity
+      //   },
+      //   0
+      // );
 
       // Национальности и их кол-во
       const nationalities = this.touristGroups.map(_ => {
@@ -390,7 +390,7 @@ export default {
         service: this.selectedService.id,*/
         product: this.selectedPrice.price.id,
         lng: this.CONFIG.lng,
-        participants: quantity,
+        //participants: quantity,
         nationalities: nationalities.join(','),
         /*duration: this.selectedDuration.index,*/
         servicePackage: this.selectedServicePackage.id ? this.selectedServicePackage.id : "",
@@ -2197,6 +2197,18 @@ export default {
 
   computed: {
     /**
+     * Возвращает суммарное кол-во всех туристов
+     * @returns {Number}
+     */
+    totalTourists() {
+      return this.touristGroups.reduce(
+        (acc, item) => {
+          return acc + item.quantity
+        },
+        0
+      );
+    },
+    /**
      * Флаг полного и корректного заполнения всей формы
      * Выбран способ доставки и необходимые данные
      */
@@ -2535,6 +2547,7 @@ export default {
           :calculation="calculate.calculation"
           :tourists="tourists"
           :totalAmount="totalAmount"
+          :totalTourists="totalTourists"
         >
         </StatusBarCart>
       </template>
