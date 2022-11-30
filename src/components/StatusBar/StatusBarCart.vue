@@ -22,7 +22,7 @@
       <div class="kv-cart-table">
 
         <div class="kv-cart-table__row" v-for="(item, i) in calculation.participants" :key="i">
-          <div class="kv-cart-table__item">{{ (i+1) }}</div>
+          <div class="kv-cart-table__item"><svg width="16" height="16"><use href="#kv-icons_user"></use></svg></div>
           <div class="kv-cart-table__item kv-cart-table__item_col">{{ item.gender }} {{item.name}} {{item.sname}}</div>
           <div class="kv-price kv-cart-table__item">
             <span  v-if="calculation.participants[i] && (calculation.participants[i].price !== null)" class="kv-price__value">{{priceFormat(calculation.participants[i].price)}}</span>

@@ -3826,6 +3826,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-cart-table__item,
 .kv-app .kv-cart-table__item .kv-price__currency {
   color: var(--c-second_dark);
+  fill: var(--c-second_dark);
 }
 
 .kv-app .kv-price_second {
@@ -5867,11 +5868,12 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   border-radius: 0 6px 6px 0;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 16px 20px;
   cursor: pointer;
 
 }
-.kv-block1-info__info {
+.kv-block1-info__info,
+.kv-block1-info__info  *{
   font-size: 18px;
   line-height: 25px;
 }
@@ -5885,6 +5887,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 }
 .kv-block-info__action * {
   cursor: pointer;
+  font-size: 18px;
 }
 .kv-kv-block-info__icon {
   fill: var(--dark-grey_bdv);
