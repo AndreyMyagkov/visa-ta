@@ -1,7 +1,8 @@
 <template>
   <div class="kv-content__body">
 
-    <div class="kv-content__text" v-html="data.servicePackagesInfo"></div>
+    <!--<div class="kv-content__text" v-html="data.servicePackagesInfo"></div>-->
+    <TextClamp class="kv-content__text" :text="data.servicePackagesInfo" lines="2"></TextClamp>
 
     <div
       class="kv-service-pack__wrapper"
@@ -160,7 +161,8 @@
           <div class="kv-service kv-services__item-inner">
             <div class="kv-service__main">
               <div class="kv-service__title">{{item.name}}</div>
-              <div class="kv-service__text" v-html="item.description"></div>
+              <!--<div class="kv-service__text" v-html="item.description"></div>-->
+              <TextClamp class="kv-service__text" :text="item.description" lines="2"></TextClamp>
             </div>
             <div class="kv-service__aside">
               <div class="kv-price kv-service__price">
@@ -309,8 +311,12 @@
 
 <script>
 import * as constants from "@/helpers/constants";
+import TextClamp from "@/components/UI/TextClamp.vue";
 export default {
   name: "controlPackages",
+  components: {
+    TextClamp
+  },
   props: {
     data: {
       type: Object,

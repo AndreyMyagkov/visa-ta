@@ -1,4 +1,6 @@
 <script setup>
+  import TextClamp from "@/components/UI/TextClamp.vue";
+
   function handlePlusNationalityButton() {
     //$refs.kvblock2.$el.classList.remove('kv-is-hover')
     document.querySelector('#kv-block-2').classList.remove('kv-is-hover')
@@ -2808,7 +2810,8 @@ export default {
           v-if="selectedPrice.price.id && productDetails.id && (productDetails.servicePackages || productDetails.suppServices)"
         >
 
-          <div class="kv-packages-text kv-user-text"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s </div>
+          <div class="kv-packages-text kv-user-text"></div>
+          <TextClamp class="kv-packages-text" text="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry" lines="2" style="--bg: rgba(242 251 253)"></TextClamp>
 
           <control-packages
             :data="productDetails"
