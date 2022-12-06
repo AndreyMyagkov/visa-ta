@@ -1,5 +1,14 @@
 <template>
-  <carousel :settings="sliderDurations" :breakpoints="breakpoints" style="margin: 25px 15px 0px 15px">
+  <carousel
+    :settings="sliderDurations"
+    :breakpoints="breakpoints"
+    ref="sliderDurationsRef"
+    :class="{
+      'is-empty':  !navigation
+    }"
+    style="margin: 25px 15px 0 15px"
+    @init="sliderDurationsInit"
+  >
     <slide
       class="story-carousel__slide"
       v-for="(item, index) in list"
@@ -61,6 +70,7 @@ export default {
   emits: ["change", "showModal"],
   data() {
     return {
+      navigation: true,
       error: false,
       sliderDurations: {
         modelValue:
@@ -82,7 +92,15 @@ export default {
       this.error = false;
       this.$emit("change", item);
     },
-  }
+    sliderDurationsInit() {
+      console.log('инит')
+      console.log(this.$refs.sliderDurationsRef.data.maxSlide);
+      console.log(this.list);
+      if (this.$refs.sliderDurationsRef.data.maxSlide === -1) {
+        this.navigation = false;
+      }
+    }
+  },
 };
 </script>
 

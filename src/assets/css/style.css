@@ -5646,8 +5646,10 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-staying .kv-slider-pagination {
   bottom: -12px;
 }
-.is-empty .hooper-navigation,
-.is-empty .kv-slider-pagination {
+
+.is-empty .carousel__prev,
+.is-empty .carousel__next,
+.kv-slider-navigation:has(.carousel__prev--in-active + .carousel__next--in-active){
   display: none;
 }
 .kv-app .kv-slider-pagination,
