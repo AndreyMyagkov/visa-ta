@@ -215,7 +215,7 @@ export const lng = {
         "step2": {
             "crumb": "Aufenthaltsdauer",
             "header": "Расчет примерной стоимости для одного человека",
-            "processingText": "<b>СРОК ДЕЙСТВИЯ:</b> статический текст is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "processingText": "<b>Важно</b> Обратите внимание, что маршруты доставки документов и возврата вам визы должны быть рассчитаны дополнительно к выбранному времени обработки. Мы начинаем обработку вашего заказа, когда у нас есть все необходимые документы для подачи заявления на визу. Время обработки может быть продлено посольством в отдельных случаях. Неполный пакет документов увеличивает время обработки.",
             "btnInfo": "Инфо-кнопка",
             "modalInfoHeader": "Информация",
             "modalDefaultInfo": "СРОК ПРЕБЫВАНИЯ",
@@ -369,7 +369,7 @@ export const lng = {
         "step2": {
             "crumb": "Aufenthaltsdauer",
             "header": "Расчет примерной стоимости для одного человека",
-            "processingText": "<b>СРОК ДЕЙСТВИЯ:</b> статический текст is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "processingText": "<b>Important</b> Please note that the shipping routes for documents and the return of the visa to you must be calculated in addition to the selected processing time. We start processing your order when we have all the necessary documents to apply for your visa. The processing time can be extended by the embassy in individual cases. An incomplete package of documents delays the processing time.",
             "btnInfo": "Инфо-кнопка",
             "modalInfoHeader": "Информация",
             "modalDefaultInfo": "VISA DURATION",
