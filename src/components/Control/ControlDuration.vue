@@ -30,6 +30,9 @@
     </slide>
 
     <template #addons>
+      <div class="kv-slider-navigation">
+        <navigation/>
+      </div>
       <div class="kv-slider-pagination">
       </div>
     </template>

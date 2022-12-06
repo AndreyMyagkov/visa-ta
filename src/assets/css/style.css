@@ -5651,11 +5651,12 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   display: none;
 }
 .kv-app .kv-slider-pagination,
-.kv-app[cq-max-w-991] .hooper-navigation {
+.kv-app[cq-max-w-480] .kv-slider-pagination,
+.kv-app[cq-max-w-480] .kv-slider-navigation {
   display: none;
 }
-.kv-app[cq-max-w-991] .kv-slider-pagination {
-  display: block;
+.kv-app[cq-max-w-480] .kv-slider-pagination {
+  /*display: block;*/
 }
 
 
@@ -5675,41 +5676,44 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .carousel__next {
   right: -45px;
 }
-.kv-processing-days .carousel .carousel__prev,
-.kv-processing-days .carousel .carousel__next {
+.kv-app .carousel .carousel__prev,
+.kv-app .carousel .carousel__next {
   height: 120px;
   padding: 0;
   background: #fff;
-
   width: 30px;
   text-align: center;
 }
-.kv-processing-days .carousel .carousel__prev {
+.kv-app .kv-staying .carousel .carousel__next,
+.kv-app .kv-staying .carousel .carousel__prev{
+  height: 85px;
+}
+.kv-app .carousel .carousel__prev {
   border-radius: 0 50px 50px 0px;
 }
-.kv-processing-days .carousel .carousel__next {
+.kv-app .carousel .carousel__next {
   border-radius: 50px 0px 0px 50px;
 }
-.carousel .carousel__next svg,
-.carousel .carousel__prev svg {
+.kv-app .carousel .carousel__next svg,
+.kv-app .carousel .carousel__prev svg {
   fill: var(--c-second);
   width: 24px;
   display: none;
 }
 
-.kv-processing-days .carousel .carousel__prev:after,
-.kv-processing-days .carousel .carousel__next:after {
+.kv-app .carousel .carousel__prev:after,
+.kv-app .carousel .carousel__next:after {
   content: '';
   display: block;
   width: 16px;
   height: 16px;
 }
 
-.kv-processing-days .carousel .carousel__prev:after {
+.kv-app .carousel .carousel__prev:after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M12,15.88a.4.4,0,0,1-.27-.11l-7.5-7.5a.4.4,0,0,1,0-.54l7.5-7.5a.4.4,0,0,1,.54,0,.4.4,0,0,1,0,.54L5,8l7.24,7.23a.4.4,0,0,1,0,.54A.4.4,0,0,1,12,15.88Z' fill='%23406A72'/%3E%3C/svg%3E");
 }
 
-.kv-processing-days .carousel .carousel__next:after {
+.kv-app .carousel .carousel__next:after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5.13a.39.39,0,0,1,.27.1l7.49,7.5a.38.38,0,0,1,0,.54l-7.49,7.5a.38.38,0,0,1-.54-.54L11.47,8,4.23.77a.4.4,0,0,1,0-.54A.39.39,0,0,1,4.5.13Z' fill='%23406A72'/%3E%3C/svg%3E");
 }
 

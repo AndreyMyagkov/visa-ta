@@ -27,7 +27,8 @@
                 'kv-processing-day_active': isActiveCurrentPriceBlock(i),
                 'kv-processing-day_disabled': !isDisabledCurrentPrice(i),
                 'kv-processing-day_blocked': isBlockedCurrentPrice(i),
-                'kv-processing-day_error': error.price
+                'kv-processing-day_error': error.price,
+                'kv-processing-day_long-price': isHasLongPrice
               }">
 
                 <div class="kv-processing-day__header">
@@ -94,7 +95,7 @@
               <navigation/>
             </div>
             <div class="kv-slider-pagination">
-              <pagination/>
+
             </div>
           </template>
         </carousel>
@@ -371,6 +372,28 @@ export default {
 
       return tmpArr.reverse();
     },
+    /**
+     * Возвращает наличие прайса с большим кол-м символов
+     */
+    isHasLongPrice() {
+      const MAX_LENGTH = 4;
+      let result = false;
+      for (let d = 0; d < this.serviceDetails.processDurations.length; d++) {
+        // Цикл по длительности обработки
+        for (let m = 0; m < this.selectedDurationsMultipliciesLength; m++) {
+          const product = this.processesArr[m][d];
+          const price = this.getPriceByProductId(product);
+          if (price && price.toString().replace(',', '').replace('.', '').length > MAX_LENGTH) {
+            result = true;
+            break;
+          }
+        }
+        if (result) {
+          break
+        }
+      }
+      return result
+    }
 
   },
 
@@ -403,6 +426,14 @@ export default {
 .kv-app .kv-staying-chb {
   width: 100%;
   justify-content: space-between;
+}
+
+.kv-app .kv-processing-day_long-price .kv-processing-day-chb__caption {
+  flex-wrap: wrap;
+}
+.kv-app  .kv-processing-day_long-price .kv-processing-day-chb__caption > span {
+  width: 100%;
+  flex: 1 0 100%;
 }
 
 </style>
