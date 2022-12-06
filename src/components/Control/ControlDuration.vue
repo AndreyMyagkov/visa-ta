@@ -31,7 +31,6 @@
 
     <template #addons>
       <div class="kv-slider-pagination">
-        <pagination/>
       </div>
     </template>
   </carousel>
@@ -39,13 +38,13 @@
 
 <script>
 import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { Carousel, Slide, /*Pagination,*/ Navigation } from "vue3-carousel";
 export default {
   name: "ControlDuration",
   components: {
     Carousel,
     Slide,
-    Pagination,
+    /*Pagination,*/
     Navigation,
   },
   props: {
@@ -63,16 +62,14 @@ export default {
       sliderDurations: {
         modelValue:
           this.selected.index === null ? 0 : this.selected.index,
-        itemsToShow: 1,
-        snapAlign: "start",
-        //trimWhiteSpace: true,
-        //wheelControl: false,
+        itemsToShow: 1.20,
+        snapAlign: "center",
       },
       breakpoints: {
-        500: { itemsToShow: 2 },
-        600: { itemsToShow: 3 },
-        800: { itemsToShow: 4 },
-        1000: { itemsToShow: 5 },
+        580: { itemsToShow: 2, snapAlign: "start"},
+        650: { itemsToShow: 3, snapAlign: "start"},
+        800: { itemsToShow: 4, snapAlign: "start" },
+        1000: { itemsToShow: 5, snapAlign: "start" },
       }
     };
   },

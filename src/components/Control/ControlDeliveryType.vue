@@ -1,7 +1,7 @@
 <template>
-  <div class="kv-row kv-mb-30">
+  <div class="kv-row kv-mb-20">
     <template v-for="item in delivery" :key="item" >
-      <div class="kv-col-12 kv-col-md-4" v-if="!(item.id === 1 && !isDigital)">
+      <div class="kv-col-12 kv-col-md-4 kv-mb-10" v-if="!(item.id === 1 && !isDigital)">
         <button
           class="kv-button kv-button__delivery-type"
           :class="{
@@ -61,6 +61,7 @@ export default {
   border-radius: 6px;
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 .kv-button__delivery-type_selected {

@@ -89,7 +89,7 @@ export default {
   background-color: var(--background-green_bdv);
   border: 1px solid rgba(48, 197, 75, 0.5);
   border-radius: 6px;
-  padding: 16px 40px 17px 20px;
+  padding: 16px 20px 17px 20px;
 }
 .kv-tg__row {
   display: flex;
@@ -109,5 +109,17 @@ export default {
 }
 .kv-alert {
   min-height: 100%;
+}
+
+@container kvoffer (max-width: 500px) {
+  .kv-tg__row {
+    flex-wrap: wrap;
+  }
+  .kv-tg__title {
+    flex: 1 0 auto;
+  }
+  .kv-tg__quality {
+    margin: 5px auto 0;
+  }
 }
 </style>

@@ -144,16 +144,13 @@ export default {
       constants,
       formatter,
       sliderPrice: {
-        snapAlign: "start",
         modelValue: this.setup.price.index === null ? 0 : this.setup.price.index,
-        itemsToShow: 1,
-        // trimWhiteSpace:true,
-        // wheelControl: false,
+        itemsToShow: 1.20,
+        snapAlign: "center",
         breakpoints: {
-          500: {itemsToShow: 1},
-          600: {itemsToShow: 2},
-          900: {itemsToShow: 3},
-          1100: {itemsToShow: 4}
+          580: {itemsToShow: 2, snapAlign: "start"},
+          900: {itemsToShow: 3, snapAlign: "start"},
+          1100: {itemsToShow: 4, snapAlign: "start"}
         }
       },
       // Флаги ошибок

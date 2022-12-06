@@ -2683,7 +2683,7 @@ export default {
 
           <template #header-aside>
             <div class="kv-block-info__action">
-              <span>Изменить отображение</span>
+              <span class="kv-block-info__action__label">Изменить отображение</span>
               <svg
                 class="kv-kv-block-info__icon kv-kv-block-info__icon_card"
                 :class="{'active': steps[1].priceMode === 'cards'}"

@@ -41,6 +41,8 @@
     --dark-grey_bdv: #406A72;
     --blue_bdv_50: rgba(0, 179, 212, 0.5);
     --background-green_bdv: #EBFAED;
+  container-type: inline-size;
+  container-name: kvoffer;
 }
 /*.kv-app, .kv-app * {*/
 /*  all: revert;*/
@@ -2453,6 +2455,10 @@
 
 .kv-app.kv-app[cq-max-w-640] .kv-content__btn {
     padding: 8px;
+}
+
+.kv-app.kv-app[cq-max-w-480] .kv-content__title {
+  font-size: 18px;
 }
 
 .kv-app .kv-buch {
@@ -6027,3 +6033,13 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   display: flex;
   align-items: center;
 }
+
+
+/* small screen */
+@container kvoffer (max-width: 550px) {
+  .kv-block-info__action__label {
+    display: none;
+  }
+}
+
+
