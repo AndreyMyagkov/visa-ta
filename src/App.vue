@@ -2734,7 +2734,14 @@ export default {
           <!-- Processing-->
           <div class="kv-processing">
             <div class="kv-processing__caption">
-              <div class="kv-processing__text kv-user-text" v-html="$lng('step2.processingText')"></div>
+              <!--<div class="kv-processing__text kv-user-text" v-html="$lng('step2.processingText')"></div>-->
+              <TextClamp
+                class="kv-processing__text"
+                :text="$lng('step2.processingText')"
+                lines="2"
+                :max-width="640"
+                style="--bg: rgba(242 251 253)"
+              ></TextClamp>
             </div>
           </div>
           <!-- /Processing-->
