@@ -3260,6 +3260,9 @@
 .kv-app .kv-processing-day.kv-processing-day_disabled .kv-processing-day__header {
     background-color: var(--c-disabled_dark);
 }
+.kv-app .kv-processing-day.kv-processing-day_disabled .kv-processing-day__body {
+  border-color: #d1d1d1;
+}
 
 .kv-app .kv-processing-day.kv-processing-day_disabled .kv-processing-day__text {
     display: -webkit-box;
