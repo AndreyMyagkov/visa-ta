@@ -2,7 +2,7 @@
   <div class="kv-content__body">
 
     <!--<div class="kv-content__text" v-html="data.servicePackagesInfo"></div>-->
-    <TextClamp class="kv-content__text" :text="data.servicePackagesInfo" lines="2"></TextClamp>
+    <TextClamp class="kv-content__text" :text="data.servicePackagesInfo" lines="2" style="--bg: rgba(242 251 253)"></TextClamp>
 
     <div
       class="kv-service-pack__wrapper"
