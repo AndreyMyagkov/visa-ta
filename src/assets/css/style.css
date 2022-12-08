@@ -6046,10 +6046,15 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 
 
 /* small screen */
+/*
 @container kvoffer (max-width: 550px) {
   .kv-block-info__action__label {
     display: none;
   }
+}
+*/
+.kv-app[cq-max-w-480] .kv-block-info__action__label {
+  display: none;
 }
 
 
