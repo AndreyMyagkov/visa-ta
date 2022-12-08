@@ -5061,11 +5061,12 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app.kv-app[cq-max-w-991] .kv-service-pack__header .kv-services-price_showed:not(.kv-services-price_active) {
     border: 2px solid var(--c-prim);
     border-bottom: none;
+  border-bottom: 1px solid var(--c-prim);
 }
 
 .kv-app.kv-app[cq-max-w-991] .kv-service-pack__header .kv-services-price_active {
     border: 2px solid var(--c-success);
-    border-bottom: none;
+  border-bottom: 1px solid var(--c-success);
 }
 
 .kv-app.kv-app[cq-max-w-991] .kv-service-pack__footer .kv-services-price_showed:not(.kv-services-price_active) {
@@ -5223,7 +5224,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 
 .kv-app .kv-service-pack__header .kv-services-price {
     border-radius: 0;
-    border-bottom: none;
+  border-bottom-width: 1px;
 }
 
 .kv-app .kv-service-pack_empty .kv-service-pack__header,
