@@ -157,7 +157,7 @@
       <!-- Services -->
       <div class="kv-services kv-services-showed">
         <!-- Services item-->
-        <div class="kv-services__item" data-cq-max-w="991" v-for="(item, i) in data.suppServices" :key="item.id">
+        <div class="kv-services__item"  v-for="(item, i) in data.suppServices" :key="item.id">
           <div class="kv-service kv-services__item-inner">
             <div class="kv-service__main">
               <div class="kv-service__title">{{item.name}}</div>

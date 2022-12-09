@@ -2526,7 +2526,7 @@ export default {
     id="kv-app"
     class="kv-app"
     notranslate
-    data-cq-max-w="991, 640, 480"
+    data-cq-max-w="991, 768, 640, 480"
     data-cq-min-w="991, 640, 480"
   >
     <iconSprite />
