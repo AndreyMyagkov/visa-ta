@@ -38,8 +38,8 @@
       </div>
     </slide>
 
-    <template #addons>
-      <div class="kv-slider-navigation">
+    <template #addons="{ currentSlide }">
+      <div class="kv-slider-navigation" v-show="currentSlide !== -1">
         <navigation/>
       </div>
       <div class="kv-slider-pagination">
@@ -79,7 +79,7 @@ export default {
         snapAlign: "center",
       },
       breakpoints: {
-        580: { itemsToShow: 2, snapAlign: "start"},
+        600: { itemsToShow: 2, snapAlign: "start"},
         650: { itemsToShow: 3, snapAlign: "start"},
         800: { itemsToShow: 4, snapAlign: "start" },
         1000: { itemsToShow: 5, snapAlign: "start" },

@@ -3410,9 +3410,9 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     font-size: 15px;
     line-height: 20px;
     color: var(--c-second);
-    width: 87px;
+    width: 80px;
     -webkit-box-flex: 0;
-    flex: 0 0 87px;
+    flex: 0 0 80px;
 }
 
 .kv-app .kv-processing-day-chb .kv-processing-day-chb__text:not(:last-child) {
@@ -5665,6 +5665,12 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   /*display: block;*/
 }
 
+@media screen and (max-width: 599px) {
+  .kv-slider-pagination,
+  .kv-slider-navigation {
+    display: none;
+  }
+}
 
 .kv-app .carousel__next, .kv-app .carousel__prev {
   background-color: transparent;

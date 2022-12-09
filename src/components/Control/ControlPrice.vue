@@ -90,8 +90,8 @@
             </div>
           </slide>
           <!-- day -->
-          <template #addons>
-            <div class="kv-slider-navigation">
+          <template  #addons="{ currentSlide }">
+            <div class="kv-slider-navigation" v-show="currentSlide !== -1">
               <navigation/>
             </div>
             <div class="kv-slider-pagination">
@@ -149,7 +149,7 @@ export default {
         itemsToShow: 1.20,
         snapAlign: "center",
         breakpoints: {
-          580: {itemsToShow: 2, snapAlign: "start"},
+          600: {itemsToShow: 2, snapAlign: "start"},
           900: {itemsToShow: 3, snapAlign: "start"},
           1100: {itemsToShow: 4, snapAlign: "start"}
         }
