@@ -2,23 +2,24 @@
   <div
     class="clamp"
     :class="{
-    clamp_clampable: clampable,
-      clamp_opened: opened,
+      clamp_clampable: clampable,
+      clamp_opened: clampable && opened,
     }"
     :style="`--line: ${!throttle ? lines : 100}`"
-    :id="`clamp-${rnd}`"
+
   >
-    <div class="clamp__text kv-user-text" v-html="text"></div>
+    <div class="clamp__text kv-user-text" ref="clamp" v-html="text"></div>
     <div class="clamp__buttons">
       <button class="clamp__btn" @click="opened = !opened">
         <svg width="12" height="7"><use href="#kv-icons_select"></use></svg>
-        <!--{{ opened ? 'See less' : 'See more' }}-->
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import {debounce} from "@/helpers/utils";
+
 export default {
   name: "TextClamp",
   props: {
@@ -37,37 +38,39 @@ export default {
       clampable: false,
       opened: false,
       throttle: false,
-      rnd: Math.floor(Math.random() * 10000),
-      observer: null
     };
   },
   methods: {
-    setClampable(element) {
-      if (this.maxWidth < element.offsetWidth) {
-        this.throttle = true
+
+    async setClampable() {
+      const element = this.$refs["clamp"];
+      if (element) {
+
+        this.throttle = this.maxWidth < element.offsetWidth;
+        await this.$nextTick();
+
+        if (this.opened) {
+          this.opened = false;
+          await this.$nextTick();
+
+          this.clampable = element.offsetHeight < element.scrollHeight && !this.throttle;
+          this.opened = true;
+        } else {
+          this.clampable = element.offsetHeight < element.scrollHeight && !this.throttle;
+        }
+
       }
-      this.clampable = element.offsetHeight < element.scrollHeight && !this.throttle;
-      //element.parentElement.classList[(element.scrollHeight > element.offsetHeight  && !this.throttle) ? 'add' : 'remove']('clamp_clampable');
 
     },
   },
   mounted() {
-
-    const element = document.querySelector(`#clamp-${this.rnd} .clamp__text`);
-    this.setClampable(element);
-
-    // const observer = new ResizeObserver(entries => {
-    //   for (let entry of entries) {
-    //     //entry.target.parentElement.classList[(entry.target.scrollHeight > entry.contentRect.height) ? 'add' : 'remove']('clamp_clampable');
-    //     //this.clampable = entry.contentRect.height < entry.target.scrollHeight;
-    //   }
-    // });
-    // this.observer = observer;
-    //
-    // observer.observe(element);
+    this.setClampable();
+    window.addEventListener("resize", debounce(this.setClampable, 100), {
+      passive: true,
+    });
   },
-  beforeDestroy() {
-    this.observer && this.observer.disconnect();
+  beforeUnmount() {
+    window.removeEventListener("resize", this.setClampable);
   },
 };
 </script>
@@ -116,6 +119,9 @@ export default {
 .clamp_clampable .clamp__buttons {
   display: block;
 }
+/*.clamp:not(.clamp_opened) .clamp__buttons {*/
+/*  display: block;*/
+/*}*/
 .clamp__btn {
   color: var(--dark-grey_bdv);
   fill: var(--dark-grey_bdv);
