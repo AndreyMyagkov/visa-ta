@@ -6,7 +6,7 @@
     :class="{
       'is-empty':  !navigation
     }"
-    style="margin: 25px 15px 0 15px"
+    style="margin: 15px 15px 0 15px"
     @init="sliderDurationsInit"
   >
     <slide

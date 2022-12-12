@@ -1074,14 +1074,14 @@ export default {
      * Выбор первого возможного сервис-пакета, если он еще не выбран
      */
     setFirstPackage() {
-      //console.log('setFirstPackage')
+      console.log('setFirstPackage')
       if (
         this.productDetails.servicePackages !== null &&
         this.productDetails.servicePackages.length &&
         this.selectedServicePackage.id === null
       ) {
-        //this.selectPackage(this.data.servicePackages[0])
-        //this.changePackage(this.productDetails.servicePackages[0]);
+        this.changePackage(this.productDetails.servicePackages[0]);
+        this.$refs.package?.selectPackage(this.productDetails.servicePackages[0]);
       }
     },
 
@@ -1099,6 +1099,8 @@ export default {
         //this.setFirstPackage();
         return false;
       }
+      // Сброс выбранных пакетов
+      this.resetStep4();
       try {
         this.isLoading = true;
         let response = await fetch(
@@ -1118,12 +1120,16 @@ export default {
                   })
                 }
         */
+        // Предвыбор первого пакета, если он есть и пакет еще не выбран
         this.productDetails = productDetails.product;
 
+        this.setFirstPackage();
 
 
         this.setResidenceRegionsRequired();
-        //this.setFirstPackage();
+
+
+
       } catch (err) {
         this.isLoading = false;
         console.log(err);
@@ -1912,6 +1918,7 @@ export default {
      * Сброс шага 4
      */
     resetStep4() {
+      console.log('сброс 4')
       this.selectedServicePackage = new constants.ServicePackage();
       this.selectedSuppServices = [];
     },
