@@ -342,12 +342,13 @@ export default {
      */
     prepareProductsPricesArr() {
       const tmpArr = [];
-      // Цикл по кратности
+      // Цикл по длительности обработки
       for (let d = 0; d < this.serviceDetails.processDurations.length; d++) {
 
         const tmpArr2 = [];
-        // Цикл по длительности обработки
+        // Цикл по  кратности
         for (let m = 0; m < this.selectedDurationsMultipliciesLength; m++) {
+
           const product = this.processesArr[m][d];
           tmpArr2.push(
               {

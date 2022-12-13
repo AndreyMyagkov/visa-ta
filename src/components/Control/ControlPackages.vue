@@ -420,8 +420,7 @@ export default {
       }
       this.$emit('changePackage',pcg);
       this.$emit('stepDataChange', 4);
-      console.log('selectPackage');
-      console.log(pcg);
+
       this.$emit('calculate');
     },
     /**
@@ -581,7 +580,6 @@ export default {
   },
   mounted(){
     //this.$emit('active');
-    console.log('mounted 4');
     this.packageSelected = Object.assign({}, this.selectedServicePackage);
     this.packageShowed = this.packageSelected.id
     //this.serviceSelected = this.selectedSuppServices.map(_ => _.id);

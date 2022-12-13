@@ -1758,7 +1758,15 @@ export default {
 
         // Загружаем детали сервиса при выборе типа визы
         this.steps[1].showModalCorrectParticipant = true;
+
+
+        // Сброс Duration, Price ???
+        this.selectedDuration = new constants.DurationDefault();
+        this.selectedPrice = new constants.PriceDefault();
+        this.calculate = new constants.calculateDefault();
+
         await this.loadServiceDetails();
+
         // Загрузка цен, если выбрана группа туристов
         if (this.touristGroups.length) {
           await this.loadStep2Data();
@@ -1775,10 +1783,7 @@ export default {
         _.selected = item.id === _.id;
       });
 
-      // Сброс Duration, Price ???
-      this.selectedDuration = new constants.DurationDefault();
-      this.selectedPrice = new constants.PriceDefault();
-      this.calculate = new constants.calculateDefault();
+
       this.resetStep4();
       this.resetStep6();
     },
