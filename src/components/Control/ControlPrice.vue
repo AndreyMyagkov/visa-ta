@@ -116,6 +116,7 @@ import * as formatter from "@/helpers/format";
 
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import {debounce} from "@/helpers/utils";
 
 export default {
   name: "ControlPrice",
@@ -303,6 +304,10 @@ export default {
         this.setPrice(priceObject);
       }
       return (priceCount === 1) ? id : false
+    },
+
+    onResize() {
+      this.$refs.hooperPrice.slideTo(this.setup.price.index)
     }
 
 
@@ -396,6 +401,15 @@ export default {
       return result
     }
 
+  },
+
+  mounted() {
+    window.addEventListener('resize', debounce(this.onResize, 200), {
+      passive: true,
+    })
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.onResize);
   },
 
 }

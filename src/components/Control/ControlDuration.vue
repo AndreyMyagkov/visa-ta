@@ -51,6 +51,7 @@
 <script>
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, /*Pagination,*/ Navigation } from "vue3-carousel";
+import {debounce} from "@/helpers/utils";
 export default {
   name: "ControlDuration",
   components: {
@@ -99,7 +100,18 @@ export default {
       if (this.$refs.sliderDurationsRef.data.maxSlide === -1) {
         this.navigation = false;
       }
+    },
+    onResize() {
+      this.$refs.sliderDurationsRef.slideTo(this.selected.index)
     }
+  },
+  mounted() {
+    window.addEventListener('resize', debounce(this.onResize, 200), {
+      passive: true,
+    })
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.onResize);
   },
 };
 </script>
