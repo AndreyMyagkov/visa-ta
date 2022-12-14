@@ -13,7 +13,8 @@
             :breakpoints="sliderPrice.breakpoints"
             ref="hooperPrice"
             :class="{
-              'kv-processing-days__inner-showed-action-label': setup.redirectUrl && setup.mode === 'price' && setup.price.price.id
+              'kv-processing-days__inner-showed-action-label': setup.redirectUrl && setup.mode === 'price' && setup.price.price.id,
+              'is-empty':  !navigation
           }">
 
           <!-- day -->
@@ -145,12 +146,13 @@ export default {
     return {
       constants,
       formatter,
+      navigation: true,
       sliderPrice: {
         modelValue: this.setup.price.index === null ? 0 : this.setup.price.index,
         itemsToShow: 1.20,
         snapAlign: "center",
         breakpoints: {
-          600: {itemsToShow: 2, snapAlign: "start"},
+          620: {itemsToShow: 2, snapAlign: "start"},
           900: {itemsToShow: 3, snapAlign: "start"},
           1100: {itemsToShow: 4, snapAlign: "start"}
         }
@@ -307,7 +309,16 @@ export default {
     },
 
     onResize() {
-      this.$refs.hooperPrice.slideTo(this.setup.price.index)
+      if (!this.$refs.hooperPrice) {
+        return
+      }
+      this.$refs.hooperPrice && this.$refs.hooperPrice.slideTo(this.setup.price.index);
+      if (this.$refs.hooperPrice.data.minSlide.value === 0 && this.$refs.hooperPrice.data.maxSlide.value <= 0) {
+        this.navigation = false;
+      } else {
+        this.navigation = true;
+      }
+
     }
 
 

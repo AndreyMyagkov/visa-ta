@@ -50,6 +50,7 @@
 
 <script>
 import "vue3-carousel/dist/carousel.css";
+
 import { Carousel, Slide, /*Pagination,*/ Navigation } from "vue3-carousel";
 import {debounce} from "@/helpers/utils";
 export default {
@@ -80,7 +81,7 @@ export default {
         snapAlign: "center",
       },
       breakpoints: {
-        600: { itemsToShow: 2, snapAlign: "start"},
+        620: { itemsToShow: 2, snapAlign: "start"},
         650: { itemsToShow: 3, snapAlign: "start"},
         800: { itemsToShow: 4, snapAlign: "start" },
         1000: { itemsToShow: 5, snapAlign: "start" },
@@ -102,7 +103,18 @@ export default {
       }
     },
     onResize() {
-      this.$refs.sliderDurationsRef.slideTo(this.selected.index)
+      if (!this.$refs.sliderDurationsRef) {
+        return
+      }
+      this.$refs.sliderDurationsRef && this.$refs.sliderDurationsRef.slideTo(this.selected.index);
+      console.log(this.$refs.sliderDurationsRef);
+      console.log('minSlide', this.$refs.sliderDurationsRef.data.minSlide.value);
+      console.log('minSlide', this.$refs.sliderDurationsRef.data.maxSlide.value);
+      if (this.$refs.sliderDurationsRef.data.minSlide.value === 0 && this.$refs.sliderDurationsRef.data.maxSlide.value <= 0) {
+        this.navigation = false;
+      } else {
+        this.navigation = true;
+      }
     }
   },
   mounted() {

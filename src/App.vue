@@ -1741,6 +1741,8 @@ export default {
         this.selectedServiceGroup = item;
         this.selectedService = new constants.ServicesDefault();
 
+        this.onChangeVisaType();
+
         setTimeout(() => {
           this.scrollTo("#kv-services", true);
         }, 200);
@@ -1760,10 +1762,7 @@ export default {
         this.steps[1].showModalCorrectParticipant = true;
 
 
-        // Сброс Duration, Price ???
-        this.selectedDuration = new constants.DurationDefault();
-        this.selectedPrice = new constants.PriceDefault();
-        this.calculate = new constants.calculateDefault();
+        this.onChangeVisaType();
 
         await this.loadServiceDetails();
 
@@ -1775,6 +1774,8 @@ export default {
         this.nextStep();
       }
 
+
+
       this.serviceGroups.forEach((_) => {
         _.selected = item.id === _.id;
       });
@@ -1783,6 +1784,22 @@ export default {
         _.selected = item.id === _.id;
       });
 
+
+
+    },
+
+    onChangeVisaType() {
+      // Сброс Duration, Price ???
+      this.selectedDuration = new constants.DurationDefault();
+      this.selectedPrice = new constants.PriceDefault();
+      this.calculate = new constants.calculateDefault();
+
+      this.serviceDetails = {
+        id: null,
+          durations: [],
+          processDurations: [],
+          products: []
+      }
 
       this.resetStep4();
       this.resetStep6();

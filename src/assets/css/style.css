@@ -5665,7 +5665,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   /*display: block;*/
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 619px) {
   .kv-slider-pagination,
   .kv-slider-navigation {
     display: none;
