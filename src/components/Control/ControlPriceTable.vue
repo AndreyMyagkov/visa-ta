@@ -333,6 +333,7 @@ export default {
 .kv-ptable-col {
   min-width: 140px;
   max-width: 300px;
+  flex: 1 1 auto;
 }
 
 .kv-ptable-processing {
@@ -407,7 +408,8 @@ export default {
 
 .kv-ptable-price {
   flex: 1 1 auto;
-  text-align: center;
+  text-align: right;
+  padding-right: 5px;
 }
 
 .kv-ptable-price__value {
