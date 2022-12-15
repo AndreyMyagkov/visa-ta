@@ -152,9 +152,9 @@ export default {
         itemsToShow: 1.20,
         snapAlign: "center",
         breakpoints: {
-          620: {itemsToShow: 2, snapAlign: "start"},
-          900: {itemsToShow: 3, snapAlign: "start"},
-          1100: {itemsToShow: 4, snapAlign: "start"}
+          630: {itemsToShow: 2, snapAlign: "start"},
+          950: {itemsToShow: 3, snapAlign: "start"},
+          1150: {itemsToShow: 4, snapAlign: "start"}
         }
       },
       // Флаги ошибок

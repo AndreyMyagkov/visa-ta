@@ -476,6 +476,9 @@ export default {
       this.selectedPrice = new constants.PriceDefault();
       this.selectedDuration = new constants.DurationDefault();
       this.calculate = new constants.calculateDefault();
+      if (!this.selectedService.id) {
+        return
+      }
       await this.loadPrices();
       await this.preselectSingleDuration();
       await this.sendCalculateAndValidate();
@@ -2661,6 +2664,7 @@ export default {
           class="kv-is-hover"
           ref="kvblock2"
           v-show="listNationalities.length
+            /*&& selectedService.id || touristGroups.length*/
             && selectedService.id
             && serviceDetails.durations.length
             && serviceDetails.processDurations.length

@@ -81,7 +81,7 @@ export default {
         snapAlign: "center",
       },
       breakpoints: {
-        620: { itemsToShow: 2, snapAlign: "start"},
+        630: { itemsToShow: 2, snapAlign: "start"},
         650: { itemsToShow: 3, snapAlign: "start"},
         800: { itemsToShow: 4, snapAlign: "start" },
         1000: { itemsToShow: 5, snapAlign: "start" },
@@ -107,9 +107,6 @@ export default {
         return
       }
       this.$refs.sliderDurationsRef && this.$refs.sliderDurationsRef.slideTo(this.selected.index);
-      console.log(this.$refs.sliderDurationsRef);
-      console.log('minSlide', this.$refs.sliderDurationsRef.data.minSlide.value);
-      console.log('minSlide', this.$refs.sliderDurationsRef.data.maxSlide.value);
       if (this.$refs.sliderDurationsRef.data.minSlide.value === 0 && this.$refs.sliderDurationsRef.data.maxSlide.value <= 0) {
         this.navigation = false;
       } else {

@@ -41,8 +41,8 @@
     --dark-grey_bdv: #406A72;
     --blue_bdv_50: rgba(0, 179, 212, 0.5);
     --background-green_bdv: #EBFAED;
-  container-type: inline-size;
-  container-name: kvoffer;
+ /* container-type: inline-size;
+  container-name: kvoffer;*/
 }
 /*.kv-app, .kv-app * {*/
 /*  all: revert;*/
@@ -5665,7 +5665,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
   /*display: block;*/
 }
 
-@media screen and (max-width: 619px) {
+@media screen and (max-width: 629px) {
   .kv-slider-pagination,
   .kv-slider-navigation {
     display: none;
