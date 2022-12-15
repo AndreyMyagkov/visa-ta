@@ -386,6 +386,7 @@ export default {
       const supServices = this.selectedSuppServices.map(item => item.id).join(',');
 
       const params = {
+        aaa: 'bbb',
         mode: 'restore',
         /*country: '',*/
         /*serviceGroup: this.selectedServiceGroup.id,
@@ -420,12 +421,82 @@ export default {
       const params = this.collectData();
       window.open(this.CONFIG.orderModuleUrl + '?' + new URLSearchParams(params).toString(), '_blank')
     },
-    // Обработка кнопки Angebot
-    // TODO: Отправка в API
-    processAngebot() {
-      const params = this.collectData();
-      window.open(document.location.href + '?' + new URLSearchParams(params).toString(), '_blank')
+
+    /**
+     * Обработка кнопки Angebot
+     */
+
+    async processAngebot() {
+
+      const code = await this.fetchAngebotCode();
+      if (!code) {
+        return false
+      }
+
+      window.open(`paxconnector://v2/addonservice/new/${code}`, '_blank');
+
+      //window.open(document.location.href + '?' + new URLSearchParams(params).toString(), '_blank')
     },
+
+    getSatusDescriptionString() {
+      let description = [];
+      description = `${this.selectedService.name}, ${this.selectedDuration.name}, `;
+      description += this.selectedPrice.price.m !== 'm' ? `${this.selectedPrice.price.m}-${this.$lng('step2.multiplicity')}` : this.$lng('step2.multiplicities');
+      description += this.selectedPrice.info.quantity + ' ' + this.$lng(`step2.dimension.${this.selectedPrice.info.dimension}`);
+
+      description += this.touristGroups.map(_ => {
+        return `${_.nationality.name} x ${_.quantity}`
+      }).join(',');
+
+      if (this.calculate.calculation.servicePackage !== null && this.calculate.calculation.servicePackage.participants.length) {
+        description += this.calculate.calculation.servicePackage.name + ', '
+      }
+      console.log(description);
+      return description
+    },
+
+    /**
+     * Получает код заказа на основе Amount, description, restoreUrl
+     */
+    async fetchAngebotCode() {
+
+      const restoreParams = this.collectData();
+      const restoreUrl = document.location.href + '?' + new URLSearchParams(restoreParams).toString();
+
+      const headers = new Headers();
+      headers.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const requestOptions = {
+        method: "POST",
+        headers: headers,
+        body: network.toFormUrlEncoded({
+          priceCents: this.calculate.amount * 100,
+          description: this.getSatusDescriptionString(),
+          restoreUrl: restoreUrl,
+        }),
+        redirect: "follow",
+      };
+      try {
+        this.isLoading = true;
+        let response = await fetch(
+          `${this.CONFIG.API_URL}createPaxConnectImportCode`,
+          requestOptions
+        );
+        let angebotCode = await response.json();
+        this.isLoading = false;
+        if (response.status >= 400 && response.status < 600) {
+          throw new Error(angebotCode.Message);
+        }
+
+        return angebotCode
+
+      } catch (err) {
+        this.isLoading = false;
+        console.log(err);
+        return '';
+      }
+    },
+
     /**
      * Добавляет группу туристов
      * @param data
@@ -1924,6 +1995,7 @@ export default {
     changePackage(pcg) {
       this.selectedServicePackage = pcg;
       this.steps[0].showModalWhenChangeVisa = true;
+      this.sendCalculateAndValidate();
     },
 
     /**
@@ -1938,6 +2010,7 @@ export default {
       }
       //this.selectedSuppServices = services;
       this.steps[0].showModalWhenChangeVisa = true;
+      this.sendCalculateAndValidate();
     },
     /**
      * Сброс шага 4
