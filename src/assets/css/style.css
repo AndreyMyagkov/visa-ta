@@ -2388,7 +2388,7 @@
     font-weight: bold;
     font-size: 20px;
     text-transform: uppercase;
-    line-height: 35px;
+    line-height: 1.75;
     color: var(--dark-grey_bdv);
     flex: 1 1 0%;
     min-width: 0;
@@ -3499,7 +3499,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     padding: 17px 16px;
     font-weight: normal;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 1.388;
     color: #00B3D4;
     text-transform: uppercase;
     margin-left: auto;
@@ -5847,9 +5847,9 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-country-text,
 .kv-packages-text,
 .kv-delivery-text{
-  margin-bottom: 30px;
+  margin-bottom: 2em;
   font-size: 15px;
-  line-height: 20px;
+  line-height: 1.33;
 }
 .vs__dropdown-toggle {
   padding: 12px 0 16px;
@@ -5897,11 +5897,11 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-block1-info__info,
 .kv-block1-info__info  *{
   font-size: 18px;
-  line-height: 25px;
+  line-height: 1.388;
 }
 .kv-block-info__action {
   font-size: 18px;
-  line-height: 25px;
+  line-height: 1.388;
   display: flex;
   gap: 10px;
   align-items: center;

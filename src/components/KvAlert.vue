@@ -60,7 +60,7 @@ export default {
    flex: 1 1 calc(100% - 28px);
    max-width: calc(100% - 28px);
    font-size: 15px;
-   line-height: 20px;
+   line-height: 1.333;
    color: var(--color);
  }
 </style>

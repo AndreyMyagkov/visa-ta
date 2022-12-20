@@ -98,7 +98,7 @@ export default {
 .kv-tg__title {
   flex: 1 1 200px;
   font-size: 18px;
-  line-height: 25px;
+  line-height: 1.3888;
 }
 .kv-tg__quality {
   flex: 0 1 130px;

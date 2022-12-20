@@ -43,6 +43,6 @@ export default {
   border-bottom: dashed 1px currentColor;
   cursor: pointer;
   font-size: 15px;
-  line-height: 20px;
+  line-height: 1.333;
 }
 </style>

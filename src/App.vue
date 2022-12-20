@@ -574,7 +574,7 @@ export default {
         const link = document.createElement("link");
         link.type = "text/css";
         link.rel = "stylesheet";
-        link.href = path;
+        link.href = __KV_CONFIG.css;
         head.appendChild(link);
       }
 
