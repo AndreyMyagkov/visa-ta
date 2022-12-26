@@ -27,7 +27,8 @@
             :class="{'kv-selected': item.index === setup.duration.index && mult === setup.price.price.m}"
             v-for="mult in item.multiplicities"
             :key="mult">
-            {{ mult }}-malige
+            <template v-if="mult !== 'm'">{{ mult }}-{{ $lng('step2.multiplicity') }}</template>
+            <template v-else>{{ $lng('step2.multiplicities') }}</template>
           </div>
         </div>
       </div>
@@ -36,9 +37,11 @@
     </div>
 
 
-    <div class="kv-ptable-right">
-      <div class="kv-ptable-col" v-for="(item, pd) in [...serviceDetails.processDurations].reverse()" :key="pd">
-        <!-- header -->
+    <div class="kv-ptable-right" style="width: calc(100% - 200px)">
+
+       <div class="kv-ptable-col" v-for="(item, pd) in [...serviceDetails.processDurations].reverse()" :key="pd">
+
+         <!-- header -->
         <div class="kv-ptable-processing"
             :class="{'kv-ptable-processing_selected': item.hours === setup.price.info.hours}"
         >
@@ -61,7 +64,7 @@
               }"
               v-for="(td, m) in data" :key="m"
           >
-            <label
+           <label
               class="kv-ptable-data__radio"
               :class="{
                 'kv-ptable-data_bordered': td.id === setup.price.price.id
@@ -88,8 +91,9 @@
               <span class="kv-ptable-price">
                 <span class="kv-ptable-price__value">{{ td.price }}</span>
                 <span class="kv-ptable-price__label">€</span>
-              </span>
-            </label>
+            </span>
+          </label>
+
           </div>
 
 
@@ -97,6 +101,8 @@
         <!-- /data -->
       </div>
     </div>
+
+
 
   </div>
 
@@ -245,7 +251,7 @@ export default {
   flex: 0 0 50%;
   padding: 0 5px;
   font-size: 15px;
-  line-height: 21px;
+  line-height: 1.4;
   text-align: center;
 }
 
@@ -309,6 +315,7 @@ export default {
   align-items: center;
   justify-content: center;
   border-bottom: solid 1px var(--blue_bdv_50);
+  padding: 0 5px;
 }
 .kv-ptable-multiplicity__item:last-child {
   border-bottom: none;
@@ -331,7 +338,7 @@ export default {
 }
 
 .kv-ptable-col {
-  min-width: 140px;
+  /*min-width: 140px;*/
   max-width: 300px;
   flex: 1 1 auto;
 }
@@ -347,20 +354,20 @@ export default {
 
 .kv-ptable-processing__title {
   font-size: 15px;
-  line-height: 21px;
+  line-height: 1.4;
   color: #fff;
 }
 
 .kv-ptable-processing__value {
   font-size: 28px;
-  line-height: 38px;
+  line-height: 1.36;
   font-weight: 700;
   color: #fff;
 }
 
 .kv-ptable-processing__label {
   font-size: 15px;
-  line-height: 21px;
+  line-height: 1.4;
   color: #fff;
 }
 
@@ -398,6 +405,7 @@ export default {
 }
 .kv-ptable-data__mark {
   flex: 0 0 50px;
+  min-width: 50px;
   max-width: 50px;
   padding: 0 10px 0 20px;
   fill: none;
@@ -414,14 +422,14 @@ export default {
 
 .kv-ptable-price__value {
   font-size: 24px;
-  line-height: 32px;
+  line-height: 1.333;
   font-weight: 700;
   margin-right: 3px;
 }
 
 .kv-ptable-price__label {
   font-size: 16px;
-  line-height: 22px;
+  line-height: 1.375;
 }
 
 .kv-ptable-processing_selected {

@@ -1039,7 +1039,6 @@
 
 .kv-app .kv-form__label {
     font-weight: normal;
-    line-height: 19px;
     position: absolute;
     top: 18px;
     left: 20px;
@@ -1048,7 +1047,7 @@
     transition: .3s;
     pointer-events: none;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 1.3889;
     color: var(--c-second_dark);
 }
 
@@ -1554,7 +1553,7 @@
 .kv-app .kv-form-radio .kv-form-radio__title {
     font-weight: bold;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 1.3889;
     color: var(--c-second_dark);
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -1572,7 +1571,7 @@
 .kv-app .kv-form-radio .kv-form-radio__text {
     font-weight: normal;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 1.333;
     color: var(--c-second);
     display: block;
 }
@@ -2033,7 +2032,7 @@
 
 .kv-app .kv-step-values {
     background-color: var(--c-disabled);
-    min-height: 40px;
+    /*min-height: 40px;*/
 }
 
 .kv-app .kv-step-values .kv-step-values__inner {
@@ -2193,7 +2192,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     color: var(--c-second);
 }
 
@@ -2342,7 +2341,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 1.3889;
     color: var(--c-second_dark);
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
@@ -2890,7 +2889,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 1.3889;
     color: var(--c-second);
     -ms-flex-item-align: center;
     align-self: center;
@@ -3143,7 +3142,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 22px;
+    line-height: 1.375;
     text-align: center;
     color: var(--c-main);
 }
@@ -3153,7 +3152,7 @@
     font-style: normal;
     font-weight: bold;
     font-size: 40px;
-    line-height: 48px;
+    line-height: 1.2;
     text-align: center;
     color: var(--c-main);
 }
@@ -3163,7 +3162,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     text-align: center;
     color: var(--c-main);
 }
@@ -3331,7 +3330,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 22px;
+    line-height: 1.375;
     color: var(--c-second);
 }
 
@@ -3339,7 +3338,7 @@
     font-weight: bold;
 }
 
-.kv-app .kv-calc-block .kv-calc-block__info {
+.kv-app  .kv-calc-block__info {
     margin-top: 20px;
 }
 
@@ -3408,11 +3407,10 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 1.333;
     color: var(--c-second);
-    width: 80px;
     -webkit-box-flex: 0;
-    flex: 0 0 80px;
+    flex: 0 0 87px;
 }
 
 .kv-app .kv-processing-day-chb .kv-processing-day-chb__text:not(:last-child) {
@@ -3424,7 +3422,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
-    line-height: 39px;
+    line-height: 1.3;
     color: var(--c-second);
     -webkit-box-flex: 0;
     -ms-flex: 0 0 75px;
@@ -3452,7 +3450,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     text-align: center;
     color: var(--c-second);
 }
@@ -3555,7 +3553,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-service__title {
     font-weight: 700;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 1.3889;
     margin-bottom: 5px;
 }
 
@@ -3582,7 +3580,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-service__caption {
     font-weight: normal;
     font-size: 14px;
-    line-height: 19px;
+    line-height: 1.357;
     text-align: center;
     color: #00B3D4;
 }
@@ -3710,7 +3708,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-class__caption {
     font-weight: normal;
     font-size: 14px;
-    line-height: 19px;
+    line-height: 1.357;
     text-align: center;
     color: var(--c-second);
     display: none;
@@ -3807,7 +3805,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     display: flex;
   font-weight: 700;
   font-size: 30px;
-  line-height: 41px;
+  line-height: 1.36667;
   color: #fff;
 }
 .kv-app  .kv-cart__value {
@@ -3823,11 +3821,11 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-price__value {
   font-weight: 700;
   font-size: 30px;
-  line-height: 41px;
+  line-height: 1.3667;
 }
 .kv-app .kv-price .kv-price__currency {
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     color: inherit;
     margin-left: 4px;
   font-weight: 400;
@@ -4444,7 +4442,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     flex-wrap: nowrap;
     font-weight: normal;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     text-align: center;
     color: var(--c-second_dark);
     padding: 0 15px;
@@ -4475,7 +4473,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-review-total__counter {
     font-weight: normal;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     text-align: center;
     color: var(--c-second_dark);
 }
@@ -4483,7 +4481,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-review-total__title {
     font-weight: bold;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 1.35;
     color: var(--c-second_dark);
     padding: 10px 15px;
     text-align: center;
@@ -4497,7 +4495,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-review-total__more {
     font-weight: normal;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 1.333;
     color: var(--c-second);
     padding: 20px 15px;
     position: relative;
@@ -4645,7 +4643,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-class-tab__title {
     font-weight: bold;
     font-size: 16px;
-    line-height: 22px;
+    line-height: 1.375;
     text-align: center;
     color: #FFFFFF;
 }
@@ -4938,7 +4936,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-services-price__person {
     font-weight: normal;
     font-size: 14px;
-    line-height: 19px;
+    line-height: 1.357;
     color: var(--c-second);
     text-align: center;
     display: none;
@@ -4950,7 +4948,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
     border-radius: 6px;
     font-weight: normal;
     font-size: 14px;
-    line-height: 19px;
+    line-height: 1.357;
     text-align: center;
     color: #FFFFFF;
     padding: 6px 11px;
@@ -4990,13 +4988,13 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-services-price_active .kv-services-price__price {
     font-weight: bold;
     font-size: 30px;
-    line-height: 49px;
+    line-height: 1.6333;
     color: var(--c-second);
 }
 
 .kv-app .kv-services-price_active .kv-services-price__price span {
     font-size: 20px;
-    line-height: 20px;
+    line-height: 1;
 }
 
 .kv-app .kv-services-price_active .kv-services-price__btn {
@@ -5535,7 +5533,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv_is-focused .kv-form__label {
     top: 3px;
     font-size: 14px;
-    line-height: 25px;
+    line-height: 1.786;
 }
 
 
@@ -5864,7 +5862,7 @@ input:checked+.kv-processing-day-chb__inner .kv-processing-day-chb__box svg {
 .kv-app .kv-footer-buttons__button {
   font-weight: 700;
   font-size: 18px;
-  line-height: 25px;
+  line-height: 1.3889;
   text-align: center;
   color: #FFFFFF;
   padding: 11px 50px;

@@ -92,7 +92,7 @@ export default {
       error: false
     }
   },
-  emits: ["change"],
+  emits: ["change", "showModal"],
   methods: {
     postalChange(item) {
       this.error = false;

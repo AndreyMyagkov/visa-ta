@@ -52,8 +52,9 @@ export const lng = {
                 "d": "Arbeitstage",
                 "m": "Monat"
             },
-            "multiplicity": "malige Einreise",
-            "multiplicities": "mehrmalige Einreise",
+            "multiplicity": "malige",
+            "multiplicities": "mehrmalige",
+            "entry": "Einreise",
             "order": "beantragen",
             "included": "Die Kosten für Ihr Visum setzen sich aus <b>der Botschaftsgebühr</b>, <b>unserer Servicegebühr</b> und ggf. Einladung (Visum Support Brief) zusammen.</b>",
             "errorByTourists": "Bezüglich einer Änderung der Bestellung ist es notwendig, die bereits eingegebenen Daten der Teilnehmer zu korrigieren."
@@ -229,8 +230,9 @@ export const lng = {
                 "d": "Arbeitstage",
                 "m": "Monat"
             },
-            "multiplicity": "malige Einreise",
-            "multiplicities": "mehrmalige Einreise",
+            "multiplicity": "malige",
+            "multiplicities": "mehrmalige",
+            "entry": "Einreise",
             "order": "Kaufen",
             "included": "В стоимость входит: <b>консульский сбор, сервисный сбор, сбор за приглашение</b>",
             "errorByTourists": "В результате изменения заказа, необходимо откорректировать внесенные ранее данные участников"
@@ -383,8 +385,9 @@ export const lng = {
                 "d": "Arbeitstage",
                 "m": "Monat"
             },
-            "multiplicity": "malige Einreise",
-            "multiplicities": "mehrmalige Einreise",
+            "multiplicity": "malige",
+            "multiplicities": "mehrmalige",
+            "entry": "Einreise",
             "order": "Kaufen",
             "included": "В стоимость входит: <b>консульский сбор, сервисный сбор, сбор за приглашение</b>"
         },

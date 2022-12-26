@@ -46,6 +46,7 @@ import ControlPriceTable from "@/components/Control/ControlPriceTable.vue";
 import KvAlert from "@/components/KvAlert.vue";
 import StatusBarInfoBottom from "@/components/StatusBar/StatusBarInfoBottom.vue"
 
+
 export default {
   name: "App",
   components: {
@@ -311,8 +312,8 @@ export default {
       }
 
 
-      // Отделение офиса
-      if (getParams.office && getParams.office !== "null") {
+      // Доставка: самовывоз. Отделение офиса
+      if (getParams.delivery === "pick-up" && getParams.office && getParams.office !== "null") {
 
         const branch = this.pickupPoints.find(_ => _.id === getParams.office);
         if (branch) {
@@ -323,8 +324,8 @@ export default {
         }
       }
 
-      // Страна и почтовая служба
-      if (getParams.addressingCountry && getParams.addressingCountry !== "null"
+      // Доставка: по почте. Страна и почтовая служба
+      if (getParams.delivery === "post-customer" && getParams.addressingCountry && getParams.addressingCountry !== "null"
         && getParams.postalService && getParams.postalService !== "null"
       ) {
 
@@ -347,6 +348,10 @@ export default {
         } else {
           this.setRestoreError('#kv-block-5');
         }
+      }
+
+      if (getParams.delivery === "electronic") {
+        this.delivery.type = 1;
       }
 
       this.allowCalculate = true;
@@ -401,6 +406,7 @@ export default {
         addressingCountry: this.delivery.type === 2 ? this.delivery.addressingCountry.codeA3 : "",
         office: this.delivery.type === 3 ? this.delivery.branch.id : "",
         postalService: this.selectedPostalService === null ? "" : this.selectedPostalService.id,
+        delivery: constants.deliveryTypes[this.delivery.type - 1],
         agnr: this.CONFIG.agnr,
       }
 
@@ -438,21 +444,56 @@ export default {
       //window.open(document.location.href + '?' + new URLSearchParams(params).toString(), '_blank')
     },
 
-    getSatusDescriptionString() {
+    getStatusDescriptionString() {
       let description = [];
-      description = `${this.selectedService.name}, ${this.selectedDuration.name}, `;
-      description += this.selectedPrice.price.m !== 'm' ? `${this.selectedPrice.price.m}-${this.$lng('step2.multiplicity')}` : this.$lng('step2.multiplicities');
-      description += this.selectedPrice.info.quantity + ' ' + this.$lng(`step2.dimension.${this.selectedPrice.info.dimension}`);
 
-      description += this.touristGroups.map(_ => {
-        return `${_.nationality.name} x ${_.quantity}`
-      }).join(',');
+      // Country
+      description.push({ key: 'Land', value: this.selectedCountry.name });
 
+      // Visa type
+      description.push({ key: 'Visu-Type', value: this.selectedService.name });
+
+      // Duration
+      description.push({ key: 'Gültigkeitsdauer', value: this.selectedDuration.name });
+
+      // Multiply
+      description.push({ key: 'Einreisetype', value: this.selectedPrice.price.m !== 'm' ? `${this.selectedPrice.price.m}-${this.$lng('step2.multiplicity')}` : this.$lng('step2.multiplicities') });
+
+      // Processing time
+      description.push({ key: 'Bearbeitungsdauer', value: this.selectedPrice.info.quantity + ' ' + this.$lng(`step2.dimension.${this.selectedPrice.info.dimension}`) });
+
+      //Tourists
+      description.push({ key: 'Anzahl der Reisenden', value: this.totalTourists});
+
+      // Add
+
+      const extra = [];
+      // Package Name
       if (this.calculate.calculation.servicePackage !== null && this.calculate.calculation.servicePackage.participants.length) {
-        description += this.calculate.calculation.servicePackage.name + ', '
+        extra.push(this.calculate.calculation.servicePackage.name)
       }
-      console.log(description);
-      return description
+
+      // SuppService
+      const suppServices = [];
+      if (this.calculate.calculation.suppServices !== null && this.calculate.calculation.suppServices.length) {
+        this.calculate.calculation.suppServices.forEach(_ => {
+          suppServices.push(_.name)
+        })
+        extra.push(suppServices.join(', '))
+      }
+
+      // Postal Service
+      if (this.selectedPostalService.id !== null && this.delivery.type === 2) {
+        extra.push(this.selectedPostalService.name)
+      }
+
+      description.push({ key: 'Zusatzleistungen', value: extra.join(', ')});
+
+      let descriptionHTML = '';
+      description.forEach(_ => {
+        descriptionHTML += `<b>${_.key}:</b> ${_.value}<br>`
+      })
+      return descriptionHTML
     },
 
     /**
@@ -471,7 +512,7 @@ export default {
         headers: headers,
         body: network.toFormUrlEncoded({
           priceCents: this.calculate.amount * 100,
-          description: this.getSatusDescriptionString(),
+          description: this.getStatusDescriptionString(),
           restoreUrl: restoreUrl,
         }),
         redirect: "follow",
@@ -1220,7 +1261,7 @@ export default {
         return null;
       }
       let postalData = null;
-      if (this.calculate.deliveryMedia === "digital") {
+      if (this.calculate.deliveryMedia === "digital" && this.delivery.type === 1) {
         return null;
       }
       // Проверка на не 100% заполненность адреса
@@ -2669,7 +2710,7 @@ export default {
           icon="step_1"
           header="VISA-AUSWAHL"
           id="kv-block-1"
-          v-if="listCountries.length && services.length"
+          v-if="listCountries.length"
         >
           <template #header-aside v-if="selectedService.id">
             <!--<div class="kv-block-info__action" @click="steps[0].isOpen = !steps[0].isOpen">
@@ -2736,12 +2777,15 @@ export default {
           id="kv-block-2"
           class="kv-is-hover"
           ref="kvblock2"
-          v-show="listNationalities.length
+          v-show="(listNationalities.length
             /*&& selectedService.id || touristGroups.length*/
             && selectedService.id
             && serviceDetails.durations.length
             && serviceDetails.processDurations.length
             && serviceDetails.products.length
+            && services.length) || (
+              listNationalities.length && touristGroups.length && selectedServiceGroup.id
+            )
           "
         >
           <ControlTouristsGroup
@@ -2786,6 +2830,8 @@ export default {
             && serviceDetails.durations.length
             && serviceDetails.processDurations.length
             && serviceDetails.products.length
+            && services.length
+            && selectedService.id
             "
         >
 
@@ -2907,7 +2953,7 @@ export default {
 
             </div>
           </div>
-          <!-- /Calc bloc info-->
+          <!-- /Calc block info-->
 
         </TheBlock>
         <!-- /Step3 -->
@@ -3050,6 +3096,8 @@ export default {
             id="kv-button__angebot"
             @click="processAngebot()"
           >Angebot</button>
+
+          <!--<button class="kv-button" @click="getStatusDescriptionString()">test</button>-->
         </div>
 
 

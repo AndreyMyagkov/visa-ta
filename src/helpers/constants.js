@@ -172,3 +172,6 @@ export class PostalServiceDefault {
         this.workingTime = "";
     }
 }
+
+
+export const deliveryTypes = ["electronic", "post-customer", "pick-up"];

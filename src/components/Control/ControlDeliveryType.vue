@@ -53,7 +53,7 @@ export default {
 .kv-button__delivery-type {
   font-weight: 700;
   font-size: 18px;
-  line-height: 20px;
+  line-height: 1.111;
   padding: 20px 40px;
   text-align: center;
   background-color: #fff;

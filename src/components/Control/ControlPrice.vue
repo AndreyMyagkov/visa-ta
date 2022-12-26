@@ -1,5 +1,5 @@
 <template>
-  <div  class="kv-content__body">
+  <div  class="kv-content__body-">
 
     <div class="kv-calc-block" v-if="serviceDetails.id" style="margin-top: 17px;">
 
@@ -54,8 +54,8 @@
                         <span class="kv-processing-day-chb__box kv-custom-control__icon-radio"></span>
                         <span class="kv-processing-day-chb__caption">
                           <span class="kv-processing-day-chb__text">
-                            <template v-if="price.m !== 'm'">{{price.m}}-{{ $lng('step2.multiplicity') }}</template>
-                            <template v-else>{{ $lng('step2.multiplicities') }}</template>
+                            <template v-if="price.m !== 'm'">{{price.m}}-{{ $lng('step2.multiplicity') }} {{ $lng('step2.entry') }}</template>
+                            <template v-else>{{ $lng('step2.multiplicities') }} {{ $lng('step2.entry') }}</template>
                           </span>
                           <span class="kv-processing-day-chb__title">
                             <template  v-if="price.price !== null">{{formatter.priceFormat(price.price)}}</template>
