@@ -83,6 +83,7 @@
   </div>
 </template>
 
+
 <script>
 import { dashSymbol } from "@/helpers/constants";
 import { priceFormat } from "@/helpers/format";

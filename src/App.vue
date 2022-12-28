@@ -2128,8 +2128,8 @@ export default {
      * Сброс шага 6
      */
     resetStep6(calculate = false) {
-      this.postalServices = [];
-      this.selectedPostalService = new constants.PostalServiceDefault();
+      //this.postalServices = [];
+      //this.selectedPostalService = new constants.PostalServiceDefault();
       if (calculate) {
         this.sendCalculateAndValidate();
       }
@@ -2673,7 +2673,7 @@ export default {
     class="kv-app"
     notranslate
     data-cq-max-w="991, 768, 640, 480"
-    data-cq-min-w="991, 640, 480"
+    data-cq-min-w="991, 768, 640, 480"
   >
     <iconSprite />
 

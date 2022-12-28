@@ -139,15 +139,46 @@ export default {
   flex: 1 1 100%;
 }
 
+[cq-min-w-480] .kv-review-total_col-status {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+[cq-min-w-480] .kv-review-total_col-total {
+  flex: 1 1 auto;
+}
+[cq-min-w-480] .kv-review-total_col-cart {
+  flex: 1 1 40%;
+  max-width: 150px;
+}
 
+
+[cq-min-w-640] .kv-review-total_col-status {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
 [cq-min-w-640] .kv-review-total_col-total {
-  flex: 1 1 60%;
-  max-width: 60%;
+  flex: 1 1 auto;
 }
 [cq-min-w-640] .kv-review-total_col-cart {
   flex: 1 1 40%;
+  max-width: 150px;
+}
+
+[cq-min-w-768] .kv-review-total_col-status {
+  flex: 1 1 auto;
+  /*max-width: 40%;*/
+}
+[cq-min-w-768] .kv-review-total_col-total {
+  flex: 1 1 auto;
   max-width: 40%;
 }
+[cq-min-w-768] .kv-review-total_col-cart {
+  flex: 1 1 40%;
+  max-width: 150px;
+}
+
+
+
 
 [cq-min-w-991] .kv-review-total_col-status {
   flex: 1 1 40%;
